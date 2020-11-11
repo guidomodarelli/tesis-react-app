@@ -1,0 +1,17 @@
+.HomeContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.Home {
+  max-width: 1000px;
+}
+
+.portfolio {
+  margin: 0;
+}
+
+.Home__image__ppal {
+  max-width: inherit;
+  margin: 2rem 0;
+}
