@@ -17,10 +17,10 @@ export default class Badge extends Component {
     return (
       <div className='Badge'>
         <div className='Badge__header'>
-          <img src={logo} alt='Logo' />
+          <img src={logo} alt='Logo' className='img-fluid m-2' />
         </div>
-        <div className='Badge__section-name'>
-          <Gravatar className='Badge__avatar' email={email} alt='Avatar' />
+        <div className='Badge__section-name p-5'>
+          <Gravatar className='Badge__avatar img-fluid' email={email} alt='Avatar' />
           <h1>
             {firstname} <br /> {lastname}
           </h1>

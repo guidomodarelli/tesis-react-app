@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.Badge__Background__Image {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Badge__Background__Image img {
+  height: 500px;
+}

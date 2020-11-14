@@ -6,10 +6,8 @@ const randomNumber = (min = 0, max = 1) =>
 const simulateNetworkLatency = (min = 30, max = 1500) =>
   delay(randomNumber(min, max));
 
-const callAPI = async (endpoint, token, options = {}) => {
+const callAPI = async ({ endpoint, token = '', options = {} }) => {
   await simulateNetworkLatency();
-
-  console.log(options.body);
 
   options.headers = {
     'Content-Type': 'application/json',
@@ -26,30 +24,54 @@ const callAPI = async (endpoint, token, options = {}) => {
 
 const api = {
   loggedIn(token) {
-    return callAPI('/loggedIn', token);
+    return callAPI({ endpoint: '/loggedIn', token: token });
   },
   users: {
     list() {
-      return callAPI('/users');
+      return callAPI({ endpoint: '/users' });
     },
-    create(user, token) {
-      return callAPI('/signup', token, {
-        method: 'POST',
-        body: JSON.stringify(user),
+    login(data) {
+      return callAPI({
+        endpoint: '/login',
+        options: {
+          method: 'POST',
+          body: JSON.stringify(data)
+        }
       });
     },
-    read(userId, token) {
-      return callAPI(`/users/${userId}`, token);
+    create(user, token) {
+      return callAPI({
+        endpoint: '/signup',
+        token: token,
+        options: {
+          method: 'POST',
+          body: JSON.stringify(user),
+        },
+      });
+    },
+    findById(userId, token) {
+      return callAPI({ endpoint: `/users/${userId}`, token: token });
+    },
+    findByEmail(email) {
+      return callAPI({ endpoint: `/users/email/${email}` });
     },
     update(userId, updates, token) {
-      return callAPI(`/users/${userId}`, token, {
-        method: 'PUT',
-        body: JSON.stringify(updates),
+      return callAPI({
+        endpoint: `/users/${userId}`,
+        token: token,
+        options: {
+          method: 'PUT',
+          body: JSON.stringify(updates),
+        },
       });
     },
     remove(userId, token) {
-      return callAPI(`/users/${userId}`, token, {
-        method: 'DELETE',
+      return callAPI({
+        endpoint: `/users/${userId}`,
+        token: token,
+        options: {
+          method: 'DELETE',
+        },
       });
     },
   },

@@ -36,7 +36,7 @@ class UserNew extends Component {
       const response = await api.users.create(this.state.form);
       this.setState({ uploading: false, error: null });
       localStorage.setItem('token', response.token);
-      // this.props.history.push('/users');
+      this.props.history.push('/login');
     } catch (error) {
       this.setState({ uploading: false, error: error });
     }
@@ -61,9 +61,9 @@ class UserNew extends Component {
     }
     return (
       <>
-        <div className='container mt-3'>
+        <div className='container'>
           <div className='row'>
-            <div className='col'>
+            <div className='col mt-4'>
               <Badge
                 firstname={this.state.form.firstname || 'Nombre'}
                 lastname={this.state.form.lastname || 'Apellido'}
@@ -75,7 +75,7 @@ class UserNew extends Component {
               />
             </div>
 
-            <div className='col-6'>
+            <div className='col mt-4 mb-4'>
               <h1>Nuevo usuario</h1>
               <UserForm
                 onChange={this.handleChange}
