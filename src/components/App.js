@@ -1,15 +1,16 @@
+import 'bootswatch/dist/litera/bootstrap.min.css';
 import { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
+import UserDetails from '../pages/UserDetails';
 import UserNew from '../pages/UserNew';
+import UserEdit from '../pages/UserEdit';
+import Users from '../pages/Users';
 import api from '../utils/api';
 import Layout from './Layout';
 import './styles/App.css';
-import Users from '../pages/Users';
-import 'bootswatch/dist/litera/bootstrap.min.css'
-import UserDetails from '../pages/UserDetails';
 
 class App extends Component {
   constructor() {
@@ -23,7 +24,8 @@ class App extends Component {
 
   handleLogin = async () => {
     try {
-      const data = await api.loggedIn(localStorage.getItem('token'));
+      const response = await api.loggedIn(localStorage.getItem('token'));
+      const data = await response.json();
       this.setState({
         loggedIn: data.loggedIn,
         error: null,
@@ -46,6 +48,7 @@ class App extends Component {
             <Route exact path='/signup' component={UserNew} />
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/:userId' component={UserDetails} />
+            <Route exact path='/users/:userId/edit' component={UserEdit} />
             <Route component={NotFound} />
           </Switch>
         </Layout>

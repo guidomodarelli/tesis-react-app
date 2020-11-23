@@ -29,7 +29,7 @@ class UserNew extends Component {
     try {
       const response = await api.users.login(this.state.form);
       this.setState({ loading: false, error: null });
-      if (response.success !== false) {
+      if (response.token) {
         localStorage.setItem('token', response.token);
         this.props.history.push('/');
       }

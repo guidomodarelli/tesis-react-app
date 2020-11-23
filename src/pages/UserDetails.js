@@ -1,70 +1,93 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Badge from '../components/Badge';
 import PageLoading from '../components/PageLoading';
+import PageError from '../components/PageUpload';
 import api from '../utils/api';
+
+function Actions({ userId }) {
+  return (
+    <div className='col d-flex flex-column align-items-center justify-content-center'>
+      <h2 className='mb-4'>Acciones:</h2>
+      <div>
+        <div className='btn btn-primary mb-4' to={`/users/${userId}/edit`}>
+          Editar
+        </div>
+      </div>
+      <div>
+        <button /* onClick={props.onOpenModal} */ className='btn btn-danger'>
+          Eliminar
+        </button>
+        {/* <DeleteBadgeModal
+      isOpen={props.modalIsOpen}
+      onClose={props.onCloseModal}
+      onDeleteBadge={props.onDeleteBadge}
+    /> */}
+      </div>
+    </div>
+  );
+}
 
 function UserDetails(props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(undefined);
-  
-  async function fetchData() {
-    setLoading(true);
-    setError(null);
+  const [profile, setProfile] = useState(false);
+
+  const userId = props.match.params.userId;
+  const isMounted = useRef(true);
+
+  const fetchData = useCallback(async () => {
+    isMounted.current && setLoading(true);
+    isMounted.current && setError(null);
     try {
-      const response = await api.users.findById(props.match.params.userId);
-      console.log(response);
-      setData(response);
+      const response = await api.users.findById(userId);
+      const data = await response.json();
+      isMounted.current && setData(data);
     } catch (error) {
-      setError(error);
+      isMounted.current && setError(error);
     } finally {
-      setLoading(false);
+      isMounted.current && setLoading(false);
     }
-  };
+  }, [userId]);
+
+  const isMyProfile = useCallback(async () => {
+    isMounted.current && setError(null);
+    try {
+      const response = await api.users.myProfile(userId);
+      const data = await response.json();
+      isMounted.current && setProfile(data.myProfile);
+    } catch (error) {
+      isMounted.current && setError(null);
+    }
+  }, [userId]);
 
   useEffect(() => {
+    isMyProfile();
     fetchData();
-    return () => {};
-  }, []);
+    return () => {
+      isMounted.current = false;
+    };
+  }, [fetchData, isMyProfile]);
 
   if (loading) {
     return <PageLoading />;
+  } else if (error) {
+    return <PageError />;
   } else
     return (
       <div className='container'>
         <div className='row'>
-          <div className='col'>
-            {/* <Badge
-            firstName={data.firstName || ''}
-            lastName={data.lastName || ''}
-            email={data.email || ''}
-            twitter={data.twitter || ''}
-            jobTitle={data.jobTitle || ''}
-          /> */}
+          <div className='col mt-4 ml-2 mr-2 row justify-content-center'>
+            <Badge
+              firstname={data.firstname}
+              lastname={data.lastname}
+              email={data.email}
+              instagram={data.instagram}
+              birthdate={data.birthdate}
+              jobtitle={data.jobtitle}
+            />
           </div>
-          <div className='col d-flex flex-column align-items-center justify-content-center'>
-            <h2 className='mb-4'>Acciones:</h2>
-            <div>
-              {/* <div
-              className='btn btn-primary mb-4'
-              to={`/badges/${data.id}/edit`}
-            >
-              Edit
-            </div> */}
-            </div>
-            <div>
-              <button
-                /* onClick={props.onOpenModal} */ className='btn btn-danger'
-              >
-                Delete
-              </button>
-              {/* <DeleteBadgeModal
-                isOpen={props.modalIsOpen}
-                onClose={props.onCloseModal}
-                onDeleteBadge={props.onDeleteBadge}
-              /> */}
-            </div>
-          </div>
+          {profile && <Actions userId={userId} />}
         </div>
       </div>
     );

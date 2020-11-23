@@ -34,8 +34,9 @@ class UserNew extends Component {
     try {
       const response = await api.users.create(this.state.form);
       this.setState({ uploading: false, error: null });
-      if (response.status === 201) {
-        this.props.history.push('/login');
+      if (response.status === 200) {
+        const userId = this.props.match.params.userId;
+        this.props.history.push(`/users/${userId}`);
       }
     } catch (error) {
       this.setState({ uploading: false, error: error });
@@ -49,7 +50,7 @@ class UserNew extends Component {
     var m = hoy.getMonth() - cumpleanos.getMonth();
 
     if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-      edad--;
+        edad--;
     }
 
     return edad;

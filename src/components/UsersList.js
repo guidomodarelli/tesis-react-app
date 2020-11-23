@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Gravatar from './Gravatar';
+import { Link } from 'react-router-dom';
 import instagramLogo from '../assets/images/Instagram.svg';
-// import { Link } from 'react-router-dom';
-import './styles/UsersList.css'
+import Gravatar from './Gravatar';
+import PageEmpty from './PageEmpty'
+import './styles/UsersList.css';
 
 class UserListItem extends Component {
   render() {
@@ -14,18 +15,20 @@ class UserListItem extends Component {
           <Gravatar
             className='UserListItem__avatar'
             email={user.email}
-            alt={`${user.firstName} ${user.lastName}`}
+            alt={`${user.firstname} ${user.lastname}`}
           />
         </figure>
         <div className='UserListItem__details'>
           <p className='UserListItem__fullname'>
-            {user.firstName} {user.lastName}
+            {user.firstname} {user.lastname}
           </p>
           <div className='UserListItem__twitter'>
             <img src={instagramLogo} alt='Twitter logo' />
-            <p className='UserListItem__twitter text-break pr-3'>@{user.instagram}</p>
+            <p className='UserListItem__twitter text-break pr-3'>
+              @{user.instagram || '{Sin cuenta}'}
+            </p>
           </div>
-          <p className='UserListItem__jobTitle'>{user.jobTitle}</p>
+          <p className='UserListItem__jobTitle'>{user.jobtitle}</p>
         </div>
       </div>
     );
@@ -35,21 +38,24 @@ class UserListItem extends Component {
 export default class UsersList extends Component {
   render() {
     const users = this.props.users;
+    if (!(users instanceof Array) || users.length === 0) {
+      return <PageEmpty />;
+    }
     return (
-        <ul className='list-unstyled'>
-          {users.map((user) => {
-            return (
-              <li key={user.id}>
-                {/* <Link
-                  className='text-reset text-decoration-none'
-                  to={`/badges/${user.id}`}
-                > */}
-                  <UserListItem user={user} />
-                {/* </Link> */}
-              </li>
-            );
-          })}
-        </ul>
+      <ul className='list-unstyled'>
+        {users.map((user) => {
+          return (
+            <li key={user.id}>
+              <Link
+                className='text-reset text-decoration-none'
+                to={`/users/${user.id}`}
+              >
+                <UserListItem user={user} />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     );
   }
 }

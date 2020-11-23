@@ -18,8 +18,7 @@ async function callAPI(endpoint, options = {}) {
   const url = BASE_URL + endpoint;
 
   try {
-    const response = await fetch(url, options);
-    return await response.json();
+    return await fetch(url, options);
   } catch (error) {
     console.log(error);
   }
@@ -33,16 +32,32 @@ const api = {
     list() {
       return callAPI('/users');
     },
-    login(data) {
+    myProfile(userId) {
+      return callAPI(`/users/myProfile/${userId}`);
+    },
+    login(user) {
+      const urlencoded = new URLSearchParams();
+      urlencoded.append('email', user.email);
+      urlencoded.append('password', user.password);
+
       return callAPI('/login', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: urlencoded,
       });
     },
     create(user) {
+      const urlencoded = new URLSearchParams();
+      urlencoded.append('email', user.email);
+      urlencoded.append('firstname', user.firstname);
+      urlencoded.append('lastname', user.lastname);
+      urlencoded.append('birthdate', user.birthdate);
+      urlencoded.append('jobtitle', user.jobtitle);
+      urlencoded.append('instagram', user.instagram);
+      urlencoded.append('password', user.password);
+
       return callAPI('/signup', {
         method: 'POST',
-        body: JSON.stringify(user),
+        body: urlencoded,
       });
     },
     findById(userId) {
