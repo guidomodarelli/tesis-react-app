@@ -9,6 +9,7 @@ import Layout from './Layout';
 import './styles/App.css';
 import Users from '../pages/Users';
 import 'bootswatch/dist/litera/bootstrap.min.css'
+import UserDetails from '../pages/UserDetails';
 
 class App extends Component {
   constructor() {
@@ -44,6 +45,7 @@ class App extends Component {
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={UserNew} />
             <Route exact path='/users' component={Users} />
+            <Route exact path='/users/:userId' component={UserDetails} />
             <Route component={NotFound} />
           </Switch>
         </Layout>
