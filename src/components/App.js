@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
-import UserDetails from '../pages/UserDetails';
-import UserNew from '../pages/UserNew';
+import UserDetailsContainer from '../pages/UserDetailsContainer';
 import UserEdit from '../pages/UserEdit';
+import UserNew from '../pages/UserNew';
 import Users from '../pages/Users';
 import api from '../utils/api';
 import Layout from './Layout';
@@ -47,7 +47,7 @@ class App extends Component {
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={UserNew} />
             <Route exact path='/users' component={Users} />
-            <Route exact path='/users/:userId' component={UserDetails} />
+            <Route exact path='/users/:userId' component={UserDetailsContainer} />
             <Route exact path='/users/:userId/edit' component={UserEdit} />
             <Route component={NotFound} />
           </Switch>

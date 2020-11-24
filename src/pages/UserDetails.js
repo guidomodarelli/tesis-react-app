@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Badge from '../components/Badge';
-import PageLoading from '../components/PageLoading';
-import PageError from '../components/PageUpload';
-import api from '../utils/api';
+import DeleteUserModal from '../components/DeleteUserModal';
 
-function Actions({ userId }) {
+function Actions(props) {
+  const userId = props.userId;
   return (
     <div className='col d-flex flex-column align-items-center justify-content-center'>
       <h2 className='mb-4'>Acciones:</h2>
@@ -15,83 +14,47 @@ function Actions({ userId }) {
         </Link>
       </div>
       <div>
-        <button /* onClick={props.onOpenModal} */ className='btn btn-danger'>
+        <button onClick={props.onOpenModal} className='btn btn-danger'>
           Eliminar
         </button>
-        {/* <DeleteBadgeModal
-      isOpen={props.modalIsOpen}
-      onClose={props.onCloseModal}
-      onDeleteBadge={props.onDeleteBadge}
-    /> */}
+        <DeleteUserModal
+          isOpen={props.modalIsOpen}
+          onClose={props.onCloseModal}
+          onDeleteUser={props.onDeleteUser}
+        />
       </div>
     </div>
   );
 }
 
 function UserDetails(props) {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(undefined);
-  const [profile, setProfile] = useState(false);
+  const user = props.user;
 
-  const userId = props.match.params.userId;
-  const isMounted = useRef(true);
-
-  const fetchData = useCallback(async () => {
-    isMounted.current && setLoading(true);
-    isMounted.current && setError(null);
-    try {
-      const response = await api.users.findById(userId);
-      const data = await response.json();
-      isMounted.current && setData(data);
-    } catch (error) {
-      isMounted.current && setError(error);
-    } finally {
-      isMounted.current && setLoading(false);
-    }
-  }, [userId]);
-
-  const isMyProfile = useCallback(async () => {
-    isMounted.current && setError(null);
-    try {
-      const response = await api.users.myProfile(userId);
-      const data = await response.json();
-      isMounted.current && setProfile(data.myProfile);
-    } catch (error) {
-      isMounted.current && setError(null);
-    }
-  }, [userId]);
-
-  useEffect(() => {
-    isMyProfile();
-    fetchData();
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fetchData, isMyProfile]);
-
-  if (loading) {
-    return <PageLoading />;
-  } else if (error) {
-    return <PageError />;
-  } else
-    return (
-      <div className='container'>
-        <div className='row'>
-          <div className='col mt-4 ml-2 mr-2 row justify-content-center'>
-            <Badge
-              firstname={data.firstname}
-              lastname={data.lastname}
-              email={data.email}
-              instagram={data.instagram}
-              birthdate={data.birthdate}
-              jobtitle={data.jobtitle}
-            />
-          </div>
-          {profile && <Actions userId={userId} />}
+  return (
+    <div className='container'>
+      <div className='row'>
+        <div className='col mt-4 ml-2 mr-2 row justify-content-center'>
+          <Badge
+            firstname={user.firstname || ''}
+            lastname={user.lastname || ''}
+            email={user.email || ''}
+            instagram={user.instagram || ''}
+            birthdate={user.birthdate || ''}
+            jobtitle={user.jobtitle || ''}
+          />
         </div>
+        {props.profile && (
+          <Actions
+            userId={user.id}
+            onOpenModal={props.onOpenModal}
+            modalIsOpen={props.modalIsOpen}
+            onCloseModal={props.onCloseModal}
+            onDeleteUser={props.onDeleteUser}
+          />
+        )}
       </div>
-    );
+    </div>
+  );
 }
 
 export default UserDetails;
