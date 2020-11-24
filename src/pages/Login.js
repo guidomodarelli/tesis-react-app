@@ -29,8 +29,9 @@ class UserNew extends Component {
     try {
       const response = await api.users.login(this.state.form);
       this.setState({ loading: false, error: null });
-      if (response.token) {
-        localStorage.setItem('token', response.token);
+      if (response.status === 200) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
         this.props.history.push('/');
       }
     } catch (error) {

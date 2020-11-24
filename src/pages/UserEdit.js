@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import api from '../utils/api';
-import PageUpload from '../components/PageUpload';
 import Badge from '../components/Badge';
+import PageUpload from '../components/PageUpload';
 import UserForm from '../components/UserForm';
+import api from '../utils/api';
 
 class UserNew extends Component {
   state = {
@@ -19,6 +19,45 @@ class UserNew extends Component {
     },
   };
 
+  componentDidMount() {
+    this.fetchData(this.props.match.params.userId);
+  }
+
+  fetchData = async (userId) => {
+    this.setState({ error: null });
+    try {
+      const response = await api.users.findById(userId);
+      const data = await response.json();
+      this.setState({
+        form: {
+          ...this.state.form,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          email: data.email,
+          birthdate: data.birthdate,
+        },
+      });
+      if (data.jobtitle) {
+        this.setState({
+          form: {
+            ...this.state.form,
+            jobtitle: data.jobtitle,
+          },
+        });
+      }
+      if (data.instagram) {
+        this.setState({
+          form: {
+            ...this.state.form,
+            instagram: data.instagram,
+          },
+        });
+      }
+    } catch (error) {
+      this.setState({ error: error });
+    }
+  };
+
   handleChange = (e) => {
     this.setState({
       form: {
@@ -32,10 +71,15 @@ class UserNew extends Component {
     e.preventDefault();
     this.setState({ uploading: true, error: null });
     try {
-      const response = await api.users.create(this.state.form);
+      const dataJson = JSON.stringify(this.state.form);
+      const data = JSON.parse(dataJson);
+      if (!data.password) {
+        delete data.password;
+      }
+      const userId = this.props.match.params.userId;
+      const response = await api.users.update(userId, data);
       this.setState({ uploading: false, error: null });
       if (response.status === 200) {
-        const userId = this.props.match.params.userId;
         this.props.history.push(`/users/${userId}`);
       }
     } catch (error) {
@@ -50,7 +94,7 @@ class UserNew extends Component {
     var m = hoy.getMonth() - cumpleanos.getMonth();
 
     if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-        edad--;
+      edad--;
     }
 
     return edad;
@@ -71,13 +115,12 @@ class UserNew extends Component {
                 email={this.state.form.email || 'calistep@gmail.com'}
                 birthdate={this.state.form.birthdate || '2008-01-25'}
                 jobtitle={this.state.form.jobtitle || 'Titulo profesional'}
-                instagram={this.state.form.instagram || 'cuenta_intagram'}
-                avatarUrl='https://www.gravatar.com/avatar?d=identicon'
+                instagram={this.state.form.instagram}
               />
             </div>
 
             <div className='col mt-4 mb-4'>
-              <h1>Nuevo usuario</h1>
+              <h1>Editar usuario</h1>
               <UserForm
                 onChange={this.handleChange}
                 formValues={this.state.form}

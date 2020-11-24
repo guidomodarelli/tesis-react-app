@@ -54,7 +54,7 @@ const api = {
       urlencoded.append('jobtitle', user.jobtitle);
       urlencoded.append('instagram', user.instagram);
       urlencoded.append('password', user.password);
-
+      
       return callAPI('/signup', {
         method: 'POST',
         body: urlencoded,
@@ -67,9 +67,13 @@ const api = {
       return callAPI(`/users/email/${email}`);
     },
     update(userId, updates) {
+      const urlencoded = new URLSearchParams();
+      for (const [key, value] of Object.entries(updates)) {
+        urlencoded.append(key, value);
+      }
       return callAPI(`/users/${userId}`, {
         method: 'PUT',
-        body: JSON.stringify(updates),
+        body: urlencoded,
       });
     },
     remove(userId) {

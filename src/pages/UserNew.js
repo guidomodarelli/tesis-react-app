@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import api from '../utils/api';
-import PageUpload from '../components/PageUpload';
 import Badge from '../components/Badge';
+import PageUpload from '../components/PageUpload';
 import UserForm from '../components/UserForm';
+import api from '../utils/api';
 
 class UserNew extends Component {
   state = {
@@ -71,7 +71,6 @@ class UserNew extends Component {
                 birthdate={this.state.form.birthdate || '2008-01-25'}
                 jobtitle={this.state.form.jobtitle || 'Titulo profesional'}
                 instagram={this.state.form.instagram || 'cuenta_intagram'}
-                avatarUrl='https://www.gravatar.com/avatar?d=identicon'
               />
             </div>
 

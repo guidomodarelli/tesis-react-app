@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Badge from '../components/Badge';
 import PageLoading from '../components/PageLoading';
 import PageError from '../components/PageUpload';
@@ -9,9 +10,9 @@ function Actions({ userId }) {
     <div className='col d-flex flex-column align-items-center justify-content-center'>
       <h2 className='mb-4'>Acciones:</h2>
       <div>
-        <div className='btn btn-primary mb-4' to={`/users/${userId}/edit`}>
+        <Link className='btn btn-primary mb-4' to={`/users/${userId}/edit`}>
           Editar
-        </div>
+        </Link>
       </div>
       <div>
         <button /* onClick={props.onOpenModal} */ className='btn btn-danger'>
