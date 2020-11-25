@@ -1,5 +1,5 @@
 import React from 'react';
-import upload__image from '../assets/images/Upload.svg';
+import upload__image from '../assets/images/upload.svg';
 
 function PageError() {
   return (

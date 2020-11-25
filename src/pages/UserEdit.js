@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Badge from '../components/Badge';
 import PageUpload from '../components/PageUpload';
 import UserForm from '../components/UserForm';
-import api from '../utils/api';
+import api from '../server/api';
 
 class UserNew extends Component {
   state = {

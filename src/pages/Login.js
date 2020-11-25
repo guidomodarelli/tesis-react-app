@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import PageLoading from '../components/PageLoading';
-import api from '../utils/api';
+import api from '../server/api';
 
 class UserNew extends Component {
   state = {

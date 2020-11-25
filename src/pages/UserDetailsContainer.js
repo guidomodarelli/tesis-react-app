@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
-import api from '../utils/api';
+import api from '../server/api';
 import UserDetails from './UserDetails';
 
 function UserDetailsContainer(props) {

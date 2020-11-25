@@ -3,8 +3,8 @@ import logo from '../assets/images/CALISTEP.png';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import UsersList from '../components/UsersList';
-import api from '../utils/api';
-import './styles/Users.css';
+import api from '../server/api';
+import '../assets/styles/pages/Users.css';
 
 function Users(props) {
   const [loading, setLoading] = useState(true);

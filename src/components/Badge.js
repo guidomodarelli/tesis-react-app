@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './styles/Badge.css';
+import '../assets/styles/components/Badge.css';
 import logo from '../assets/images/CALISTEP.png';
 import Gravatar from './Gravatar';
 

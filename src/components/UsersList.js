@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import instagramLogo from '../assets/images/Instagram.svg';
 import Gravatar from './Gravatar';
 import PageEmpty from './PageEmpty'
-import './styles/UsersList.css';
+import '../assets/styles/components/UsersList.css';
 
 class UserListItem extends Component {
   render() {
