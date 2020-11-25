@@ -34,7 +34,7 @@ const UserNew = (props) => {
     setUploading(true);
     setError(null);
     try {
-      const response = await api.users.create(form);
+      const response = await api(signal).users.create(form);
       if (response.status === 201) {
         props.history.push('/login');
       }

@@ -24,7 +24,11 @@ const UserEdit = (props) => {
   const fetchData = () => {
     api(signal)
       .users.findById(userId)
-      .then((response) => response.json())
+      .then((response) => {
+        return response.status === 401
+          ? props.history.push('/login')
+          : response.json();
+      })
       .then((data) => {
         setValues({
           ...form,
@@ -66,7 +70,7 @@ const UserEdit = (props) => {
       if (!data.password) {
         delete data.password;
       }
-      const response = await api.users.update(userId, data);
+      const response = await api(signal).users.update(userId, data);
       if (response.status === 200) {
         props.history.push(`/users/${userId}`);
       }

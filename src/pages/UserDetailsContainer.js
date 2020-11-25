@@ -28,7 +28,7 @@ const UserDetailsContainer = (props) => {
     setLoading(true);
     setError(null);
     try {
-      await api.users.remove(userId);
+      await api(signal).users.remove(userId);
       localStorage.removeItem('token');
       props.history.push('/users');
     } catch (error) {
@@ -41,7 +41,11 @@ const UserDetailsContainer = (props) => {
     setLoading(true);
     api(signal)
       .users.findById(userId)
-      .then((response) => response.json())
+      .then((response) => {
+        return response.status === 401
+          ? props.history.push('/login')
+          : response.json();
+      })
       .then((data) => setData(data))
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
@@ -58,6 +62,7 @@ const UserDetailsContainer = (props) => {
   useEffect(() => {
     isMyProfile();
     fetchData();
+    return () => controller.abort();
   }, []);
 
   if (loading) {

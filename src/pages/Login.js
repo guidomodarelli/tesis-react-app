@@ -25,16 +25,14 @@ const Login = (props) => {
   const handleSumbit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
     try {
-      const response = await api.users.login(form);
-      setLoading(true);
-      setError(null);
+      const response = await api(signal).users.login(form);
+      const data = await response.json();
       if (response.status === 200) {
-        const data = await response.json();
         localStorage.setItem('token', data.token);
         props.history.push('/');
       } else {
+        console.error(data);
         localStorage.removeItem('token');
       }
     } catch (error) {
@@ -46,14 +44,15 @@ const Login = (props) => {
 
   const handleLogin = () => {
     setLoading(true);
-    api(signal).loggedIn()
-    .then(response => {
-      if (response.status === 200) {
-        props.history.push('/');
-      }
-    })
-    .catch(error => setError(error))
-    .finally(() => setLoading(false))
+    api(signal)
+      .loggedIn()
+      .then((response) => {
+        if (response.status === 200) {
+          props.history.push('/');
+        }
+      })
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -78,6 +77,6 @@ const Login = (props) => {
       </p>
     </div>
   );
-}
+};
 
 export default Login;

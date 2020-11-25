@@ -19,10 +19,9 @@ const Users = (props) => {
     api(signal)
       .users.list()
       .then((response) => {
-        if (response.status === 401) {
-          // props.history.push('/login');
-        }
-        response.json();
+        return response.status === 401
+          ? props.history.push('/login')
+          : response.json();
       })
       .then((data) => setData(data))
       .catch((error) => setError(error))
