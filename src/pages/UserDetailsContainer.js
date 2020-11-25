@@ -1,18 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import api from '../server/api';
 import UserDetails from './UserDetails';
 
-function UserDetailsContainer(props) {
+const UserDetailsContainer = (props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(undefined);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [profile, setProfile] = useState(false);
+  const controller = new AbortController();
+  const signal = controller.signal;
 
   const userId = props.match.params.userId;
-  const isMounted = useRef(true);
 
   const handleOpenModal = () => {
     setModalIsOpen(true);
@@ -27,6 +29,7 @@ function UserDetailsContainer(props) {
     setError(null);
     try {
       await api.users.remove(userId);
+      localStorage.removeItem('token');
       props.history.push('/users');
     } catch (error) {
       setLoading(false);
@@ -34,54 +37,44 @@ function UserDetailsContainer(props) {
     }
   };
 
-  const fetchData = useCallback(async () => {
-    isMounted.current && setLoading(true);
-    isMounted.current && setError(null);
-    try {
-      const response = await api.users.findById(userId);
-      const data = await response.json();
-      isMounted.current && setData(data);
-    } catch (error) {
-      isMounted.current && setError(error);
-    } finally {
-      isMounted.current && setLoading(false);
-    }
-  }, [userId]);
+  const fetchData = () => {
+    setLoading(true);
+    api(signal)
+      .users.findById(userId)
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
+  };
 
-  const isMyProfile = useCallback(async () => {
-    isMounted.current && setError(null);
-    try {
-      const response = await api.users.myProfile(userId);
-      const data = await response.json();
-      isMounted.current && setProfile(data.myProfile);
-    } catch (error) {
-      isMounted.current && setError(null);
-    }
-  }, [userId]);
+  const isMyProfile = () => {
+    api(signal)
+      .users.myProfile(userId)
+      .then((response) => response.json())
+      .then((data) => setProfile(data.myProfile))
+      .catch((error) => setError(error));
+  };
 
   useEffect(() => {
     isMyProfile();
     fetchData();
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fetchData, isMyProfile]);
+  }, []);
 
   if (loading) {
     return <PageLoading />;
   } else if (error) {
     return <PageError />;
   } else
-  return (
-    <UserDetails
-      onCloseModal={handleCloseModal}
-      onOpenModal={handleOpenModal}
-      modalIsOpen={modalIsOpen}
-      onDeleteUser={handleDeleteUser}
-      user={data}
-      profile={profile}
-    />
-  );
-}
+    return (
+      <UserDetails
+        onCloseModal={handleCloseModal}
+        onOpenModal={handleOpenModal}
+        modalIsOpen={modalIsOpen}
+        onDeleteUser={handleDeleteUser}
+        user={data}
+        profile={profile}
+      />
+    );
+};
 
 export default UserDetailsContainer;

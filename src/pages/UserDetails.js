@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import Badge from '../components/Badge';
 import DeleteUserModal from '../components/DeleteUserModal';
 
-function Actions(props) {
-  const userId = props.userId;
+const Actions = (props) => {
+  const { userId } = props;
   return (
     <div className='col d-flex flex-column align-items-center justify-content-center'>
       <h2 className='mb-4'>Acciones:</h2>
@@ -27,9 +27,8 @@ function Actions(props) {
   );
 }
 
-function UserDetails(props) {
-  const user = props.user;
-
+const UserDetails = (props) => {
+  const { user, profile } = props;
   return (
     <div className='container'>
       <div className='row'>
@@ -43,7 +42,7 @@ function UserDetails(props) {
             jobtitle={user.jobtitle || ''}
           />
         </div>
-        {props.profile && (
+        {profile && (
           <Actions
             userId={user.id}
             onOpenModal={props.onOpenModal}

@@ -1,38 +1,38 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import logo from '../assets/images/CALISTEP.png';
+import '../assets/styles/pages/Users.css';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import UsersList from '../components/UsersList';
 import api from '../server/api';
-import '../assets/styles/pages/Users.css';
 
-function Users(props) {
+const Users = (props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(undefined);
+  const controller = new AbortController();
+  const signal = controller.signal;
 
-  const isMounted = useRef(true);
-
-  const fetchData = useCallback(async () => {
-    isMounted.current && setLoading(true);
-    isMounted.current && setError(null);
-    try {
-      const response = await api.users.list();
-      const data = await response.json()
-      isMounted.current && setData(data);
-    } catch (error) {
-      isMounted.current && setError(error);
-    } finally {
-      isMounted.current && setLoading(false);
-    }
-  }, []);
+  const fetchData = () => {
+    setLoading(true);
+    api(signal)
+      .users.list()
+      .then((response) => {
+        if (response.status === 401) {
+          // props.history.push('/login');
+        }
+        response.json();
+      })
+      .then((data) => setData(data))
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
     fetchData();
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fetchData]);
+    return () => controller.abort();
+  }, []);
 
   if (loading && !data) {
     return <PageLoading />;
@@ -52,11 +52,9 @@ function Users(props) {
 
       <div className='Users__container'>
         <UsersList users={data} />
-
-        {/* {this.state.loading && <MiniPageLoading />} */}
       </div>
     </>
   );
-}
+};
 
 export default Users;

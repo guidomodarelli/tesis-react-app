@@ -1,138 +1,118 @@
-import React, { Component } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import Badge from '../components/Badge';
 import PageUpload from '../components/PageUpload';
 import UserForm from '../components/UserForm';
 import api from '../server/api';
 
-class UserNew extends Component {
-  state = {
-    uploading: false,
-    error: null,
-    form: {
-      firstname: '',
-      lastname: '',
-      email: '',
-      birthdate: '',
-      jobtitle: '',
-      instagram: '',
-      password: '',
-    },
-  };
+const UserEdit = (props) => {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(null);
+  const [form, setValues] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    birthdate: '',
+    jobtitle: '',
+    instagram: '',
+    password: '',
+  });
+  const { userId } = props.match.params;
+  const controller = new AbortController();
+  const signal = controller.signal;
 
-  componentDidMount() {
-    this.fetchData(this.props.match.params.userId);
-  }
-
-  fetchData = async (userId) => {
-    this.setState({ error: null });
-    try {
-      const response = await api.users.findById(userId);
-      const data = await response.json();
-      this.setState({
-        form: {
-          ...this.state.form,
+  const fetchData = () => {
+    api(signal)
+      .users.findById(userId)
+      .then((response) => response.json())
+      .then((data) => {
+        setValues({
+          ...form,
           firstname: data.firstname,
           lastname: data.lastname,
           email: data.email,
           birthdate: data.birthdate,
-        },
-      });
-      if (data.jobtitle) {
-        this.setState({
-          form: {
-            ...this.state.form,
+        });
+        if (data.jobtitle) {
+          setValues({
+            ...form,
             jobtitle: data.jobtitle,
-          },
-        });
-      }
-      if (data.instagram) {
-        this.setState({
-          form: {
-            ...this.state.form,
+          });
+        }
+        if (data.instagram) {
+          setValues({
+            ...form,
             instagram: data.instagram,
-          },
-        });
-      }
-    } catch (error) {
-      this.setState({ error: error });
-    }
+          });
+        }
+      })
+      .catch((error) => setError(error));
   };
 
-  handleChange = (e) => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        [e.target.name]: e.target.value,
-      },
+  const handleChange = (e) => {
+    setValues({
+      ...form,
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleSumbit = async (e) => {
+  const handleSumbit = async (e) => {
     e.preventDefault();
-    this.setState({ uploading: true, error: null });
+    setUploading(true);
+    setError(null);
     try {
-      const dataJson = JSON.stringify(this.state.form);
+      const dataJson = JSON.stringify(form);
       const data = JSON.parse(dataJson);
       if (!data.password) {
         delete data.password;
       }
-      const userId = this.props.match.params.userId;
       const response = await api.users.update(userId, data);
-      this.setState({ uploading: false, error: null });
       if (response.status === 200) {
-        this.props.history.push(`/users/${userId}`);
+        props.history.push(`/users/${userId}`);
       }
     } catch (error) {
-      this.setState({ uploading: false, error: error });
+      setError(error);
+    } finally {
+      setUploading(false);
     }
   };
 
-  calcularEdad(fecha) {
-    var hoy = new Date();
-    var cumpleanos = new Date(fecha);
-    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-    var m = hoy.getMonth() - cumpleanos.getMonth();
+  useEffect(() => {
+    fetchData();
+    return () => controller.abort();
+  }, []);
 
-    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-      edad--;
-    }
-
-    return edad;
+  if (uploading) {
+    return <PageUpload />;
   }
+  return (
+    <>
+      <div className='container'>
+        <div className='row'>
+          <div className='col mt-4'>
+            <Badge
+              firstname={form.firstname || 'Nombre'}
+              lastname={form.lastname || 'Apellido'}
+              email={form.email || 'calistep@gmail.com'}
+              birthdate={form.birthdate || '2008-01-25'}
+              jobtitle={form.jobtitle || 'Titulo profesional'}
+              instagram={form.instagram}
+            />
+          </div>
 
-  render() {
-    if (this.state.uploading) {
-      return <PageUpload />;
-    }
-    return (
-      <>
-        <div className='container'>
-          <div className='row'>
-            <div className='col mt-4'>
-              <Badge
-                firstname={this.state.form.firstname || 'Nombre'}
-                lastname={this.state.form.lastname || 'Apellido'}
-                email={this.state.form.email || 'calistep@gmail.com'}
-                birthdate={this.state.form.birthdate || '2008-01-25'}
-                jobtitle={this.state.form.jobtitle || 'Titulo profesional'}
-                instagram={this.state.form.instagram}
-              />
-            </div>
-
-            <div className='col mt-4 mb-4'>
-              <h1>Editar usuario</h1>
-              <UserForm
-                onChange={this.handleChange}
-                formValues={this.state.form}
-                onSumbit={this.handleSumbit}
-                error={this.state.error}
-              />
-            </div>
+          <div className='col mt-4 mb-4'>
+            <h1>Editar usuario</h1>
+            <UserForm
+              onChange={handleChange}
+              formValues={form}
+              onSumbit={handleSumbit}
+              error={error}
+            />
           </div>
         </div>
-      </>
-    );
-  }
-}
+      </div>
+    </>
+  );
+};
 
-export default UserNew;
+export default UserEdit;
