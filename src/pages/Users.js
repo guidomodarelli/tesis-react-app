@@ -18,13 +18,19 @@ const Users = (props) => {
     api(signal)
       .users.list()
       .then((response) => {
-        return response.status === 401 ?
-          props.history.push('/login') :
-          response.json();
+        if (response.status === 401) {
+          return props.history.push('/login');
+        }
+        return response.json();
       })
-      .then((data) => setData(data))
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {

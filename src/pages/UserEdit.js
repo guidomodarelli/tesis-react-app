@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Badge from '../components/Badge';
+import PageLoading from '../components/PageLoading';
 import PageUpload from '../components/PageUpload';
 import UserForm from '../components/UserForm';
 import api from '../server/api';
 
 const UserEdit = (props) => {
+  const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
   const [form, setValues] = useState({
@@ -23,12 +25,14 @@ const UserEdit = (props) => {
   const { signal } = controller;
 
   const fetchData = () => {
+    setLoading(true);
     api(signal)
       .users.findById(userId)
       .then((response) => {
-        return response.status === 401 ?
-          props.history.push('/login') :
-          response.json();
+        if (response.status === 401) {
+          return props.history.push('/login');
+        }
+        return response.json();
       })
       .then((data) => {
         setValues({
@@ -50,8 +54,12 @@ const UserEdit = (props) => {
             instagram: data.instagram,
           });
         }
+        setLoading(false);
       })
-      .catch((error) => setError(error));
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   };
 
   const handleChange = (e) => {
@@ -75,9 +83,9 @@ const UserEdit = (props) => {
       if (response.status === 200) {
         props.history.push(`/users/${userId}`);
       }
+      setUploading(false);
     } catch (error) {
       setError(error);
-    } finally {
       setUploading(false);
     }
   };
@@ -87,6 +95,9 @@ const UserEdit = (props) => {
     return () => controller.abort();
   }, []);
 
+  if (loading) {
+    return <PageLoading />;
+  }
   if (uploading) {
     return <PageUpload />;
   }

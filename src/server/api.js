@@ -22,12 +22,9 @@ async function callAPI(endpoint, options = {}) {
     signal: mySignal,
   };
   const url = BASE_URL + endpoint;
-  try {
-    return await fetch(url, newOptions);
-  } catch (error) {
-    console.error(error);
-  }
-  return undefined;
+  return fetch(url, newOptions)
+    .then((response) => response)
+    .catch(console.error);
 }
 
 const api = (signal) => {

@@ -34,9 +34,9 @@ const Login = (props) => {
         console.error(data);
         localStorage.removeItem('token');
       }
+      setLoading(false);
     } catch (error) {
       setError(error);
-    } finally {
       setLoading(false);
     }
   };
@@ -45,13 +45,17 @@ const Login = (props) => {
     setLoading(true);
     api(signal)
       .loggedIn()
-      .then((response) => {
-        if (response.status === 200) {
-          props.history.push('/');
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.loggedIn) {
+          return props.history.push('/');
         }
+        return setLoading(false);
       })
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {

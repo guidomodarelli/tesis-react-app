@@ -39,7 +39,6 @@ const UserNew = (props) => {
       }
     } catch (error) {
       setError(error);
-    } finally {
       setUploading(false);
     }
   };
@@ -48,13 +47,17 @@ const UserNew = (props) => {
     setLoading(true);
     api(signal)
       .loggedIn()
-      .then((response) => {
-        if (response.status === 200) {
-          props.history.push('/');
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.loggedIn) {
+          return props.history.push('/');
         }
+        return setLoading(false);
       })
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
