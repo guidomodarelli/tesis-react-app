@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import logo from '../assets/images/CALISTEP.png';
 import '../assets/styles/pages/Users.css';
@@ -12,16 +11,16 @@ const Users = (props) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(undefined);
   const controller = new AbortController();
-  const signal = controller.signal;
+  const { signal } = controller;
 
   const fetchData = () => {
     setLoading(true);
     api(signal)
       .users.list()
       .then((response) => {
-        return response.status === 401
-          ? props.history.push('/login')
-          : response.json();
+        return response.status === 401 ?
+          props.history.push('/login') :
+          response.json();
       })
       .then((data) => setData(data))
       .catch((error) => setError(error))

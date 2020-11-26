@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import Badge from '../components/Badge';
 import PageLoading from '../components/PageLoading';
@@ -19,8 +18,8 @@ const UserNew = (props) => {
     instagram: '',
     password: '',
   });
-  const controller = new AbortController()
-  const signal = controller.signal;
+  const controller = new AbortController();
+  const { signal } = controller;
 
   const handleChange = (e) => {
     setValues({
@@ -47,14 +46,15 @@ const UserNew = (props) => {
 
   const handleLogin = () => {
     setLoading(true);
-    api(signal).loggedIn()
-    .then(response => {
-      if (response.status === 200) {
-        props.history.push('/');
-      }
-    })
-    .catch(error => setError(error))
-    .finally(() => setLoading(false))
+    api(signal)
+      .loggedIn()
+      .then((response) => {
+        if (response.status === 200) {
+          props.history.push('/');
+        }
+      })
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const UserNew = (props) => {
             <UserForm
               onChange={handleChange}
               formValues={form}
-              onSumbit={handleSumbit}
+              onSubmit={handleSumbit}
               error={error}
             />
           </div>

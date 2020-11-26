@@ -1,89 +1,92 @@
 import React from 'react';
 
-function UserForm(props) {
+const UserForm = (props) => {
+  const { onSubmit, onChange, formValues, error } = props;
   return (
-    <form onSubmit={props.onSumbit}>
+    <form onSubmit={onSubmit}>
       <div className='form-group'>
-        <label>Nombre</label>
+        <label htmlFor='firstname'>Nombre</label>
         <input
-          onChange={props.onChange}
+          onChange={onChange}
           className='form-control'
           type='text'
           name='firstname'
-          value={props.formValues.firstname}
+          id='firstname'
+          value={formValues.firstname}
         />
       </div>
       <div className='form-group'>
-        <label>Apellido</label>
+        <label htmlFor='lastname'>Apellido</label>
         <input
-          onChange={props.onChange}
+          onChange={onChange}
           className='form-control'
           type='text'
           name='lastname'
-          value={props.formValues.lastname}
+          id='lastname'
+          value={formValues.lastname}
         />
       </div>
       <div className='form-group'>
-        <label>Correo electronico</label>
+        <label htmlFor='email'>Correo electronico</label>
         <input
-          onChange={props.onChange}
+          onChange={onChange}
           className='form-control'
           type='email'
           name='email'
-          value={props.formValues.email}
+          id='email'
+          value={formValues.email}
         />
       </div>
       <div className='form-group'>
-        <label>Fecha de nacimiento</label>
+        <label htmlFor='birthdate'>Fecha de nacimiento</label>
         <input
-          onChange={props.onChange}
+          onChange={onChange}
           className='form-control'
           type='date'
           name='birthdate'
-          value={props.formValues.birthdate}
+          id='birthdate'
+          value={formValues.birthdate}
         />
       </div>
       <div className='form-group'>
-        <label>Titulo profesional</label>
+        <label htmlFor='jobtitle'>Titulo profesional</label>
         <input
-          onChange={props.onChange}
+          onChange={onChange}
           className='form-control'
           type='text'
           name='jobtitle'
-          value={props.formValues.jobtitle}
+          id='jobtitle'
+          value={formValues.jobtitle}
         />
       </div>
       <div className='form-group'>
-        <label>Instagram</label>
+        <label htmlFor='instagram'>Instagram</label>
         <input
-          onChange={props.onChange}
+          onChange={onChange}
           className='form-control'
           type='text'
           name='instagram'
-          value={props.formValues.instagram}
+          id='instagram'
+          value={formValues.instagram}
         />
       </div>
       <div className='form-group'>
-        <label>Contraseña</label>
+        <label htmlFor='password'>Contraseña</label>
         <input
-          onChange={props.onChange}
+          onChange={onChange}
           className='form-control'
           type='password'
           name='password'
-          value={props.formValues.password}
+          id='password'
+          value={formValues.password}
         />
       </div>
-      <button
-        type='submit'
-        className='btn btn-primary'
-      >
+      <button type='submit' className='btn btn-primary'>
         Guardar
       </button>
-      {props.error && (
-        <p className='text-danger'>{props.error.message}</p>
-      )}
+      {error && <p className='text-danger'>{error.message}</p>}
     </form>
   );
-}
+};
 
 export default UserForm;

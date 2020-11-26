@@ -4,7 +4,13 @@ import Badge from '../components/Badge';
 import DeleteUserModal from '../components/DeleteUserModal';
 
 const Actions = (props) => {
-  const { userId } = props;
+  const {
+    userId,
+    onOpenModal,
+    modalIsOpen,
+    onCloseModal,
+    onDeleteUser,
+  } = props;
   return (
     <div className='col d-flex flex-column align-items-center justify-content-center'>
       <h2 className='mb-4'>Acciones:</h2>
@@ -14,21 +20,28 @@ const Actions = (props) => {
         </Link>
       </div>
       <div>
-        <button onClick={props.onOpenModal} className='btn btn-danger'>
+        <button type='button' onClick={onOpenModal} className='btn btn-danger'>
           Eliminar
         </button>
         <DeleteUserModal
-          isOpen={props.modalIsOpen}
-          onClose={props.onCloseModal}
-          onDeleteUser={props.onDeleteUser}
+          isOpen={modalIsOpen}
+          onClose={onCloseModal}
+          onDeleteUser={onDeleteUser}
         />
       </div>
     </div>
   );
-}
+};
 
 const UserDetails = (props) => {
-  const { user, profile } = props;
+  const {
+    user,
+    profile,
+    onOpenModal,
+    modalIsOpen,
+    onCloseModal,
+    onDeleteUser,
+  } = props;
   return (
     <div className='container'>
       <div className='row'>
@@ -45,15 +58,15 @@ const UserDetails = (props) => {
         {profile && (
           <Actions
             userId={user.id}
-            onOpenModal={props.onOpenModal}
-            modalIsOpen={props.modalIsOpen}
-            onCloseModal={props.onCloseModal}
-            onDeleteUser={props.onDeleteUser}
+            onOpenModal={onOpenModal}
+            modalIsOpen={modalIsOpen}
+            onCloseModal={onCloseModal}
+            onDeleteUser={onDeleteUser}
           />
         )}
       </div>
     </div>
   );
-}
+};
 
 export default UserDetails;

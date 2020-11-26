@@ -1,30 +1,33 @@
 const BASE_URL = 'http://localhost:5000';
 
-var mySignal;
+let mySignal;
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const randomNumber = (min = 0, max = 1) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
-const simulateNetworkLatency = (min = 30, max = 1500) =>
-  delay(randomNumber(min, max));
+const randomNumber = (min = 0, max = 1) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+const simulateNetworkLatency = (min = 30, max = 1500) => {
+  return delay(randomNumber(min, max));
+};
 
 async function callAPI(endpoint, options = {}) {
   await simulateNetworkLatency();
 
-  options.headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Accept: 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  const newOptions = {
+    ...options,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    signal: mySignal,
   };
-
-  options.signal = mySignal;
-
   const url = BASE_URL + endpoint;
-
   try {
-    return await fetch(url, options);
+    return await fetch(url, newOptions);
   } catch (error) {
     console.error(error);
   }
+  return undefined;
 }
 
 const api = (signal) => {
@@ -73,7 +76,11 @@ const api = (signal) => {
       },
       update(userId, updates) {
         const urlencoded = new URLSearchParams();
-        for (const [key, value] of Object.entries(updates)) {
+        const entries = Object.entries(updates);
+        for (let i = 0; i < entries.length; i++) {
+          const entry = entries[i];
+          const key = entry[0];
+          const value = entry[1];
           urlencoded.append(key, value);
         }
         return callAPI(`/users/${userId}`, {

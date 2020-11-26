@@ -20,7 +20,8 @@ const Porfolio = () => (
         <li>Seguimiento por WhatsApp</li>
         <li>
           Conexión entre alumnos de
-          <span className='calistep'>Calistep</span>, para que puedas compartir
+          <span className='calistep'>Calistep</span>
+          , para que puedas compartir
           progresos, ideas, dudas y que te sientas parte de esta comunidad
         </li>
       </ul>
@@ -31,12 +32,16 @@ const Porfolio = () => (
 const Promotion = () => (
   <section className='container'>
     <h3 className='text-center'>
-      ¡Aprovecha tu semana <span>gratis</span>!
+      ¡Aprovecha tu semana
+      <span>gratis</span>
+      !
     </h3>
     <p className='text-center'>
       Dale clic al botón antes de que se termine el tiempo, y
       <br />
-      ¡Súmate a <span className='calistep'>Calistep</span> ahora mismo!
+      ¡Súmate a
+      <span className='calistep'>Calistep</span>
+      ahora mismo!
     </p>
   </section>
 );

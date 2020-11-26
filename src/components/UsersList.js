@@ -19,12 +19,15 @@ const UserListItem = (props) => {
       </figure>
       <div className='UserListItem__details'>
         <p className='UserListItem__fullname'>
-          {user.firstname} {user.lastname}
+          {user.firstname}
+          {' '}
+          {user.lastname}
         </p>
         <div className='UserListItem__twitter'>
           <img src={instagramLogo} alt='Twitter logo' />
           <p className='UserListItem__twitter text-break pr-3'>
-            @{user.instagram || '{Sin cuenta}'}
+            @
+            {user.instagram || '{Sin cuenta}'}
           </p>
         </div>
         <p className='UserListItem__jobTitle'>{user.jobtitle}</p>

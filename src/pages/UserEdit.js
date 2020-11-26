@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import Badge from '../components/Badge';
 import PageUpload from '../components/PageUpload';
@@ -17,17 +16,19 @@ const UserEdit = (props) => {
     instagram: '',
     password: '',
   });
-  const { userId } = props.match.params;
+  const { match } = props;
+  const { params } = match;
+  const { userId } = params;
   const controller = new AbortController();
-  const signal = controller.signal;
+  const { signal } = controller;
 
   const fetchData = () => {
     api(signal)
       .users.findById(userId)
       .then((response) => {
-        return response.status === 401
-          ? props.history.push('/login')
-          : response.json();
+        return response.status === 401 ?
+          props.history.push('/login') :
+          response.json();
       })
       .then((data) => {
         setValues({
@@ -109,7 +110,7 @@ const UserEdit = (props) => {
             <UserForm
               onChange={handleChange}
               formValues={form}
-              onSumbit={handleSumbit}
+              onSubmit={handleSumbit}
               error={error}
             />
           </div>

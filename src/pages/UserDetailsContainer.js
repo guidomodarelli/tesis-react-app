@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import api from '../server/api';
@@ -12,9 +11,11 @@ const UserDetailsContainer = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [profile, setProfile] = useState(false);
   const controller = new AbortController();
-  const signal = controller.signal;
+  const { signal } = controller;
 
-  const userId = props.match.params.userId;
+  const { match } = props;
+  const { params } = match;
+  const { userId } = params;
 
   const handleOpenModal = () => {
     setModalIsOpen(true);
@@ -42,9 +43,9 @@ const UserDetailsContainer = (props) => {
     api(signal)
       .users.findById(userId)
       .then((response) => {
-        return response.status === 401
-          ? props.history.push('/login')
-          : response.json();
+        return response.status === 401 ?
+          props.history.push('/login') :
+          response.json();
       })
       .then((data) => setData(data))
       .catch((error) => setError(error))
@@ -67,19 +68,20 @@ const UserDetailsContainer = (props) => {
 
   if (loading) {
     return <PageLoading />;
-  } else if (error) {
+  }
+  if (error) {
     return <PageError />;
-  } else
-    return (
-      <UserDetails
-        onCloseModal={handleCloseModal}
-        onOpenModal={handleOpenModal}
-        modalIsOpen={modalIsOpen}
-        onDeleteUser={handleDeleteUser}
-        user={data}
-        profile={profile}
-      />
-    );
+  }
+  return (
+    <UserDetails
+      onCloseModal={handleCloseModal}
+      onOpenModal={handleOpenModal}
+      modalIsOpen={modalIsOpen}
+      onDeleteUser={handleDeleteUser}
+      user={data}
+      profile={profile}
+    />
+  );
 };
 
 export default UserDetailsContainer;

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
@@ -13,7 +12,7 @@ const Login = (props) => {
     password: '',
   });
   const controller = new AbortController();
-  const signal = controller.signal;
+  const { signal } = controller;
 
   const handleChange = (e) => {
     setValues({
@@ -69,11 +68,12 @@ const Login = (props) => {
       <LoginForm
         onChange={handleChange}
         formValues={form}
-        onSumbit={handleSumbit}
+        onSubmit={handleSumbit}
         error={error}
       />
       <p className='mt-3'>
-        ¿No tienes una cuenta? <Link to='/signup'>Registrate</Link>
+        ¿No tienes una cuenta?
+        <Link to='/signup'>Registrate</Link>
       </p>
     </div>
   );

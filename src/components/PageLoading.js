@@ -1,12 +1,12 @@
 import React from 'react';
-import loading__image from '../assets/images/loading.svg';
+import loadingImage from '../assets/images/loading.svg';
 
-function PageLoading() {
+const PageLoading = () => {
   return (
     <figure className='Badge__Background__Image'>
-      <img src={loading__image} alt='loading gif' />
+      <img src={loadingImage} alt='loading gif' />
     </figure>
   );
-}
+};
 
 export default PageLoading;

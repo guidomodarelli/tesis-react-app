@@ -1,12 +1,12 @@
 import React from 'react';
-import error__image from '../assets/images/error.svg';
+import errorImage from '../assets/images/error.svg';
 
-function PageError() {
+const PageError = () => {
   return (
     <figure className='Badge__Background__Image'>
-      <img src={error__image} alt='500 Internal server error' />
+      <img src={errorImage} alt='500 Internal server error' />
     </figure>
   );
-}
+};
 
 export default PageError;
