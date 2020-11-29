@@ -29,31 +29,22 @@ const UserEdit = (props) => {
     api(signal)
       .users.findById(userId)
       .then((response) => {
-        if (response.status === 401) {
+        if (!response.ok) {
           return props.history.push('/login');
         }
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         setValues({
           ...form,
           firstname: data.firstname,
           lastname: data.lastname,
           email: data.email,
           birthdate: data.birthdate,
+          jobtitle: data.jobtitle || '',
+          instagram: data.instagram || '',
         });
-        if (data.jobtitle) {
-          setValues({
-            ...form,
-            jobtitle: data.jobtitle,
-          });
-        }
-        if (data.instagram) {
-          setValues({
-            ...form,
-            instagram: data.instagram,
-          });
-        }
         setLoading(false);
       })
       .catch((error) => {
