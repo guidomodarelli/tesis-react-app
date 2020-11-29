@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/tesis-react-app/static/css/main.bcea19b6.chunk.css",
+    "main.js": "/tesis-react-app/static/js/main.cd487e2a.chunk.js",
+    "main.js.map": "/tesis-react-app/static/js/main.cd487e2a.chunk.js.map",
+    "runtime-main.js": "/tesis-react-app/static/js/runtime-main.26f234ee.js",
+    "runtime-main.js.map": "/tesis-react-app/static/js/runtime-main.26f234ee.js.map",
+    "static/css/2.3c830e02.chunk.css": "/tesis-react-app/static/css/2.3c830e02.chunk.css",
+    "static/js/2.ad5b0d88.chunk.js": "/tesis-react-app/static/js/2.ad5b0d88.chunk.js",
+    "static/js/2.ad5b0d88.chunk.js.map": "/tesis-react-app/static/js/2.ad5b0d88.chunk.js.map",
+    "static/js/3.3cc5a9ff.chunk.js": "/tesis-react-app/static/js/3.3cc5a9ff.chunk.js",
+    "static/js/3.3cc5a9ff.chunk.js.map": "/tesis-react-app/static/js/3.3cc5a9ff.chunk.js.map",
+    "index.html": "/tesis-react-app/index.html",
+    "static/css/2.3c830e02.chunk.css.map": "/tesis-react-app/static/css/2.3c830e02.chunk.css.map",
+    "static/css/main.bcea19b6.chunk.css.map": "/tesis-react-app/static/css/main.bcea19b6.chunk.css.map",
+    "static/js/2.ad5b0d88.chunk.js.LICENSE.txt": "/tesis-react-app/static/js/2.ad5b0d88.chunk.js.LICENSE.txt",
+    "static/media/CALISTEP.13229db8.png": "/tesis-react-app/static/media/CALISTEP.13229db8.png",
+    "static/media/Instagram.f19834e5.svg": "/tesis-react-app/static/media/Instagram.f19834e5.svg",
+    "static/media/empty.7d8b98a6.svg": "/tesis-react-app/static/media/empty.7d8b98a6.svg",
+    "static/media/error.22b88227.svg": "/tesis-react-app/static/media/error.22b88227.svg",
+    "static/media/loading.17028467.svg": "/tesis-react-app/static/media/loading.17028467.svg",
+    "static/media/logo-calistep-step-by-step.d5ed6fc1.svg": "/tesis-react-app/static/media/logo-calistep-step-by-step.d5ed6fc1.svg",
+    "static/media/upload.10bf06f7.svg": "/tesis-react-app/static/media/upload.10bf06f7.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.26f234ee.js",
+    "static/css/2.3c830e02.chunk.css",
+    "static/js/2.ad5b0d88.chunk.js",
+    "static/css/main.bcea19b6.chunk.css",
+    "static/js/main.cd487e2a.chunk.js"
+  ]
+}
