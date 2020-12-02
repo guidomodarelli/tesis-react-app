@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import PageLoading from '../components/PageLoading';
-import api from '../server/api';
+import { isLoggedIn, login } from '../redux/actions/usersActions';
 
 const Login = (props) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [form, setValues] = useState({
     email: '',
     password: '',
   });
-  const controller = new AbortController();
-  const { signal } = controller;
 
   const handleChange = (e) => {
     setValues({
@@ -23,47 +20,18 @@ const Login = (props) => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await api(signal).users.login(form);
-      const data = await response.json();
-      if (response.status === 200) {
-        localStorage.setItem('token', data.token);
-        props.history.push('/');
-      } else {
-        console.error(data);
-        localStorage.removeItem('token');
-      }
-      setLoading(false);
-    } catch (error) {
-      setError(error);
-      setLoading(false);
+    if (await props.login(form)) {
+      props.history.push('/');
     }
   };
 
-  const handleLogin = () => {
-    setLoading(true);
-    api(signal)
-      .loggedIn()
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.loggedIn) {
-          return props.history.push('/');
-        }
-        return setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    handleLogin();
-    return () => controller.abort();
+  useEffect(async () => {
+    if (await props.isLoggedIn()) {
+      props.history.push('/');
+    }
   }, []);
 
-  if (loading) {
+  if (props.usersReducer.loading) {
     return <PageLoading />;
   }
   return (
@@ -73,14 +41,22 @@ const Login = (props) => {
         onChange={handleChange}
         formValues={form}
         onSubmit={handleSumbit}
-        error={error}
+        error={props.usersReducer.error}
       />
       <p className='mt-3'>
         ¿No tienes una cuenta?
+        {' '}
         <Link to='/signup'>Registrate</Link>
       </p>
     </div>
   );
 };
 
-export default Login;
+const mapStateToProps = ({ usersReducer }) => ({ usersReducer });
+
+const mapDispatchToProps = {
+  isLoggedIn,
+  login,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

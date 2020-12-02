@@ -1,41 +1,38 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import logo from '../assets/images/CALISTEP.png';
 import '../assets/styles/pages/Users.css';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import UsersList from '../components/UsersList';
 import api from '../server/api';
+import { isLoggedIn } from '../redux/actions/usersActions';
 
 const Users = (props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(undefined);
-  const controller = new AbortController();
-  const { signal } = controller;
 
   const fetchData = () => {
     setLoading(true);
-    api(signal)
-      .users.list()
-      .then((response) => {
-        if (response.status === 401) {
-          return props.history.push('/login');
-        }
-        return response.json();
-      })
+    api.get.users
+      .list()
       .then((data) => {
         setData(data);
         setLoading(false);
       })
       .catch((error) => {
+        console.error(error);
         setError(error);
         setLoading(false);
       });
   };
 
-  useEffect(() => {
-    fetchData();
-    return () => controller.abort();
+  useEffect(async () => {
+    if (!await props.isLoggedIn()) {
+      return props.history.push('/login');
+    }
+    return fetchData();
   }, []);
 
   if (loading && !data) {
@@ -61,4 +58,8 @@ const Users = (props) => {
   );
 };
 
-export default Users;
+const mapDispatchToProps = {
+  isLoggedIn,
+};
+
+export default connect(null, mapDispatchToProps)(Users);

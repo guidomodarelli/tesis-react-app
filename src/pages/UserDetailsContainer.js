@@ -10,8 +10,6 @@ const UserDetailsContainer = (props) => {
   const [data, setData] = useState(undefined);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [profile, setProfile] = useState(false);
-  const controller = new AbortController();
-  const { signal } = controller;
 
   const { match } = props;
   const { params } = match;
@@ -29,7 +27,7 @@ const UserDetailsContainer = (props) => {
     setLoading(true);
     setError(null);
     try {
-      await api(signal).users.remove(userId);
+      await api.users.remove(userId);
       localStorage.removeItem('token');
       props.history.push('/users');
     } catch (error) {
@@ -40,8 +38,8 @@ const UserDetailsContainer = (props) => {
 
   const fetchData = () => {
     setLoading(true);
-    api(signal)
-      .users.findById(userId)
+    api.users
+      .findById(userId)
       .then((response) => {
         if (response.status === 401) {
           return props.history.push('/login');
@@ -59,8 +57,8 @@ const UserDetailsContainer = (props) => {
   };
 
   const isMyProfile = () => {
-    api(signal)
-      .users.myProfile(userId)
+    api.users
+      .myProfile(userId)
       .then((response) => response.json())
       .then((data) => setProfile(data.myProfile))
       .catch((error) => setError(error));
@@ -69,7 +67,6 @@ const UserDetailsContainer = (props) => {
   useEffect(() => {
     isMyProfile();
     fetchData();
-    return () => controller.abort();
   }, []);
 
   if (loading) {

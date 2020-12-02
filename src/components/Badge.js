@@ -41,7 +41,7 @@ const Badge = (props) => {
       <div className='Badge__section-age'>
         <h3>
           Edad:
-          {calcularEdad(birthdate)}
+          {calcularEdad()}
         </h3>
       </div>
       {(jobtitle || instagram) && (

@@ -21,13 +21,11 @@ const UserEdit = (props) => {
   const { match } = props;
   const { params } = match;
   const { userId } = params;
-  const controller = new AbortController();
-  const { signal } = controller;
 
   const fetchData = () => {
     setLoading(true);
-    api(signal)
-      .users.findById(userId)
+    api.users
+      .findById(userId)
       .then((response) => {
         if (!response.ok) {
           return props.history.push('/login');
@@ -35,7 +33,6 @@ const UserEdit = (props) => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setValues({
           ...form,
           firstname: data.firstname,
@@ -70,7 +67,7 @@ const UserEdit = (props) => {
       if (!data.password) {
         delete data.password;
       }
-      const response = await api(signal).users.update(userId, data);
+      const response = await api.users.update(userId, data);
       if (response.status === 200) {
         props.history.push(`/users/${userId}`);
       }
@@ -83,7 +80,6 @@ const UserEdit = (props) => {
 
   useEffect(() => {
     fetchData();
-    return () => controller.abort();
   }, []);
 
   if (loading) {

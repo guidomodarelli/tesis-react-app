@@ -18,8 +18,6 @@ const UserNew = (props) => {
     instagram: '',
     password: '',
   });
-  const controller = new AbortController();
-  const { signal } = controller;
 
   const handleChange = (e) => {
     setValues({
@@ -33,7 +31,7 @@ const UserNew = (props) => {
     setUploading(true);
     setError(null);
     try {
-      const response = await api(signal).users.create(form);
+      const response = await api.users.create(form);
       if (response.status === 201) {
         props.history.push('/login');
       }
@@ -45,9 +43,8 @@ const UserNew = (props) => {
 
   const handleLogin = () => {
     setLoading(true);
-    api(signal)
+    api.get
       .loggedIn()
-      .then((response) => response.json())
       .then((data) => {
         if (data.loggedIn) {
           return props.history.push('/');
@@ -62,7 +59,6 @@ const UserNew = (props) => {
 
   useEffect(() => {
     handleLogin();
-    return () => controller.abort();
   }, []);
 
   if (uploading) {
