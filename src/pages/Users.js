@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import logo from '../assets/images/CALISTEP.png';
 import '../assets/styles/pages/Users.css';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import UsersList from '../components/UsersList';
-import api from '../server/api';
-import { isLoggedIn } from '../redux/actions/usersActions';
+import api from '../api';
 
 const Users = (props) => {
   const [loading, setLoading] = useState(true);
@@ -29,9 +27,6 @@ const Users = (props) => {
   };
 
   useEffect(async () => {
-    if (!await props.isLoggedIn()) {
-      return props.history.push('/login');
-    }
     return fetchData();
   }, []);
 
@@ -58,8 +53,4 @@ const Users = (props) => {
   );
 };
 
-const mapDispatchToProps = {
-  isLoggedIn,
-};
-
-export default connect(null, mapDispatchToProps)(Users);
+export default Users;

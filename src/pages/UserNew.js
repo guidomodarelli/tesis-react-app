@@ -3,7 +3,7 @@ import Badge from '../components/Badge';
 import PageLoading from '../components/PageLoading';
 import PageUpload from '../components/PageUpload';
 import UserForm from '../components/UserForm';
-import api from '../server/api';
+import api from '../api';
 
 const UserNew = (props) => {
   const [uploading, setUploading] = useState(false);

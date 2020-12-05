@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import PageLoading from '../components/PageLoading';
-import { isLoggedIn, login } from '../redux/actions/usersActions';
+import { isLoggedIn } from '../redux/actions';
+import { login } from '../redux/actions/usersActions';
 
 const Login = (props) => {
   const [form, setValues] = useState({
@@ -25,13 +26,8 @@ const Login = (props) => {
     }
   };
 
-  useEffect(async () => {
-    if (await props.isLoggedIn()) {
-      props.history.push('/');
-    }
-  }, []);
-
-  if (props.usersReducer.loading) {
+  console.log(props);
+  if (props.reducer.loading) {
     return <PageLoading />;
   }
   return (
@@ -41,7 +37,7 @@ const Login = (props) => {
         onChange={handleChange}
         formValues={form}
         onSubmit={handleSumbit}
-        error={props.usersReducer.error}
+        error={props.reducer.error}
       />
       <p className='mt-3'>
         ¿No tienes una cuenta?
@@ -52,7 +48,12 @@ const Login = (props) => {
   );
 };
 
-const mapStateToProps = ({ usersReducer }) => ({ usersReducer });
+const mapStateToProps = (reducers) => {
+  return {
+    reducer: reducers.reducer,
+    usersReducer: reducers.usersReducer,
+  };
+};
 
 const mapDispatchToProps = {
   isLoggedIn,

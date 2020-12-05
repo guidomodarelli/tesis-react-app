@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
-import api from '../server/api';
+import api from '../api';
 import UserDetails from './UserDetails';
 
 const UserDetailsContainer = (props) => {

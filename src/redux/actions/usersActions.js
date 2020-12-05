@@ -1,4 +1,4 @@
-import api from '../../server/api';
+import api from '../../api';
 import {
   GET_USERS,
   USER_ERROR,
@@ -20,22 +20,6 @@ export const getAll = () => async (dispatch) => {
       type: USER_ERROR,
       payload: error.message,
     });
-  }
-};
-
-export const isLoggedIn = () => async (dispatch) => {
-  dispatch({ type: USER_LOADING, payload: true });
-  try {
-    const data = await api.get.loggedIn();
-    dispatch({ type: USER_LOADING, payload: false });
-    return data.loggedIn;
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    dispatch({
-      type: USER_ERROR,
-      payload: error.message,
-    });
-    return false;
   }
 };
 

@@ -1,6 +1,5 @@
 import 'bootswatch/dist/litera/bootstrap.min.css';
 import React from 'react';
-import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import '../assets/styles/App.css';
 import Layout from '../components/Layout';
@@ -11,7 +10,6 @@ import UserDetailsContainer from '../pages/UserDetailsContainer';
 import UserEdit from '../pages/UserEdit';
 import UserNew from '../pages/UserNew';
 import Users from '../pages/Users';
-import { isLoggedIn } from '../redux/actions/usersActions';
 
 const App = (props) => {
 
@@ -32,10 +30,4 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = ({ usersReducers }) => ({ usersReducers });
-
-const mapDispatchToProps = {
-  isLoggedIn,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { isLoggedIn } from '../redux/actions';
 
-const NavBar = () => {
+const NavBar = (props) => {
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <button
@@ -15,7 +17,10 @@ const NavBar = () => {
       >
         <span className='navbar-toggler-icon' />
       </button>
-      <div className='collapse navbar-collapse' id='navbarNav'>
+      <div
+        className='collapse navbar-collapse row justify-content-between ml-1 mr-1'
+        id='navbarNav'
+      >
         <ul className='navbar-nav'>
           <li className='nav-item active'>
             <Link className='nav-link' to='/'>
@@ -24,6 +29,13 @@ const NavBar = () => {
               <span className='sr-only'>(current)</span>
             </Link>
           </li>
+          {props.loading && (
+            <li className='nav-item'>
+              <Link className='nav-link' to='/users'>
+                Usuarios
+              </Link>
+            </li>
+          )}
           <li className='nav-item'>
             <Link className='nav-link' to='#galery'>
               Galeria
@@ -50,9 +62,24 @@ const NavBar = () => {
             </Link>
           </li>
         </ul>
+        {!props.loading && (
+          <Link to='/login' className='btn btn-primary'>
+            <span>Iniciar sesión</span>
+          </Link>
+        )}
       </div>
     </nav>
   );
 };
 
-export default NavBar;
+const mapStateToProps = (state) => {
+  return {
+    loading: state.loading,
+  };
+};
+
+const mapDispatchToProps = {
+  isLoggedIn,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
