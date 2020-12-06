@@ -32,21 +32,20 @@ const Badge = (props) => {
         />
         <h1>
           {firstname}
-          {' '}
           <br />
-          {' '}
           {lastname}
         </h1>
       </div>
       <div className='Badge__section-age'>
         <h3>
           Edad:
+          {' '}
           {calcularEdad()}
         </h3>
       </div>
       {(jobtitle || instagram) && (
         <div className='Badge__section-info'>
-          <h3>{jobtitle}</h3>
+          {jobtitle && <h3>{jobtitle}</h3>}
           {instagram && (
             <div>
               @

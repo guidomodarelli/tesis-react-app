@@ -12,22 +12,28 @@ const Actions = (props) => {
     onDeleteUser,
   } = props;
   return (
-    <div className='col d-flex flex-column align-items-center justify-content-center'>
+    <div className='col d-flex flex-column align-items-center justify-content-center mt-4 mb-4'>
       <h2 className='mb-4'>Acciones:</h2>
-      <div>
-        <Link className='btn btn-primary mb-4' to={`/users/${userId}/edit`}>
-          Editar
-        </Link>
-      </div>
-      <div>
-        <button type='button' onClick={onOpenModal} className='btn btn-danger'>
-          Eliminar
-        </button>
-        <DeleteUserModal
-          isOpen={modalIsOpen}
-          onClose={onCloseModal}
-          onDeleteUser={onDeleteUser}
-        />
+      <div className='row'>
+        <div className='mr-4'>
+          <Link className='btn btn-primary mb-4' to={`/users/${userId}/edit`}>
+            Editar
+          </Link>
+        </div>
+        <div>
+          <button
+            type='button'
+            onClick={onOpenModal}
+            className='btn btn-danger'
+          >
+            Eliminar
+          </button>
+          <DeleteUserModal
+            isOpen={modalIsOpen}
+            onClose={onCloseModal}
+            onDeleteUser={onDeleteUser}
+          />
+        </div>
       </div>
     </div>
   );
@@ -44,6 +50,9 @@ const UserDetails = (props) => {
   } = props;
   return (
     <div className='container'>
+      <Link to='/users' className='btn btn-outline-dark mt-3'>
+        Volver
+      </Link>
       <div className='row'>
         <div className='col mt-4 ml-2 mr-2 row justify-content-center'>
           <Badge

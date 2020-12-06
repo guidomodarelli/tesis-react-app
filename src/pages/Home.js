@@ -9,7 +9,7 @@ const Porfolio = () => (
       difícil transcurrirlo solo, y para eso estamos nosotros, para ayudarte a
       vos a que puedas cumplir tus objetivos de manera exitosa.
     </p>
-    <h3 className='text-center'>¿Cómo podemos ayudarte?</h3>
+    <h3 className='text-center mt-3'>¿Cómo podemos ayudarte?</h3>
     <div className='m-0'>
       <ul>
         <li>
@@ -20,6 +20,7 @@ const Porfolio = () => (
         <li>Seguimiento por WhatsApp</li>
         <li>
           Conexión entre alumnos de
+          {' '}
           <span className='calistep'>Calistep</span>
           , para que puedas compartir
           progresos, ideas, dudas y que te sientas parte de esta comunidad
@@ -33,14 +34,16 @@ const Promotion = () => (
   <section className='container'>
     <h3 className='text-center'>
       ¡Aprovecha tu semana
+      {' '}
       <span>gratis</span>
       !
     </h3>
-    <p className='text-center'>
+    <p className='text-center mb-4'>
       Dale clic al botón antes de que se termine el tiempo, y
-      <br />
       ¡Súmate a
+      {' '}
       <span className='calistep'>Calistep</span>
+      {' '}
       ahora mismo!
     </p>
   </section>

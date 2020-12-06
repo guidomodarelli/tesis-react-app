@@ -24,14 +24,8 @@ const UserEdit = (props) => {
 
   const fetchData = () => {
     setLoading(true);
-    api.users
+    api.get.users
       .findById(userId)
-      .then((response) => {
-        if (!response.ok) {
-          return props.history.push('/login');
-        }
-        return response.json();
-      })
       .then((data) => {
         setValues({
           ...form,
@@ -47,6 +41,7 @@ const UserEdit = (props) => {
       .catch((error) => {
         setError(error);
         setLoading(false);
+        props.history.push('/login');
       });
   };
 
@@ -67,10 +62,8 @@ const UserEdit = (props) => {
       if (!data.password) {
         delete data.password;
       }
-      const response = await api.users.update(userId, data);
-      if (response.status === 200) {
-        props.history.push(`/users/${userId}`);
-      }
+      await api.put.users.update(userId, data);
+      props.history.push(`/users/${userId}`);
       setUploading(false);
     } catch (error) {
       setError(error);

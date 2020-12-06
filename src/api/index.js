@@ -30,11 +30,13 @@ async function callAPI(endpoint, options = {}) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error('Algo salió mal, intente de nuevo, más tarde.');
+      throw new Error(response.statusText || 'Algo salió mal, intente de nuevo, más tarde.');
     })
     .then((data) => {
       if (!data) {
-        throw new Error('Problema con el servidor, no se pudo establecer conexion');
+        throw new Error(
+          'Ocurrió un problema con el servidor, no se pudo establecer conexión',
+        );
       }
       return data;
     })
@@ -62,7 +64,7 @@ const api = {
     },
   },
   post: {
-    login(user) {
+    signIn(user) {
       const urlencoded = new URLSearchParams();
       urlencoded.append('email', user.email);
       urlencoded.append('password', user.password);
@@ -72,7 +74,7 @@ const api = {
         body: urlencoded,
       });
     },
-    create(user) {
+    signUp(user) {
       const urlencoded = new URLSearchParams();
       urlencoded.append('email', user.email);
       urlencoded.append('firstname', user.firstname);
@@ -89,26 +91,30 @@ const api = {
     },
   },
   put: {
-    update(userId, updates) {
-      const urlencoded = new URLSearchParams();
-      const entries = Object.entries(updates);
-      for (let i = 0; i < entries.length; i++) {
-        const entry = entries[i];
-        const key = entry[0];
-        const value = entry[1];
-        urlencoded.append(key, value);
-      }
-      return callAPI(`/users/${userId}`, {
-        method: 'PUT',
-        body: urlencoded,
-      });
+    users: {
+      update(userId, updates) {
+        const urlencoded = new URLSearchParams();
+        const entries = Object.entries(updates);
+        for (let i = 0; i < entries.length; i++) {
+          const entry = entries[i];
+          const key = entry[0];
+          const value = entry[1];
+          urlencoded.append(key, value);
+        }
+        return callAPI(`/users/${userId}`, {
+          method: 'PUT',
+          body: urlencoded,
+        });
+      },
     },
   },
   delete: {
-    remove(userId) {
-      return callAPI(`/users/${userId}`, {
-        method: 'DELETE',
-      });
+    users: {
+      remove(userId) {
+        return callAPI(`/users/${userId}`, {
+          method: 'DELETE',
+        });
+      },
     },
   },
 };

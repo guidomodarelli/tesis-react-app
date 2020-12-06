@@ -11,9 +11,11 @@ const UserDetailsContainer = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [profile, setProfile] = useState(false);
 
-  const { match } = props;
-  const { params } = match;
-  const { userId } = params;
+  const {
+    match: {
+      params: { userId },
+    },
+  } = props;
 
   const handleOpenModal = () => {
     setModalIsOpen(true);
@@ -27,45 +29,42 @@ const UserDetailsContainer = (props) => {
     setLoading(true);
     setError(null);
     try {
-      await api.users.remove(userId);
+      await api.delete.users.remove(userId);
       localStorage.removeItem('token');
-      props.history.push('/users');
+      props.history.push('/');
     } catch (error) {
       setLoading(false);
       setError(error);
     }
   };
 
+  const isMyProfile = async () => {
+    try {
+      const data = await api.get.users.myProfile(userId);
+      if (data) {
+        setProfile(data.myProfile);
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   const fetchData = () => {
     setLoading(true);
-    api.users
+    api.get.users
       .findById(userId)
-      .then((response) => {
-        if (response.status === 401) {
-          return props.history.push('/login');
-        }
-        return response.json();
-      })
       .then((data) => {
         setData(data);
-        setLoading(false);
+        isMyProfile();
       })
+      .then(() => setLoading(false))
       .catch((error) => {
         setError(error);
         setLoading(false);
       });
   };
 
-  const isMyProfile = () => {
-    api.users
-      .myProfile(userId)
-      .then((response) => response.json())
-      .then((data) => setProfile(data.myProfile))
-      .catch((error) => setError(error));
-  };
-
   useEffect(() => {
-    isMyProfile();
     fetchData();
   }, []);
 
@@ -76,14 +75,16 @@ const UserDetailsContainer = (props) => {
     return <PageError />;
   }
   return (
-    <UserDetails
-      onCloseModal={handleCloseModal}
-      onOpenModal={handleOpenModal}
-      modalIsOpen={modalIsOpen}
-      onDeleteUser={handleDeleteUser}
-      user={data}
-      profile={profile}
-    />
+    <>
+      <UserDetails
+        onCloseModal={handleCloseModal}
+        onOpenModal={handleOpenModal}
+        modalIsOpen={modalIsOpen}
+        onDeleteUser={handleDeleteUser}
+        user={data}
+        profile={profile}
+      />
+    </>
   );
 };
 

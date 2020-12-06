@@ -26,11 +26,11 @@ const Users = (props) => {
       });
   };
 
-  useEffect(async () => {
-    return fetchData();
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  if (loading && !data) {
+  if (loading) {
     return <PageLoading />;
   }
   if (error) {

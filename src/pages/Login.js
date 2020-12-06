@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import PageLoading from '../components/PageLoading';
-import { isLoggedIn } from '../redux/actions';
-import { login } from '../redux/actions/usersActions';
+import { signIn } from '../redux/actions';
 
 const Login = (props) => {
   const [form, setValues] = useState({
@@ -21,13 +20,12 @@ const Login = (props) => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-    if (await props.login(form)) {
-      props.history.push('/');
+    if (await props.signIn(form)) {
+      props.history.push('/users');
     }
   };
 
-  console.log(props);
-  if (props.reducer.loading) {
+  if (props.loading) {
     return <PageLoading />;
   }
   return (
@@ -37,7 +35,7 @@ const Login = (props) => {
         onChange={handleChange}
         formValues={form}
         onSubmit={handleSumbit}
-        error={props.reducer.error}
+        error={props.error}
       />
       <p className='mt-3'>
         ¿No tienes una cuenta?
@@ -50,14 +48,13 @@ const Login = (props) => {
 
 const mapStateToProps = (reducers) => {
   return {
-    reducer: reducers.reducer,
-    usersReducer: reducers.usersReducer,
+    loading: reducers.reducer.loading,
+    error: reducers.reducer.error,
   };
 };
 
 const mapDispatchToProps = {
-  isLoggedIn,
-  login,
+  signIn,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -31,10 +31,11 @@ const UserNew = (props) => {
     setUploading(true);
     setError(null);
     try {
-      const response = await api.users.create(form);
-      if (response.status === 201) {
+      const data = await api.post.signUp(form);
+      if (data && data.id) {
         props.history.push('/login');
       }
+      setUploading(false);
     } catch (error) {
       setError(error);
       setUploading(false);

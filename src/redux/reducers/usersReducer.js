@@ -11,7 +11,7 @@ const usersReducers = (state = INITIAL_STATE, action) => {
     case GET_USERS:
       return { ...state, users: action.payload, loading: false, error: '' };
     case USER_LOADING:
-      return { ...state, loading: action.payload };
+      return { ...state, loading: true };
     case USER_ERROR:
       return { ...state, error: action.payload, loading: false };
     default:
