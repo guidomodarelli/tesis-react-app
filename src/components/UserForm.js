@@ -84,6 +84,9 @@ const UserForm = (props) => {
       <button type='submit' className='btn btn-primary'>
         Guardar
       </button>
+      <button type='button' className='btn btn-danger ml-2' onClick={props.onCancel}>
+        Cancelar
+      </button>
       {error && <p className='text-danger'>{error.message}</p>}
     </form>
   );

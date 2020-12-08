@@ -71,6 +71,10 @@ const UserEdit = (props) => {
     }
   };
 
+  const handleCancel = () => {
+    props.history.push(`/users/${userId}`);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -103,6 +107,7 @@ const UserEdit = (props) => {
               formValues={form}
               onSubmit={handleSumbit}
               error={error}
+              onCancel={handleCancel}
             />
           </div>
         </div>

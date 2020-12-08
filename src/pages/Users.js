@@ -1,33 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import logo from '../assets/images/CALISTEP.png';
 import '../assets/styles/pages/Users.css';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import UsersList from '../components/UsersList';
-import api from '../api';
+import { getAll as getUsers } from '../redux/actions/usersActions';
 
 const Users = (props) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(undefined);
-
-  const fetchData = () => {
-    setLoading(true);
-    api.get.users
-      .list()
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(error);
-        setLoading(false);
-      });
-  };
+  const { loading, error, users } = props;
 
   useEffect(() => {
-    fetchData();
+    props.getUsers();
   }, []);
 
   if (loading) {
@@ -47,10 +31,22 @@ const Users = (props) => {
       </div>
 
       <div className='Users__container'>
-        <UsersList users={data} />
+        <UsersList users={users} />
       </div>
     </>
   );
 };
 
-export default Users;
+const mapStateToProps = (reducers) => {
+  return {
+    loading: reducers.usersReducer.loading,
+    error: reducers.usersReducer.error,
+    users: reducers.usersReducer.users,
+  };
+};
+
+const mapDispatchToProps = {
+  getUsers,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

@@ -2,8 +2,13 @@ import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { signOut } from '../redux/actions';
 
 const NavBar = (props) => {
+  const handleClick = () => {
+    props.signOut();
+  };
+
   return (
     <Navbar bg='light' expand='lg'>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -35,9 +40,9 @@ const NavBar = (props) => {
         </Nav>
       </Navbar.Collapse>
       {props.userToken ? (
-        <Link to='/login' className='btn btn-primary'>
+        <button type='button' className='btn btn-primary' onClick={handleClick}>
           <span>Cerrar sesión</span>
-        </Link>
+        </button>
       ) : (
         <Link to='/login' className='btn btn-primary'>
           <span>Iniciar sesión</span>
@@ -55,4 +60,8 @@ const mapStateToProps = (reducers) => {
   };
 };
 
-export default connect(mapStateToProps)(NavBar);
+const mapDispatchToProps = {
+  signOut,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

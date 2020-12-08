@@ -42,11 +42,12 @@ export const signUp = (user) => async (dispatch) => {
   dispatch({ type: LOADING });
   try {
     const data = await api.post.signUp(user);
+    const token = data ? data.token : '';
     dispatch({
       type: SIGN_IN,
-      payload: data.token,
+      payload: token,
     });
-    localStorage.setItem('token', data.token);
+    localStorage.setItem('token', token);
   } catch (error) {
     console.error(`Error: ${error.message}`);
     dispatch({
@@ -61,7 +62,7 @@ export const restoreToken = () => async (dispatch) => {
   dispatch({ type: LOADING });
   const data = await api.get.loggedIn();
   let userToken = null;
-  if (data.loggedIn) {
+  if (data && data.loggedIn) {
     userToken = localStorage.getItem('token');
   }
   dispatch({ type: RESTORE_TOKEN, payload: userToken });
