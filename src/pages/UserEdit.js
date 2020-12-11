@@ -89,7 +89,7 @@ const UserEdit = (props) => {
     <>
       <div className='container'>
         <div className='row'>
-          <div className='col mt-4'>
+          <div className='col mt-4 mx-2'>
             <Badge
               firstname={form.firstname || 'Nombre'}
               lastname={form.lastname || 'Apellido'}

@@ -58,6 +58,10 @@ const UserNew = (props) => {
       });
   };
 
+  const handleCancel = () => {
+    props.history.push('/login');
+  };
+
   useEffect(() => {
     handleLogin();
   }, []);
@@ -72,7 +76,7 @@ const UserNew = (props) => {
     <>
       <div className='container'>
         <div className='row'>
-          <div className='col mt-4'>
+          <div className='col mt-4 mx-2'>
             <Badge
               firstname={form.firstname || 'Nombre'}
               lastname={form.lastname || 'Apellido'}
@@ -90,6 +94,7 @@ const UserNew = (props) => {
               formValues={form}
               onSubmit={handleSumbit}
               error={error}
+              onCancel={handleCancel}
             />
           </div>
         </div>

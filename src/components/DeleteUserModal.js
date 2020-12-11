@@ -8,11 +8,14 @@ const DeleteUserModal = (props) => {
       <div className='DeleteUserModal'>
         <h1>¿Estás seguro?</h1>
         <p>Estás apunto de eliminar esta cuenta!</p>
-        <div>
+        <div className='mt-2'>
           <button
             type='button'
             onClick={onDeleteUser}
-            className='btn btn-danger mr-4'
+            className='btn btn-danger'
+            style={{
+              marginRight: '0.75rem',
+            }}
           >
             Eliminar
           </button>

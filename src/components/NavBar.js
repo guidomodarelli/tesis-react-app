@@ -10,7 +10,7 @@ const NavBar = (props) => {
   };
 
   return (
-    <Navbar bg='light' expand='lg'>
+    <Navbar bg='light' expand='lg' className='mx-2'>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
@@ -40,11 +40,11 @@ const NavBar = (props) => {
         </Nav>
       </Navbar.Collapse>
       {props.userToken ? (
-        <button type='button' className='btn btn-primary' onClick={handleClick}>
+        <button type='button' className='btn btn-primary text-nowrap' onClick={handleClick}>
           <span>Cerrar sesión</span>
         </button>
       ) : (
-        <Link to='/login' className='btn btn-primary'>
+        <Link to='/login' className='btn btn-primary text-nowrap'>
           <span>Iniciar sesión</span>
         </Link>
       )}

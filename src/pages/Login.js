@@ -40,7 +40,7 @@ const Login = (props) => {
       <p className='mt-3'>
         ¿No tienes una cuenta?
         {' '}
-        <Link to='/signup'>Registrate</Link>
+        <Link to='/signup' className='text-decoration-none'>Registrate</Link>
       </p>
     </div>
   );

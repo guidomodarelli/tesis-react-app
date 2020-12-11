@@ -15,7 +15,7 @@ const LoginForm = (props) => {
           value={formValues.email}
         />
       </div>
-      <div className='form-group'>
+      <div className='form-group mt-2'>
         <label htmlFor='passInput'>Contraseña</label>
         <input
           onChange={onChange}
@@ -28,7 +28,7 @@ const LoginForm = (props) => {
       </div>
       <button
         type='submit'
-        className='btn btn-primary'
+        className='btn btn-primary mt-3'
       >
         Iniciar sesion
       </button>
