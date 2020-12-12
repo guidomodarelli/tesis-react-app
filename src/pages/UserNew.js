@@ -8,7 +8,7 @@ import api from '../api';
 const UserNew = (props) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [form, setValues] = useState({
     firstname: '',
     lastname: '',
@@ -20,10 +20,8 @@ const UserNew = (props) => {
   });
 
   const handleChange = (e) => {
-    setValues({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setValues({ ...form, [name]: value });
   };
 
   const handleSumbit = async (e) => {
@@ -95,6 +93,7 @@ const UserNew = (props) => {
               onSubmit={handleSumbit}
               error={error}
               onCancel={handleCancel}
+              passwordRequired
             />
           </div>
         </div>

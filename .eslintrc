@@ -26,6 +26,7 @@
     "import"
   ],
   "rules": {
+    "no-param-reassign": ["error", { "props": false }],
     "react/destructuring-assignment": [
       0
     ],
