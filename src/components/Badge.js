@@ -21,7 +21,7 @@ const Badge = (props) => {
 
   return (
     <div className='Badge'>
-      <div className='Badge__header'>
+      <div className='Badge__header mx-3'>
         <img src={logo} alt='Logo' className='img-fluid m-2' />
       </div>
       <div className='Badge__section-name p-5'>

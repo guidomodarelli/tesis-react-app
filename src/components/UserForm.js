@@ -5,7 +5,10 @@ const MsgInputError = (props) => {
   const { msg, validated } = props;
 
   const setFeedbackMsg = (value) => {
-    return classNames('d-block', validated && (value ? 'invalid-feedback' : 'valid-feedback'));
+    return classNames(
+      'd-block',
+      validated && (value ? 'invalid-feedback' : 'valid-feedback'),
+    );
   };
 
   return (
@@ -16,6 +19,8 @@ const MsgInputError = (props) => {
 };
 
 const UserForm = (props) => {
+  const { onCancel } = props;
+
   const [validated, setValidated] = useState(false);
   const [formErrors, setFormErrors] = useState({
     firstname: null,
@@ -27,7 +32,15 @@ const UserForm = (props) => {
     password: null,
   });
   const { onSubmit, onChange, formValues, passwordRequired, login } = props;
-  const { firstname, lastname, email, birthdate, jobtitle, instagram, password } = formErrors;
+  const {
+    firstname,
+    lastname,
+    email,
+    birthdate,
+    jobtitle,
+    instagram,
+    password,
+  } = formErrors;
 
   const REGEX = {
     password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
@@ -126,7 +139,10 @@ const UserForm = (props) => {
           }
         }
       }
-      if (formValues.instagram && !REGEX.instagramAccount.test(formValues.instagram)) {
+      if (
+        formValues.instagram &&
+        !REGEX.instagramAccount.test(formValues.instagram)
+      ) {
         formErrors.instagram = MessageError.valid('cuenta de instagram');
         _hasErrors = true;
       }
@@ -157,7 +173,8 @@ const UserForm = (props) => {
       case 'firstname':
       case 'lastname':
       case 'jobtitle':
-        event.target.value = value.charAt(0).toUpperCase() + value.substr(1).toLowerCase();
+        event.target.value =
+          value.charAt(0).toUpperCase() + value.substr(1).toLowerCase();
         break;
       case 'email':
       case 'instagram':
@@ -168,7 +185,10 @@ const UserForm = (props) => {
   };
 
   const setClassNamesInput = (value) => {
-    return classNames('form-control', validated && (value ? 'is-invalid' : 'is-valid'));
+    return classNames(
+      'form-control',
+      validated && (value ? 'is-invalid' : 'is-valid'),
+    );
   };
 
   return (
@@ -176,7 +196,9 @@ const UserForm = (props) => {
       {!login && (
         <>
           <div className='form-group mb-2'>
-            <label htmlFor='firstname' className='mb-1'>Nombre</label>
+            <label htmlFor='firstname' className='mb-1'>
+              Nombre
+            </label>
             <input
               onChange={handleChange}
               className={setClassNamesInput(firstname)}
@@ -188,7 +210,9 @@ const UserForm = (props) => {
             <MsgInputError msg={firstname} validated={validated} />
           </div>
           <div className='form-group mb-2'>
-            <label htmlFor='lastname' className='mb-1'>Apellido</label>
+            <label htmlFor='lastname' className='mb-1'>
+              Apellido
+            </label>
             <input
               onChange={handleChange}
               className={setClassNamesInput(lastname)}
@@ -199,24 +223,10 @@ const UserForm = (props) => {
             />
             <MsgInputError msg={lastname} validated={validated} />
           </div>
-        </>
-      )}
-      <div className='form-group mb-2'>
-        <label htmlFor='email' className='mb-1'>Correo electronico</label>
-        <input
-          onChange={handleChange}
-          className={setClassNamesInput(email)}
-          type='email'
-          name='email'
-          id='email'
-          value={formValues.email}
-        />
-        <MsgInputError msg={email} validated={validated} />
-      </div>
-      {!login && (
-        <>
           <div className='form-group mb-2'>
-            <label htmlFor='birthdate' className='mb-1'>Fecha de nacimiento</label>
+            <label htmlFor='birthdate' className='mb-1'>
+              Fecha de nacimiento
+            </label>
             <input
               onChange={handleChange}
               className={setClassNamesInput(birthdate)}
@@ -228,7 +238,9 @@ const UserForm = (props) => {
             <MsgInputError msg={birthdate} validated={validated} />
           </div>
           <div className='form-group mb-2'>
-            <label htmlFor='jobtitle' className='mb-1'>Titulo profesional</label>
+            <label htmlFor='jobtitle' className='mb-1'>
+              Titulo profesional
+            </label>
             <input
               onChange={handleChange}
               className={setClassNamesInput(jobtitle)}
@@ -240,7 +252,9 @@ const UserForm = (props) => {
             <MsgInputError msg={jobtitle} validated={validated} />
           </div>
           <div className='form-group mb-2'>
-            <label htmlFor='instagram' className='mb-1'>Instagram</label>
+            <label htmlFor='instagram' className='mb-1'>
+              Instagram
+            </label>
             <input
               onChange={handleChange}
               className={setClassNamesInput(instagram)}
@@ -253,8 +267,24 @@ const UserForm = (props) => {
           </div>
         </>
       )}
+      <div className='form-group mb-2'>
+        <label htmlFor='email' className='mb-1'>
+          Correo electronico
+        </label>
+        <input
+          onChange={handleChange}
+          className={setClassNamesInput(email)}
+          type='email'
+          name='email'
+          id='email'
+          value={formValues.email}
+        />
+        <MsgInputError msg={email} validated={validated} />
+      </div>
       <div className='form-group mb-3'>
-        <label htmlFor='password' className='mb-1'>Contraseña</label>
+        <label htmlFor='password' className='mb-1'>
+          Contraseña
+        </label>
         <input
           onChange={handleChange}
           className={setClassNamesInput(password)}
@@ -265,21 +295,23 @@ const UserForm = (props) => {
         />
         <MsgInputError msg={password} validated={validated} />
       </div>
-      <button type='submit' className='btn btn-primary'>
-        {login ? <>Iniciar sesión</> : <>Guardar</>}
-      </button>
-      {!login && (
-        <button
-          type='button'
-          className='btn btn-danger'
-          onClick={props.onCancel}
-          style={{
-            marginLeft: '0.75rem',
-          }}
-        >
-          Cancelar
+      <div className='d-flex'>
+        <button type='submit' className='btn btn-primary'>
+          {login ? <>Iniciar sesión</> : <>Guardar</>}
         </button>
-      )}
+        {!login && (
+          <button
+            type='button'
+            className='btn btn-danger'
+            onClick={onCancel}
+            style={{
+              marginLeft: '0.75rem',
+            }}
+          >
+            Cancelar
+          </button>
+        )}
+      </div>
     </form>
   );
 };

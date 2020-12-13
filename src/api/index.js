@@ -1,15 +1,15 @@
 const BASE_URL = 'http://localhost:5000';
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const randomNumber = (min = 0, max = 1) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-const simulateNetworkLatency = (min = 30, max = 1500) => {
-  return delay(randomNumber(min, max));
-};
+// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+// const randomNumber = (min = 0, max = 1) => {
+//   return Math.floor(Math.random() * (max - min + 1)) + min;
+// };
+// const simulateNetworkLatency = (min = 30, max = 1500) => {
+//   return delay(randomNumber(min, max));
+// };
 
 async function callAPI(endpoint, options = {}) {
-  await simulateNetworkLatency();
+  // await simulateNetworkLatency();
 
   const token = localStorage.getItem('token');
 
@@ -52,8 +52,11 @@ const api = {
       list() {
         return callAPI('/users');
       },
-      myProfile(userId) {
+      isMyProfile(userId) {
         return callAPI(`/users/myProfile/${userId}`);
+      },
+      myProfile() {
+        return callAPI('/users/profile');
       },
       findById(userId) {
         return callAPI(`/users/${userId}`);

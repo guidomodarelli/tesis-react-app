@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import api from '../api';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
-import api from '../api';
-import UserDetails from './UserDetails';
+import UserDetails from './presentational/UserDetails';
 
 const UserDetailsContainer = (props) => {
   const [loading, setLoading] = useState(true);
@@ -38,30 +39,16 @@ const UserDetailsContainer = (props) => {
     }
   };
 
-  const isMyProfile = async () => {
-    try {
-      const data = await api.get.users.myProfile(userId);
-      if (data) {
-        setProfile(data.myProfile);
-      }
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
   const fetchData = () => {
     setLoading(true);
     api.get.users
       .findById(userId)
       .then((data) => {
         setData(data);
-        isMyProfile();
+        setProfile(data.id === userId);
       })
-      .then(() => setLoading(false))
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -88,4 +75,4 @@ const UserDetailsContainer = (props) => {
   );
 };
 
-export default UserDetailsContainer;
+export default connect(null, null)(UserDetailsContainer);

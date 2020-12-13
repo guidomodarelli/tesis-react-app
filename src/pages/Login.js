@@ -1,31 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PageLoading from '../components/PageLoading';
+import PageError from '../components/PageError';
 import UserForm from '../components/UserForm';
-import { signIn } from '../redux/actions';
+import { handleChangeSingIn, signIn } from '../redux/actions';
 
 const Login = (props) => {
-  const [form, setValues] = useState({
-    email: '',
-    password: '',
-  });
+  const { loading, form, error } = props;
 
   const handleChange = (e) => {
-    setValues({
-      ...form,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    props.handleChangeSingIn({
+      ...props.form,
+      [name]: value,
     });
   };
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-    if (await props.signIn(form)) {
+    if (await props.signIn(props.form)) {
       props.history.push('/users');
     }
   };
 
-  if (props.loading) {
+  if (error) {
+    return <PageError />;
+  }
+  if (loading) {
     return <PageLoading />;
   }
   return (
@@ -35,14 +37,15 @@ const Login = (props) => {
         onChange={handleChange}
         formValues={form}
         onSubmit={handleSumbit}
-        error={props.error}
+        error={error}
         passwordRequired
         login
       />
       <p className='mt-3'>
-        ¿No tienes una cuenta?
-        {' '}
-        <Link to='/signup' className='text-decoration-none'>Registrate</Link>
+        ¿No tienes una cuenta?&nbsp;
+        <Link to='/signup' className='text-decoration-none'>
+          Registrate
+        </Link>
       </p>
     </div>
   );
@@ -52,11 +55,13 @@ const mapStateToProps = (reducers) => {
   return {
     loading: reducers.reducer.loading,
     error: reducers.reducer.error,
+    form: reducers.reducer.form,
   };
 };
 
 const mapDispatchToProps = {
   signIn,
+  handleChangeSingIn,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

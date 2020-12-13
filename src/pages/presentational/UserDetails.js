@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Badge from '../components/Badge';
-import DeleteUserModal from '../components/DeleteUserModal';
+import Badge from '../../components/Badge';
+import DeleteUserModal from '../../components/DeleteUserModal';
 
 const Actions = (props) => {
   const {

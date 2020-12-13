@@ -1,14 +1,32 @@
 import api from '../../api';
-import { ERROR, LOADING, SIGN_OUT, SIGN_IN, RESTORE_TOKEN } from '../types';
+import {
+  ERROR,
+  LOADING,
+  SIGN_OUT,
+  SIGN_IN,
+  RESTORE_TOKEN,
+  SET_FORM,
+  SET_CURRENT_USER,
+} from '../types';
+
+export const handleChangeSingIn = (form) => (dispatch) => {
+  dispatch({ type: SET_FORM, payload: form });
+};
 
 export const signIn = (user) => async (dispatch) => {
   dispatch({ type: LOADING });
   try {
     const data = await api.post.signIn(user);
     let token = null;
+    let userData = null;
     if (data) {
-      token = data.token;
+      ({ token } = data);
+      ({ user: userData } = data);
     }
+    dispatch({
+      type: SET_CURRENT_USER,
+      payload: userData,
+    });
     dispatch({
       type: SIGN_IN,
       payload: token,
@@ -60,10 +78,12 @@ export const signUp = (user) => async (dispatch) => {
 
 export const restoreToken = () => async (dispatch) => {
   dispatch({ type: LOADING });
-  const data = await api.get.loggedIn();
+  let data = await api.get.loggedIn();
   let userToken = null;
   if (data && data.loggedIn) {
     userToken = localStorage.getItem('token');
+    data = await api.get.users.myProfile();
+    dispatch({ type: SET_CURRENT_USER, payload: data });
   }
   dispatch({ type: RESTORE_TOKEN, payload: userToken });
 };

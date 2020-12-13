@@ -1,5 +1,5 @@
 import React from 'react';
-import calistep from '../assets/images/logo-calistep-step-by-step.svg';
+import calistep from '../../assets/images/logo-calistep-step-by-step.svg';
 
 const Porfolio = () => (
   <section className='container'>

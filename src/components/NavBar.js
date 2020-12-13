@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { signOut } from '../redux/actions';
 
 const NavBar = (props) => {
+  const { userToken } = props;
+
   const handleClick = () => {
     props.signOut();
   };
@@ -17,7 +19,7 @@ const NavBar = (props) => {
           <Link className='nav-link active' to='/'>
             Inicio
           </Link>
-          {props.userToken && (
+          {userToken && (
             <Link className='nav-link' to='/users'>
               Usuarios
             </Link>
@@ -39,8 +41,12 @@ const NavBar = (props) => {
           </Link>
         </Nav>
       </Navbar.Collapse>
-      {props.userToken ? (
-        <button type='button' className='btn btn-primary text-nowrap' onClick={handleClick}>
+      {userToken ? (
+        <button
+          type='button'
+          className='btn btn-primary text-nowrap'
+          onClick={handleClick}
+        >
           <span>Cerrar sesión</span>
         </button>
       ) : (
