@@ -27,6 +27,7 @@ async function callAPI(endpoint, options = {}) {
 
   return fetch(url, init)
     .then((response) => {
+      if (response.status === 204) return {};
       if (response.ok) {
         return response.json();
       }

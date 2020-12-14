@@ -10,32 +10,40 @@ const Actions = (props) => {
     modalIsOpen,
     onCloseModal,
     onDeleteUser,
+    profile,
+    deleteUser,
   } = props;
   return (
     <div className='col d-flex flex-column align-items-center justify-content-center mt-4 mb-4'>
       <h2 className='mb-3'>Acciones:</h2>
       <div className='w-100 justify-content-center d-flex'>
-        <Link
-          className='btn btn-primary'
-          to={`/users/${userId}/edit`}
-          style={{
-            marginRight: '0.75rem',
-          }}
-        >
-          Editar
-        </Link>
-        <button
-          type='button'
-          onClick={onOpenModal}
-          className='btn btn-danger'
-        >
-          Eliminar
-        </button>
-        <DeleteUserModal
-          isOpen={modalIsOpen}
-          onClose={onCloseModal}
-          onDeleteUser={onDeleteUser}
-        />
+        {profile && (
+          <Link
+            className='btn btn-primary'
+            to={`/users/${userId}/edit`}
+            style={{
+              marginRight: '0.75rem',
+            }}
+          >
+            Editar
+          </Link>
+        )}
+        {(profile || deleteUser) && (
+          <>
+            <button
+              type='button'
+              onClick={onOpenModal}
+              className='btn btn-danger'
+            >
+              Eliminar
+            </button>
+            <DeleteUserModal
+              isOpen={modalIsOpen}
+              onClose={onCloseModal}
+              onDeleteUser={onDeleteUser}
+            />
+          </>
+        )}
       </div>
     </div>
   );
@@ -45,6 +53,7 @@ const UserDetails = (props) => {
   const {
     user,
     profile,
+    deleteUser,
     onOpenModal,
     modalIsOpen,
     onCloseModal,
@@ -66,13 +75,15 @@ const UserDetails = (props) => {
             jobtitle={user.jobtitle || ''}
           />
         </div>
-        {profile && (
+        {(profile || deleteUser) && (
           <Actions
             userId={user.id}
             onOpenModal={onOpenModal}
             modalIsOpen={modalIsOpen}
             onCloseModal={onCloseModal}
             onDeleteUser={onDeleteUser}
+            profile={profile}
+            deleteUser={deleteUser}
           />
         )}
       </div>

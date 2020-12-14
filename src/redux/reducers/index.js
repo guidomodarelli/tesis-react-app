@@ -29,6 +29,7 @@ const initialUserData = () => ({
   jobtitle: '',
   instagram: '',
   email: '',
+  Permission: null,
 });
 
 const INITIAL_STATE = {

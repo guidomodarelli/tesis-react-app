@@ -85,5 +85,6 @@ export const restoreToken = () => async (dispatch) => {
     data = await api.get.users.myProfile();
     dispatch({ type: SET_CURRENT_USER, payload: data });
   }
+  dispatch({ type: LOADING });
   dispatch({ type: RESTORE_TOKEN, payload: userToken });
 };
