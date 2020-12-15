@@ -1,35 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PageLoading from '../components/PageLoading';
 import PageError from '../components/PageError';
+import PageLoading from '../components/PageLoading';
 import UserForm from '../components/UserForm';
 import { handleChangeSingIn, signIn } from '../redux/actions';
 
 const Login = (props) => {
-  const { loading, form, error } = props;
+  const { reducer: { loading, error, form }, signIn, handleChangeSingIn } = props;
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    props.handleChangeSingIn({
-      ...props.form,
-      [name]: value,
-    });
+    handleChangeSingIn({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSumbit = async (e) => {
+  const handleSumbit = (e) => {
     e.preventDefault();
-    if (await props.signIn(props.form)) {
-      props.history.push('/users');
-    }
+    signIn(form);
   };
 
-  if (error) {
-    return <PageError />;
-  }
-  if (loading) {
-    return <PageLoading />;
-  }
+  if (error) return <PageError />;
+  if (loading) return <PageLoading />;
   return (
     <div className='container mt-4' style={{ maxWidth: '25rem' }}>
       <h1>Iniciar sesión</h1>
@@ -37,7 +27,6 @@ const Login = (props) => {
         onChange={handleChange}
         formValues={form}
         onSubmit={handleSumbit}
-        error={error}
         passwordRequired
         login
       />
@@ -51,13 +40,10 @@ const Login = (props) => {
   );
 };
 
-const mapStateToProps = (reducers) => {
-  return {
-    loading: reducers.reducer.loading,
-    error: reducers.reducer.error,
-    form: reducers.reducer.form,
-  };
-};
+const mapStateToProps = ({ reducer, usersReducer }) => ({
+  reducer,
+  usersReducer,
+});
 
 const mapDispatchToProps = {
   signIn,

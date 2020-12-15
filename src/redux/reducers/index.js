@@ -83,7 +83,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case SET_CURRENT_USER:
       return {
         ...state,
-        loading: false,
+        loading: true,
         error: '',
         isSignOut: false,
         currentUser: action.payload,

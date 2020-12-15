@@ -8,18 +8,12 @@ import UsersList from '../components/UsersList';
 import { getAll as getUsers } from '../redux/actions/usersActions';
 
 const Users = (props) => {
-  const { loading, error, users } = props;
+  const { loading, error, users, getUsers } = props;
 
-  useEffect(() => {
-    props.getUsers();
-  }, []);
+  useEffect(() => getUsers(), []);
 
-  if (loading) {
-    return <PageLoading />;
-  }
-  if (error) {
-    return <PageError />;
-  }
+  if (error) return <PageError />;
+  if (loading) return <PageLoading />;
   return (
     <>
       <div className='Users'>
@@ -37,16 +31,8 @@ const Users = (props) => {
   );
 };
 
-const mapStateToProps = (reducers) => {
-  return {
-    loading: reducers.usersReducer.loading,
-    error: reducers.usersReducer.error,
-    users: reducers.usersReducer.users,
-  };
-};
+const mapStateToProps = ({ usersReducer }) => usersReducer;
 
-const mapDispatchToProps = {
-  getUsers,
-};
+const mapDispatchToProps = { getUsers };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

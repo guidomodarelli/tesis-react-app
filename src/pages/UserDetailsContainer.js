@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import api from '../api';
+import React, { useEffect, useState } from 'react';
+import { connect, useSelector } from 'react-redux';
+import PageEmpty from '../components/PageEmpty';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
+import { deleteUser, getAll as getUsers } from '../redux/actions/usersActions';
 import UserDetails from './presentational/UserDetails';
 
 const UserDetailsContainer = (props) => {
@@ -10,54 +11,38 @@ const UserDetailsContainer = (props) => {
     match: {
       params: { userId },
     },
+    reducer,
     usersReducer,
+    usersReducer: { users },
     reducer: {
       currentUser,
+      currentUser: { Permission },
     },
-    reducer: {
-      loading: loadingReducer,
-    },
-    usersReducer: {
-      loading: loadingUsersReducer,
-    },
+    getUsers,
+    deleteUser,
+    history,
   } = props;
 
-  const currentUserDetails = usersReducer.users.filter((el) => el.id === userId)[0];
-  const profile = currentUser.id === userId;
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const handleOpenModal = () => {
-    setModalIsOpen(true);
+  useEffect(() => !users.length && getUsers(), []);
+
+  const handleOpenModal = () => setModalIsOpen(true);
+
+  const handleCloseModal = () => setModalIsOpen(false);
+
+  const handleDeleteUser = () => {
+    deleteUser(userId);
+    history.push('/login');
   };
 
-  const handleCloseModal = () => {
-    setModalIsOpen(false);
-  };
+  const profile = () => currentUser.id === userId;
 
-  const handleDeleteUser = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      await api.delete.users.remove(userId);
-      if (profile) {
-        localStorage.removeItem('token');
-      }
-      props.history.push('/');
-    } catch (error) {
-      setLoading(false);
-      setError(error);
-    }
-  };
+  const currentUserDetails = useSelector(() => users.find((el) => el.id === userId));
 
-  if (loading || loadingReducer || loadingUsersReducer) {
-    return <PageLoading />;
-  }
-  if (error) {
-    return <PageError />;
-  }
+  if (reducer.error || usersReducer.error) return <PageError />;
+  if (reducer.loading || usersReducer.loading) return <PageLoading />;
+  if (!currentUserDetails) return <PageEmpty />;
   return (
     <>
       <UserDetails
@@ -66,18 +51,24 @@ const UserDetailsContainer = (props) => {
         modalIsOpen={modalIsOpen}
         onDeleteUser={handleDeleteUser}
         user={currentUserDetails}
-        profile={profile}
-        deleteUser={currentUser.Permission.deleteUsers}
+        profile={profile()}
+        deleteUser={Permission ? Permission.deleteUsers : false}
       />
     </>
   );
 };
 
-const mapStateToProps = (reducers) => {
-  return {
-    reducer: reducers.reducer,
-    usersReducer: reducers.usersReducer,
-  };
+const mapStateToProps = ({ reducer, usersReducer }) => ({
+  reducer,
+  usersReducer,
+});
+
+const mapDispatchToProps = {
+  deleteUser,
+  getUsers,
 };
 
-export default connect(mapStateToProps, null)(UserDetailsContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserDetailsContainer);

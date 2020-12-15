@@ -8,6 +8,7 @@ import {
   SET_FORM,
   SET_CURRENT_USER,
 } from '../types';
+import { ADD_USER } from '../types/usersTypes';
 
 export const handleChangeSingIn = (form) => (dispatch) => {
   dispatch({ type: SET_FORM, payload: form });
@@ -30,6 +31,10 @@ export const signIn = (user) => async (dispatch) => {
     dispatch({
       type: SIGN_IN,
       payload: token,
+    });
+    dispatch({
+      type: ADD_USER,
+      payload: userData,
     });
     localStorage.setItem('token', token);
   } catch (error) {
@@ -85,6 +90,5 @@ export const restoreToken = () => async (dispatch) => {
     data = await api.get.users.myProfile();
     dispatch({ type: SET_CURRENT_USER, payload: data });
   }
-  dispatch({ type: LOADING });
   dispatch({ type: RESTORE_TOKEN, payload: userToken });
 };

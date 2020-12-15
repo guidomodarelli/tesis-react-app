@@ -5,6 +5,8 @@ import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 
 class RouteAuth extends Component {
+  isAuthorizated = (auth, token) => (auth && token) || (!auth && !token);
+
   render() {
     const {
       exact,
@@ -16,21 +18,15 @@ class RouteAuth extends Component {
       auth,
     } = this.props;
 
-    if (error) {
-      return <PageError />;
-    }
-    if (loading) {
-      return <PageLoading />;
-    }
-    if ((auth && userToken) || (!auth && !userToken)) {
+    if (error) return <PageError />;
+    if (loading) return <PageLoading />;
+    if (this.isAuthorizated(auth, userToken)) {
       return <Route exact={exact} path={path} component={component} />;
     }
     return <>{auth ? <Redirect to='/login' /> : <Redirect to='/' />}</>;
   }
 }
 
-const mapStateToProps = (reducers) => {
-  return reducers.reducer;
-};
+const mapStateToProps = ({ reducer }) => reducer;
 
 export default connect(mapStateToProps)(RouteAuth);
