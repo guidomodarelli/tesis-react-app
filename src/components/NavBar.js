@@ -39,15 +39,19 @@ const NavBar = (props) => {
         </Nav>
       </Navbar.Collapse>
       {userToken ? (
-        <button
-          type='button'
+        <Link
+          to='/login'
           className='btn btn-primary text-nowrap'
           onClick={signOut}
         >
-          <span>Cerrar sesión</span>
-        </button>
+          Cerrar sesión
+        </Link>
       ) : (
-        <Link to='/login' className='btn btn-primary text-nowrap' onClick={resetForm}>
+        <Link
+          to='/login'
+          className='btn btn-primary text-nowrap'
+          onClick={resetForm}
+        >
           <span>Iniciar sesión</span>
         </Link>
       )}

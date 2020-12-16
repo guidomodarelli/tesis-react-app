@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Badge from '../components/Badge';
+import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import PageUpload from '../components/PageUpload';
 import UserForm from '../components/UserForm';
-import { handleChangeForm, putUser, resetForm } from '../redux/actions/usersActions';
+import {
+  handleChangeForm,
+  putUser,
+  resetForm,
+  getAll as getUsers,
+} from '../redux/actions/usersActions';
 
 const UserEdit = (props) => {
   const {
@@ -14,23 +20,35 @@ const UserEdit = (props) => {
     history,
     loading,
     currentUser,
-    error,
     form,
     handleChangeForm,
     putUser,
     resetForm,
+    users,
+    error,
+    getUsers,
   } = props;
 
   const [uploading, setUploading] = useState(false);
+  const [emailUnique, setEmailUnique] = useState('');
 
   const handleChange = (e) => handleChangeForm({ ...form, [e.target.name]: e.target.value });
 
+  const emailIsUnique = () => {
+    return users
+      .filter((el) => el.email !== currentUser.email)
+      .find((el) => el.email === form.email);
+  };
+
   const handleSumbit = (e) => {
     e.preventDefault();
-    setUploading(true);
-    //TODO: Validar que no haya un email repetido
-    putUser(userId);
-    history.push(`/users/${userId}`);
+    if (emailIsUnique()) {
+      setEmailUnique('El correo electronico proporcionado ya existe. Por favor, introduzca uno diferente.');
+    } else {
+      setUploading(true);
+      putUser(userId);
+      history.push(`/users/${userId}`);
+    }
   };
 
   const handleCancel = () => {
@@ -56,10 +74,12 @@ const UserEdit = (props) => {
       email,
       password: '',
     });
+    !users.length && getUsers();
   }, []);
 
   if (loading || !form) return <PageLoading />;
   if (uploading) return <PageUpload />;
+  if (error) return <PageError />;
   return (
     <>
       <div className='container'>
@@ -81,7 +101,7 @@ const UserEdit = (props) => {
               onChange={handleChange}
               formValues={form}
               onSubmit={handleSumbit}
-              error={error}
+              emailUnique={emailUnique}
               onCancel={handleCancel}
             />
           </div>
@@ -97,6 +117,7 @@ const mapDispatchToProps = {
   handleChangeForm,
   putUser,
   resetForm,
+  getUsers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEdit);

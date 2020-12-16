@@ -41,17 +41,8 @@ const INITIAL_STATE = {
   form: initialForm(),
 };
 
-const getUsersModified = (users, payload) => {
-  users.forEach((el) => {
-    if (el.email === payload.email) {
-      el.firstname = payload.firstname;
-      el.lastname = payload.lastname;
-      el.birthdate = payload.birthdate;
-      el.jobtitle = payload.jobtitle;
-      el.instagram = payload.instagram;
-      el.email = payload.email;
-    }
-  });
+const deleteCurrentUser = (users, id) => {
+  return [...users.filter((el) => el.id !== id)];
 };
 
 const usersReducers = (state = INITIAL_STATE, action) => {
@@ -80,11 +71,18 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         error: action.payload,
       };
     case DELETE_USER:
+      if (state.currentUser.id === action.id) {
+        return {
+          ...INITIAL_STATE,
+          loading: false,
+          users: deleteCurrentUser(state.users, action.id),
+        };
+      }
       return {
         ...state,
         loading: false,
         error: '',
-        users: [...state.users.filter((el) => el.id !== action.id)],
+        users: deleteCurrentUser(state.users, action.id),
       };
     case SET_FORM:
       return {
@@ -109,7 +107,6 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         currentUser: action.payload,
       };
     case PUT_USER:
-      getUsersModified(state.users, action.payload);
       return {
         ...state,
         loading: false,
@@ -119,10 +116,18 @@ const usersReducers = (state = INITIAL_STATE, action) => {
           ...state.currentUser,
           ...action.payload,
         },
+        users: [
+          ...state.users.filter((el) => el.id !== state.currentUser.id),
+          {
+            ...state.currentUser,
+            ...state.form,
+          },
+        ],
       };
     case SIGN_OUT:
       return {
         ...INITIAL_STATE,
+        users: state.users,
         loading: false,
       };
     default:

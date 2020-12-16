@@ -6,6 +6,7 @@ import {
   SIGN_OUT,
   RESTORE_TOKEN,
 } from '../types';
+import { DELETE_USER } from '../types/usersTypes';
 import usersReducer from './usersReducer';
 
 const INITIAL_STATE = {
@@ -35,6 +36,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         error: '',
         userToken: action.payload,
       };
+    case DELETE_USER:
     case SIGN_OUT:
       return {
         ...INITIAL_STATE,

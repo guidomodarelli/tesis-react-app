@@ -19,7 +19,7 @@ const MsgInputError = (props) => {
 };
 
 const UserForm = (props) => {
-  const { onCancel } = props;
+  const { onCancel, emailUnique } = props;
 
   const [validated, setValidated] = useState(false);
   const [formErrors, setFormErrors] = useState({
@@ -273,13 +273,13 @@ const UserForm = (props) => {
         </label>
         <input
           onChange={handleChange}
-          className={setClassNamesInput(email)}
+          className={setClassNamesInput(email || emailUnique)}
           type='email'
           name='email'
           id='email'
           value={formValues.email}
         />
-        <MsgInputError msg={email} validated={validated} />
+        <MsgInputError msg={email || emailUnique} validated={validated} />
       </div>
       <div className='form-group mb-3'>
         <label htmlFor='password' className='mb-1'>
