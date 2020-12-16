@@ -16,9 +16,10 @@ import { restoreToken } from '../redux/actions';
 import RouteAuth from './RouteAuth';
 
 const App = (props) => {
+  const { restoreToken } = props;
 
   useEffect(() => {
-    props.restoreToken();
+    restoreToken();
   }, []);
 
   return (

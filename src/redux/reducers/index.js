@@ -5,6 +5,7 @@ import {
   SIGN_IN,
   SIGN_OUT,
   RESTORE_TOKEN,
+  SING_UP,
 } from '../types';
 import { DELETE_USER } from '../types/usersTypes';
 import usersReducer from './usersReducer';
@@ -40,6 +41,11 @@ const reducer = (state = INITIAL_STATE, action) => {
     case SIGN_OUT:
       return {
         ...INITIAL_STATE,
+        loading: false,
+      };
+    case SING_UP:
+      return {
+        ...state,
         loading: false,
       };
     default:

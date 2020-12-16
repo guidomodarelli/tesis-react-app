@@ -1,5 +1,12 @@
 import api from '../../api';
-import { ERROR, LOADING, SIGN_OUT, SIGN_IN, RESTORE_TOKEN } from '../types';
+import {
+  ERROR,
+  LOADING,
+  SIGN_OUT,
+  SIGN_IN,
+  RESTORE_TOKEN,
+  SING_UP,
+} from '../types';
 import { SET_CURRENT_USER, USER_NOT_LOADING } from '../types/usersTypes';
 
 export const signIn = (user) => async (dispatch) => {
@@ -48,13 +55,10 @@ export const signOut = () => (dispatch) => {
 export const signUp = (user) => async (dispatch) => {
   dispatch({ type: LOADING });
   try {
-    const data = await api.post.signUp(user);
-    const token = data ? data.token : '';
+    await api.post.signUp(user);
     dispatch({
-      type: SIGN_IN,
-      payload: token,
+      type: SING_UP,
     });
-    localStorage.setItem('token', token);
   } catch (error) {
     console.error(`Error: ${error.message}`);
     dispatch({
@@ -84,6 +88,5 @@ export const restoreToken = () => async (dispatch) => {
       payload: error.message,
     });
     localStorage.removeItem('token');
-
   }
 };
