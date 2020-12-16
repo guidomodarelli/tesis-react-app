@@ -1,33 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import api from '../api';
 import Badge from '../components/Badge';
 import PageLoading from '../components/PageLoading';
 import PageUpload from '../components/PageUpload';
 import UserForm from '../components/UserForm';
-import api from '../api';
+import { handleChangeForm, resetForm } from '../redux/actions/usersActions';
 
 const UserNew = (props) => {
+  const { loading, form, handleChangeForm, resetForm } = props;
+
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [form, setValues] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    birthdate: '',
-    jobtitle: '',
-    instagram: '',
-    password: '',
-  });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...form, [name]: value });
+    handleChangeForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSumbit = async (e) => {
     e.preventDefault();
     setUploading(true);
-    setError(null);
     try {
       const data = await api.post.signUp(form);
       if (data && data.id) {
@@ -35,41 +26,17 @@ const UserNew = (props) => {
       }
       setUploading(false);
     } catch (error) {
-      setError(error);
       setUploading(false);
     }
   };
 
-  const handleLogin = () => {
-    setLoading(true);
-    api.get
-      .loggedIn()
-      .then((data) => {
-        if (data.loggedIn) {
-          return props.history.push('/');
-        }
-        return setLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
-  };
-
   const handleCancel = () => {
+    resetForm();
     props.history.push('/login');
   };
 
-  useEffect(() => {
-    handleLogin();
-  }, []);
-
-  if (uploading) {
-    return <PageUpload />;
-  }
-  if (loading) {
-    return <PageLoading />;
-  }
+  if (uploading) return <PageUpload />;
+  if (loading) return <PageLoading />;
   return (
     <>
       <div className='container'>
@@ -91,7 +58,6 @@ const UserNew = (props) => {
               onChange={handleChange}
               formValues={form}
               onSubmit={handleSumbit}
-              error={error}
               onCancel={handleCancel}
               passwordRequired
             />
@@ -102,4 +68,11 @@ const UserNew = (props) => {
   );
 };
 
-export default UserNew;
+const mapStateToProps = ({ usersReducer }) => usersReducer;
+
+const mapDispatchToProps = {
+  handleChangeForm,
+  resetForm,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserNew);

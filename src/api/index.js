@@ -40,8 +40,7 @@ async function callAPI(endpoint, options = {}) {
         );
       }
       return data;
-    })
-    .catch(console.error);
+    });
 }
 
 const api = {

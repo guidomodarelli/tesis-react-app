@@ -3,13 +3,10 @@ import { Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signOut } from '../redux/actions';
+import { resetForm } from '../redux/actions/usersActions';
 
 const NavBar = (props) => {
-  const { userToken } = props;
-
-  const handleClick = () => {
-    props.signOut();
-  };
+  const { userToken, signOut, resetForm } = props;
 
   return (
     <Navbar bg='light' expand='lg' className='mx-2'>
@@ -45,12 +42,12 @@ const NavBar = (props) => {
         <button
           type='button'
           className='btn btn-primary text-nowrap'
-          onClick={handleClick}
+          onClick={signOut}
         >
           <span>Cerrar sesión</span>
         </button>
       ) : (
-        <Link to='/login' className='btn btn-primary text-nowrap'>
+        <Link to='/login' className='btn btn-primary text-nowrap' onClick={resetForm}>
           <span>Iniciar sesión</span>
         </Link>
       )}
@@ -58,16 +55,11 @@ const NavBar = (props) => {
   );
 };
 
-const mapStateToProps = (reducers) => {
-  return {
-    loading: reducers.reducer.loading,
-    error: reducers.reducer.error,
-    userToken: reducers.reducer.userToken,
-  };
-};
+const mapStateToProps = ({ reducer }) => reducer;
 
 const mapDispatchToProps = {
   signOut,
+  resetForm,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

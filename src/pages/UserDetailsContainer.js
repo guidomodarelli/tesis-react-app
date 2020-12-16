@@ -13,8 +13,8 @@ const UserDetailsContainer = (props) => {
     },
     reducer,
     usersReducer,
-    usersReducer: { users },
-    reducer: {
+    usersReducer: {
+      users,
       currentUser,
       currentUser: { Permission },
     },

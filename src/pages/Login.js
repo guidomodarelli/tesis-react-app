@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
 import UserForm from '../components/UserForm';
-import { handleChangeSingIn, signIn } from '../redux/actions';
+import { signIn } from '../redux/actions';
+import { handleChangeForm, resetForm } from '../redux/actions/usersActions';
 
 const Login = (props) => {
-  const { reducer: { loading, error, form }, signIn, handleChangeSingIn } = props;
+  const { reducer, usersReducer, usersReducer: { form }, signIn, handleChangeForm, resetForm } = props;
 
   const handleChange = (e) => {
-    handleChangeSingIn({ ...form, [e.target.name]: e.target.value });
+    handleChangeForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSumbit = (e) => {
@@ -18,8 +19,8 @@ const Login = (props) => {
     signIn(form);
   };
 
-  if (error) return <PageError />;
-  if (loading) return <PageLoading />;
+  if (reducer.loading || usersReducer.loading) return <PageLoading />;
+  if (reducer.error || usersReducer.error) return <PageError />;
   return (
     <div className='container mt-4' style={{ maxWidth: '25rem' }}>
       <h1>Iniciar sesión</h1>
@@ -32,7 +33,7 @@ const Login = (props) => {
       />
       <p className='mt-3'>
         ¿No tienes una cuenta?&nbsp;
-        <Link to='/signup' className='text-decoration-none'>
+        <Link to='/signup' className='text-decoration-none' onClick={resetForm}>
           Registrate
         </Link>
       </p>
@@ -47,7 +48,8 @@ const mapStateToProps = ({ reducer, usersReducer }) => ({
 
 const mapDispatchToProps = {
   signIn,
-  handleChangeSingIn,
+  handleChangeForm,
+  resetForm,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
