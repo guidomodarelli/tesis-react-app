@@ -31,7 +31,9 @@ async function callAPI(endpoint, options = {}) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(response.statusText || 'Algo salió mal, intente de nuevo, más tarde.');
+      throw new Error(
+        response.statusText || 'Algo salió mal, intente de nuevo, más tarde.',
+      );
     })
     .then((data) => {
       if (!data) {

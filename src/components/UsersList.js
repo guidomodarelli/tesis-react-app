@@ -30,7 +30,7 @@ const UserListItem = (props) => {
             {user.instagram || '{Sin cuenta}'}
           </p>
         </div>
-        <p className='UserListItem__jobTitle'>{user.jobtitle}</p>
+        <p className='UserListItem__jobTitle'>{user.jobtitle || ''}</p>
       </div>
     </div>
   );
