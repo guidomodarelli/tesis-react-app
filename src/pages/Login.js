@@ -8,7 +8,14 @@ import { signIn } from '../redux/actions';
 import { handleChangeForm, resetForm } from '../redux/actions/usersActions';
 
 const Login = (props) => {
-  const { reducer, usersReducer, usersReducer: { form }, signIn, handleChangeForm, resetForm } = props;
+  const {
+    reducer,
+    usersReducer,
+    usersReducer: { form },
+    signIn,
+    handleChangeForm,
+    resetForm,
+  } = props;
 
   const handleChange = (e) => {
     handleChangeForm({ ...form, [e.target.name]: e.target.value });
@@ -31,6 +38,7 @@ const Login = (props) => {
         passwordRequired
         login
       />
+      {reducer.message && <p className='text-danger'>{reducer.message}</p>}
       <p className='mt-3'>
         ¿No tienes una cuenta?&nbsp;
         <Link to='/signup' className='text-decoration-none' onClick={resetForm}>

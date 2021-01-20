@@ -13,36 +13,44 @@ async function callAPI(endpoint, options = {}) {
 
   const token = localStorage.getItem('token');
 
-  const init = {
-    ...options,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Accept: 'application/json',
-    },
+  options.headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    Accept: 'application/json',
   };
   if (token) {
-    init.headers.Authorization = `Bearer ${token}`;
+    options.headers.Authorization = `Bearer ${token}`;
   }
   const url = BASE_URL + endpoint;
 
-  return fetch(url, init)
-    .then((response) => {
-      if (response.status === 204) return {};
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(
-        response.statusText || 'Algo salió mal, intente de nuevo, más tarde.',
-      );
-    })
-    .then((data) => {
-      if (!data) {
-        throw new Error(
-          'Ocurrió un problema con el servidor, no se pudo establecer conexión',
-        );
-      }
-      return data;
-    });
+  return fetch(url, options).then((response) => {
+    if (response.ok || [401].includes(response.status)) {
+      return response.json();
+    }
+    throw new Error(
+      response.statusText || 'Algo salió mal, intente de nuevo, más tarde.',
+    );
+  });
+}
+
+function saveUser(user, url, method) {
+  const urlencoded = new URLSearchParams();
+  urlencoded.append('email', user.email);
+  urlencoded.append('firstname', user.firstname);
+  urlencoded.append('lastname', user.lastname);
+  urlencoded.append('birthdate', user.birthdate);
+  if (user.jobtitle) {
+    urlencoded.append('jobtitle', user.jobtitle);
+  }
+  if (user.instagram) {
+    urlencoded.append('instagram', user.instagram);
+  }
+  if (user.password) {
+    urlencoded.append('password', user.password);
+  }
+  return callAPI(url, {
+    method,
+    body: urlencoded,
+  });
 }
 
 const api = {
@@ -80,36 +88,13 @@ const api = {
       });
     },
     signUp(user) {
-      const urlencoded = new URLSearchParams();
-      urlencoded.append('email', user.email);
-      urlencoded.append('firstname', user.firstname);
-      urlencoded.append('lastname', user.lastname);
-      urlencoded.append('birthdate', user.birthdate);
-      urlencoded.append('jobtitle', user.jobtitle);
-      urlencoded.append('instagram', user.instagram);
-      urlencoded.append('password', user.password);
-
-      return callAPI('/signup', {
-        method: 'POST',
-        body: urlencoded,
-      });
+      saveUser(user, '/signup', 'POST');
     },
   },
   put: {
     users: {
       update(userId, updates) {
-        const urlencoded = new URLSearchParams();
-        const entries = Object.entries(updates);
-        for (let i = 0; i < entries.length; i++) {
-          const entry = entries[i];
-          const key = entry[0];
-          const value = entry[1];
-          urlencoded.append(key, value);
-        }
-        return callAPI(`/users/${userId}`, {
-          method: 'PUT',
-          body: urlencoded,
-        });
+        saveUser(updates, `/users/${userId}`, 'PUT');
       },
     },
   },

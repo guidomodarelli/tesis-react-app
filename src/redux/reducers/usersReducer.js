@@ -15,8 +15,8 @@ const initialForm = () => ({
   firstname: '',
   lastname: '',
   birthdate: '',
-  jobtitle: '',
-  instagram: '',
+  jobtitle: null,
+  instagram: null,
   email: '',
   password: '',
 });
@@ -27,8 +27,8 @@ const initialUserData = () => ({
   firstname: '',
   lastname: '',
   birthdate: '',
-  jobtitle: '',
-  instagram: '',
+  jobtitle: null,
+  instagram: null,
   email: '',
   Permission: null,
 });
@@ -101,7 +101,7 @@ const usersReducers = (state = INITIAL_STATE, action) => {
     case SET_CURRENT_USER:
       return {
         ...state,
-        loading: true,
+        loading: false,
         error: '',
         form: initialForm(),
         currentUser: action.payload,

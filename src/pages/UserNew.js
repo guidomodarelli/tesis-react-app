@@ -37,7 +37,9 @@ const UserNew = (props) => {
   const handleSumbit = (e) => {
     e.preventDefault();
     if (emailIsUnique()) {
-      setEmailUnique('El correo electronico proporcionado ya existe. Por favor, introduzca uno diferente.');
+      setEmailUnique(
+        'El correo electronico proporcionado ya existe. Por favor, introduzca uno diferente.',
+      );
     } else {
       setUploading(true);
       signUp(form);

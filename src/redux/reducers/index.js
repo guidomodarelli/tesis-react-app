@@ -6,6 +6,7 @@ import {
   SIGN_OUT,
   RESTORE_TOKEN,
   SING_UP,
+  AUTH_FAIL,
 } from '../types';
 import { DELETE_USER } from '../types/usersTypes';
 import usersReducer from './usersReducer';
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
   loading: true, // es el unico que empieza en true
   error: '',
   userToken: null,
+  message: '',
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -47,6 +49,12 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case AUTH_FAIL:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload,
       };
     default:
       return state;

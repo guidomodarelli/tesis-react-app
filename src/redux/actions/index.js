@@ -1,10 +1,11 @@
 import api from '../../api';
 import {
+  AUTH_FAIL,
   ERROR,
   LOADING,
-  SIGN_OUT,
-  SIGN_IN,
   RESTORE_TOKEN,
+  SIGN_IN,
+  SIGN_OUT,
   SING_UP,
 } from '../types';
 import { SET_CURRENT_USER, USER_NOT_LOADING } from '../types/usersTypes';
@@ -16,18 +17,25 @@ export const signIn = (user) => async (dispatch) => {
     let token = null;
     let userData = null;
     if (data) {
-      ({ token } = data);
-      ({ user: userData } = data);
+      if (data.message) {
+        dispatch({
+          type: AUTH_FAIL,
+          payload: data.message,
+        });
+      } else {
+        ({ token } = data);
+        ({ user: userData } = data);
+        dispatch({
+          type: SET_CURRENT_USER,
+          payload: userData,
+        });
+        dispatch({
+          type: SIGN_IN,
+          payload: token,
+        });
+        localStorage.setItem('token', token);
+      }
     }
-    dispatch({
-      type: SET_CURRENT_USER,
-      payload: userData,
-    });
-    dispatch({
-      type: SIGN_IN,
-      payload: token,
-    });
-    localStorage.setItem('token', token);
   } catch (error) {
     console.error(`Error: ${error.message}`);
     dispatch({

@@ -269,7 +269,7 @@ const UserForm = (props) => {
       )}
       <div className='form-group mb-2'>
         <label htmlFor='email' className='mb-1'>
-          Correo electronico
+          Correo electrónico
         </label>
         <input
           onChange={handleChange}
