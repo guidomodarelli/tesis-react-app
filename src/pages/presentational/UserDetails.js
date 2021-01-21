@@ -45,13 +45,14 @@ const Actions = (props) => {
             />
           </>
         )}
-        {addAdmin && (
+        {addAdmin && !profile && (
           <button
             type='button'
-            onClick={(params) => {
-
-            }}
+            onClick={() => {}}
             className='btn btn-outline-primary'
+            style={{
+              marginLeft: '0.75rem',
+            }}
           >
             Designar como admin.
           </button>

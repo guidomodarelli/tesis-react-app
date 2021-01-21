@@ -22,14 +22,13 @@ async function callAPI(endpoint, options = {}) {
   }
   const url = BASE_URL + endpoint;
 
-  return fetch(url, options).then((response) => {
-    if (response.ok || [401].includes(response.status)) {
-      return response.json();
-    }
-    throw new Error(
-      response.statusText || 'Algo salió mal, intente de nuevo, más tarde.',
-    );
-  });
+  const response = await fetch(url, options);
+  if (response.ok || [401].includes(response.status)) {
+    return response.json();
+  }
+  throw new Error(
+    response.statusText || 'Algo salió mal, intente de nuevo, más tarde.',
+  );
 }
 
 function saveUser(user, url, method) {
@@ -87,14 +86,14 @@ const api = {
         body: urlencoded,
       });
     },
-    signUp(user) {
-      saveUser(user, '/signup', 'POST');
+    async signUp(user) {
+      await saveUser(user, '/signup', 'POST');
     },
   },
   put: {
     users: {
-      update(userId, updates) {
-        saveUser(updates, `/users/${userId}`, 'PUT');
+      async update(userId, updates) {
+        await saveUser(updates, `/users/${userId}`, 'PUT');
       },
     },
   },

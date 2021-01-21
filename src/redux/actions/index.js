@@ -42,7 +42,6 @@ export const signIn = (user) => async (dispatch) => {
       type: ERROR,
       payload: error.message,
     });
-    localStorage.removeItem('token');
   }
 };
 
@@ -73,7 +72,6 @@ export const signUp = (user) => async (dispatch) => {
       type: ERROR,
       payload: error.message,
     });
-    localStorage.removeItem('token');
   }
 };
 
