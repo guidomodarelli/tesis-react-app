@@ -5,6 +5,7 @@ import DeleteUserModal from '../../components/DeleteUserModal';
 
 const Actions = (props) => {
   const {
+    addAdmin,
     userId,
     onOpenModal,
     modalIsOpen,
@@ -44,6 +45,17 @@ const Actions = (props) => {
             />
           </>
         )}
+        {addAdmin && (
+          <button
+            type='button'
+            onClick={(params) => {
+
+            }}
+            className='btn btn-outline-primary'
+          >
+            Designar como admin.
+          </button>
+        )}
       </div>
     </div>
   );
@@ -51,6 +63,7 @@ const Actions = (props) => {
 
 const UserDetails = (props) => {
   const {
+    addAdmin,
     user,
     profile,
     deleteUser,
@@ -75,8 +88,9 @@ const UserDetails = (props) => {
             jobtitle={user.jobtitle || ''}
           />
         </div>
-        {(profile || deleteUser) && (
+        {(profile || deleteUser || addAdmin) && (
           <Actions
+            addAdmin={addAdmin}
             userId={user.id}
             onOpenModal={onOpenModal}
             modalIsOpen={modalIsOpen}

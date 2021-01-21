@@ -46,6 +46,7 @@ const UserDetailsContainer = (props) => {
   return (
     <>
       <UserDetails
+        addAdmin={Permission ? Permission.addNewAdmins : false}
         onCloseModal={handleCloseModal}
         onOpenModal={handleOpenModal}
         modalIsOpen={modalIsOpen}
