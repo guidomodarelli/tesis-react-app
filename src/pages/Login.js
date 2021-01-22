@@ -29,7 +29,7 @@ const Login = (props) => {
   if (reducer.loading || usersReducer.loading) return <PageLoading />;
   if (reducer.error || usersReducer.error) return <PageError />;
   return (
-    <div className='container mt-4' style={{ maxWidth: '25rem' }}>
+    <div className='container mt-4 Login'>
       <h1>Iniciar sesión</h1>
       <UserForm
         onChange={handleChange}

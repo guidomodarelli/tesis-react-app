@@ -23,20 +23,20 @@ const UserDetailsContainer = (props) => {
     history,
   } = props;
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalDeleteUserIsOpen, setModalDeleteUserIsOpen] = useState(false);
 
   useEffect(() => !users.length && getUsers(), []);
 
-  const handleOpenModal = () => setModalIsOpen(true);
+  const handleOpenModalDeleteUser = () => setModalDeleteUserIsOpen(true);
 
-  const handleCloseModal = () => setModalIsOpen(false);
+  const handleCloseModalDeleteUser = () => setModalDeleteUserIsOpen(false);
 
   const handleDeleteUser = () => {
     deleteUser(userId);
     history.push('/login');
   };
 
-  const profile = () => currentUser.id === userId;
+  const isMyProfile = currentUser.id === userId;
 
   const currentUserDetails = useSelector(() => users.find((el) => el.id === userId));
 
@@ -47,12 +47,12 @@ const UserDetailsContainer = (props) => {
     <>
       <UserDetails
         addAdmin={Permission ? Permission.addNewAdmins : false}
-        onCloseModal={handleCloseModal}
-        onOpenModal={handleOpenModal}
-        modalIsOpen={modalIsOpen}
+        onCloseModalDeleteUser={handleCloseModalDeleteUser}
+        onOpenModalDeleteUser={handleOpenModalDeleteUser}
+        modalDeleteUserIsOpen={modalDeleteUserIsOpen}
         onDeleteUser={handleDeleteUser}
         user={currentUserDetails}
-        profile={profile()}
+        profile={isMyProfile}
         deleteUser={Permission ? Permission.deleteUsers : false}
       />
     </>

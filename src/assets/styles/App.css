@@ -8,3 +8,7 @@
 .Badge__Background__Image img {
   height: 500px;
 }
+
+.Login {
+  max-width: 25rem;
+}

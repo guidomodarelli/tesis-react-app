@@ -302,11 +302,8 @@ const UserForm = (props) => {
         {!login && (
           <button
             type='button'
-            className='btn btn-danger'
+            className='btn btn-danger ms-2'
             onClick={onCancel}
-            style={{
-              marginLeft: '0.75rem',
-            }}
           >
             Cancelar
           </button>

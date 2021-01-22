@@ -12,10 +12,7 @@ const DeleteUserModal = (props) => {
           <button
             type='button'
             onClick={onDeleteUser}
-            className='btn btn-danger'
-            style={{
-              marginRight: '0.75rem',
-            }}
+            className='btn btn-danger me-2'
           >
             Eliminar
           </button>
