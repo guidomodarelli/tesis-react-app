@@ -5,21 +5,23 @@ const DeleteUserModal = (props) => {
   const { isOpen, onClose, onDeleteUser } = props;
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className='DeleteUserModal'>
+      <div className='modal-header'>
         <h1>¿Estás seguro?</h1>
-        <p>Estás apunto de eliminar esta cuenta!</p>
-        <div className='mt-2'>
-          <button
-            type='button'
-            onClick={onDeleteUser}
-            className='btn btn-danger me-2'
-          >
-            Eliminar
-          </button>
-          <button type='button' onClick={onClose} className='btn btn-primary'>
-            Cancelar
-          </button>
-        </div>
+      </div>
+      <div className='modal-body'>
+        <p>&iexcl;Estás apunto de eliminar esta cuenta!</p>
+      </div>
+      <div className='modal-footer'>
+        <button
+          type='button'
+          onClick={onDeleteUser}
+          className='btn btn-danger me-2'
+        >
+          Confirmar
+        </button>
+        <button type='button' onClick={onClose} className='btn btn-secondary'>
+          Cancelar
+        </button>
       </div>
     </Modal>
   );

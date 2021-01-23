@@ -24,6 +24,7 @@ const UserDetailsContainer = (props) => {
   } = props;
 
   const [modalDeleteUserIsOpen, setModalDeleteUserIsOpen] = useState(false);
+  const [modalPermisosIsOpen, setModalPermisosIsOpen] = useState(false);
 
   useEffect(() => !users.length && getUsers(), []);
 
@@ -31,10 +32,16 @@ const UserDetailsContainer = (props) => {
 
   const handleCloseModalDeleteUser = () => setModalDeleteUserIsOpen(false);
 
+  const handleOpenModalPermisos = () => setModalPermisosIsOpen(true);
+
+  const handleCloseModalPermisos = () => setModalPermisosIsOpen(false);
+
   const handleDeleteUser = () => {
     deleteUser(userId);
     history.push('/login');
   };
+
+  const handleDesignAdmin = () => {};
 
   const isMyProfile = currentUser.id === userId;
 
@@ -44,18 +51,20 @@ const UserDetailsContainer = (props) => {
   if (reducer.loading || usersReducer.loading) return <PageLoading />;
   if (!currentUserDetails) return <PageEmpty />;
   return (
-    <>
-      <UserDetails
-        addAdmin={Permission ? Permission.addNewAdmins : false}
-        onCloseModalDeleteUser={handleCloseModalDeleteUser}
-        onOpenModalDeleteUser={handleOpenModalDeleteUser}
-        modalDeleteUserIsOpen={modalDeleteUserIsOpen}
-        onDeleteUser={handleDeleteUser}
-        user={currentUserDetails}
-        profile={isMyProfile}
-        deleteUser={Permission ? Permission.deleteUsers : false}
-      />
-    </>
+    <UserDetails
+      addAdmin={Permission ? Permission.addNewAdmins : false}
+      deleteUser={Permission ? Permission.deleteUsers : false}
+      modalDeleteUserIsOpen={modalDeleteUserIsOpen}
+      modalPermisosIsOpen={modalPermisosIsOpen}
+      onCloseModalDeleteUser={handleCloseModalDeleteUser}
+      onCloseModalPermisos={handleCloseModalPermisos}
+      onDeleteUser={handleDeleteUser}
+      onDesignAdmin={handleDesignAdmin}
+      onOpenModalDeleteUser={handleOpenModalDeleteUser}
+      onOpenModalPermisos={handleOpenModalPermisos}
+      profile={isMyProfile}
+      user={currentUserDetails}
+    />
   );
 };
 

@@ -8,11 +8,14 @@ const Actions = (props) => {
   const {
     addAdmin,
     deleteUser,
-    handleClick,
     modalDeleteUserIsOpen,
+    modalPermisosIsOpen,
     onCloseModalDeleteUser,
+    onCloseModalPermisos,
     onDeleteUser,
+    onDesignAdmin,
     onOpenModalDeleteUser,
+    onOpenModalPermisos,
     profile,
     userId,
   } = props;
@@ -48,14 +51,15 @@ const Actions = (props) => {
           <>
             <button
               type='button'
+              onClick={onOpenModalPermisos}
               className='btn btn-outline-primary ms-2'
-              data-bs-toggle='modal'
-              data-bs-target='#exampleModal'
             >
               Designar como admin.
             </button>
             <PermisosAdminModal
-              handleClick={handleClick}
+              isOpen={modalPermisosIsOpen}
+              onClose={onCloseModalPermisos}
+              onDesignAdmin={onDesignAdmin}
             />
           </>
         )}
@@ -69,9 +73,13 @@ const UserDetails = (props) => {
     addAdmin,
     deleteUser,
     modalDeleteUserIsOpen,
+    modalPermisosIsOpen,
     onCloseModalDeleteUser,
+    onCloseModalPermisos,
     onDeleteUser,
+    onDesignAdmin,
     onOpenModalDeleteUser,
+    onOpenModalPermisos,
     profile,
     user,
   } = props;
@@ -94,13 +102,17 @@ const UserDetails = (props) => {
         {(profile || deleteUser || addAdmin) && (
           <Actions
             addAdmin={addAdmin}
-            userId={user.id}
-            onOpenModalDeleteUser={onOpenModalDeleteUser}
-            modalDeleteUserIsOpen={modalDeleteUserIsOpen}
-            onCloseModalDeleteUser={onCloseModalDeleteUser}
-            onDeleteUser={onDeleteUser}
-            profile={profile}
             deleteUser={deleteUser}
+            modalDeleteUserIsOpen={modalDeleteUserIsOpen}
+            modalPermisosIsOpen={modalPermisosIsOpen}
+            onCloseModalDeleteUser={onCloseModalDeleteUser}
+            onCloseModalPermisos={onCloseModalPermisos}
+            onDeleteUser={onDeleteUser}
+            onDesignAdmin={onDesignAdmin}
+            onOpenModalDeleteUser={onOpenModalDeleteUser}
+            onOpenModalPermisos={onOpenModalPermisos}
+            profile={profile}
+            userId={user.id}
           />
         )}
       </div>

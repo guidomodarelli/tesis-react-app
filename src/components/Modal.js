@@ -8,14 +8,17 @@ function Modal(props) {
     return null;
   }
   return ReactDOM.createPortal(
-    <div className='Modal'>
-      <div className='Modal__container'>
-        <button type='button' onClick={onClose} className='Modal__close-button'>
-          X
-        </button>
+    <div className='modal'>
+      <div className='modal-dialog modal-dialog-centered'>
+        <div className='modal-content'>
+          <button type='button' onClick={onClose} className='btn-close'>
+            &nbsp;
+          </button>
 
-        {children}
+          {children}
+        </div>
       </div>
+
     </div>,
     document.getElementById('modal'),
   );
