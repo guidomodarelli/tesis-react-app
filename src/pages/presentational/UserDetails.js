@@ -84,12 +84,12 @@ const UserDetails = (props) => {
     user,
   } = props;
   return (
-    <div className='container px-2'>
+    <div className='container'>
       <Link to='/users' className='btn btn-outline-dark mt-2'>
         Volver
       </Link>
       <div className='row mt-3 flex-column'>
-        <div className='col mx-2 d-flex justify-content-center'>
+        <div className='col px-2 d-flex justify-content-center'>
           <Badge
             firstname={user.firstname || ''}
             lastname={user.lastname || ''}

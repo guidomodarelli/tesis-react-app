@@ -9,7 +9,7 @@ const NavBar = (props) => {
   const { userToken, signOut, resetForm } = props;
 
   return (
-    <Navbar bg='light' expand='lg' className='mx-2'>
+    <Navbar bg='light' expand='lg' className='px-2'>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
