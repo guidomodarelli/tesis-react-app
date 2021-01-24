@@ -15,8 +15,8 @@ const initialForm = () => ({
   firstname: '',
   lastname: '',
   birthdate: '',
-  jobtitle: null,
-  instagram: null,
+  jobtitle: '',
+  instagram: '',
   email: '',
   password: '',
 });

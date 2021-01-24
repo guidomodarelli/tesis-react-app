@@ -69,8 +69,8 @@ const UserEdit = (props) => {
       firstname,
       lastname,
       birthdate,
-      jobtitle,
-      instagram,
+      jobtitle: jobtitle || '',
+      instagram: instagram || '',
       email,
       password: '',
     });
