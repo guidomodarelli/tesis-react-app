@@ -25,6 +25,17 @@ const UserDetailsContainer = (props) => {
 
   const [modalDeleteUserIsOpen, setModalDeleteUserIsOpen] = useState(false);
   const [modalPermisosIsOpen, setModalPermisosIsOpen] = useState(false);
+  const [permisos, setPermisos] = useState({
+    addNewAdmins: false,
+    changeGroupInfo: false,
+    deletePosts: false,
+    deleteVotes: false,
+    deleteUsers: false,
+    addGroup: false,
+    changeRoutine: false,
+    changePermissionsAdmins: false,
+    changeGroupUser: false,
+  });
 
   useEffect(() => !users.length && getUsers(), []);
 
@@ -41,7 +52,12 @@ const UserDetailsContainer = (props) => {
     history.push('/login');
   };
 
-  const handleDesignAdmin = () => {};
+  const handleDesignAdmin = () => {
+  };
+
+  const handleChangeCheckList = (e) => {
+    setPermisos({ ...permisos, [e.target.name]: e.target.checked });
+  };
 
   const isMyProfile = currentUser.id === userId;
 
@@ -54,6 +70,7 @@ const UserDetailsContainer = (props) => {
     <UserDetails
       addAdmin={Permission ? Permission.addNewAdmins : false}
       deleteUser={Permission ? Permission.deleteUsers : false}
+      handleChangeCheckList={handleChangeCheckList}
       modalDeleteUserIsOpen={modalDeleteUserIsOpen}
       modalPermisosIsOpen={modalPermisosIsOpen}
       onCloseModalDeleteUser={handleCloseModalDeleteUser}
@@ -62,6 +79,7 @@ const UserDetailsContainer = (props) => {
       onDesignAdmin={handleDesignAdmin}
       onOpenModalDeleteUser={handleOpenModalDeleteUser}
       onOpenModalPermisos={handleOpenModalPermisos}
+      permisos={permisos}
       profile={isMyProfile}
       user={currentUserDetails}
     />

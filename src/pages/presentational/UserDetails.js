@@ -8,6 +8,7 @@ const Actions = (props) => {
   const {
     addAdmin,
     deleteUser,
+    handleChangeCheckList,
     modalDeleteUserIsOpen,
     modalPermisosIsOpen,
     onCloseModalDeleteUser,
@@ -17,6 +18,7 @@ const Actions = (props) => {
     onOpenModalDeleteUser,
     onOpenModalPermisos,
     profile,
+    permisos,
     userId,
   } = props;
   return (
@@ -57,9 +59,11 @@ const Actions = (props) => {
               Designar como admin.
             </button>
             <PermisosAdminModal
+              handleChangeCheckList={handleChangeCheckList}
               isOpen={modalPermisosIsOpen}
               onClose={onCloseModalPermisos}
               onDesignAdmin={onDesignAdmin}
+              permisos={permisos}
             />
           </>
         )}
@@ -72,6 +76,7 @@ const UserDetails = (props) => {
   const {
     addAdmin,
     deleteUser,
+    handleChangeCheckList,
     modalDeleteUserIsOpen,
     modalPermisosIsOpen,
     onCloseModalDeleteUser,
@@ -81,6 +86,7 @@ const UserDetails = (props) => {
     onOpenModalDeleteUser,
     onOpenModalPermisos,
     profile,
+    permisos,
     user,
   } = props;
   return (
@@ -103,6 +109,7 @@ const UserDetails = (props) => {
           <Actions
             addAdmin={addAdmin}
             deleteUser={deleteUser}
+            handleChangeCheckList={handleChangeCheckList}
             modalDeleteUserIsOpen={modalDeleteUserIsOpen}
             modalPermisosIsOpen={modalPermisosIsOpen}
             onCloseModalDeleteUser={onCloseModalDeleteUser}
@@ -112,6 +119,7 @@ const UserDetails = (props) => {
             onOpenModalDeleteUser={onOpenModalDeleteUser}
             onOpenModalPermisos={onOpenModalPermisos}
             profile={profile}
+            permisos={permisos}
             userId={user.id}
           />
         )}

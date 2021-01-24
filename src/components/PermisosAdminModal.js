@@ -4,10 +4,12 @@ import Modal from './Modal';
 
 const PermisosAdminModal = (props) => {
   const {
+    currentUser: { Permission },
+    handleChangeCheckList,
     isOpen,
     onClose,
-    onDesignAdmin,
-    currentUser: { Permission },
+    onDesignAdmin: onSubmit,
+    permisos,
   } = props;
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -15,12 +17,14 @@ const PermisosAdminModal = (props) => {
         <h1 className='mt-3'>¿Qué puede hacer este administrador?</h1>
       </div>
       <div className='modal-body'>
-        <form onSubmit={onDesignAdmin}>
+        <form>
           <div className='form-check'>
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='addNewAdmins'
+              value={permisos.addNewAdmins}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault'
               disabled={Permission ? !Permission.addNewAdmins : true}
             />
@@ -32,7 +36,9 @@ const PermisosAdminModal = (props) => {
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='changeGroupInfo'
+              value={permisos.changeGroupInfo}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault2'
               disabled={Permission ? !Permission.changeGroupInfo : true}
             />
@@ -44,7 +50,9 @@ const PermisosAdminModal = (props) => {
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='deletePosts'
+              value={permisos.deletePosts}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault3'
               disabled={Permission ? !Permission.deletePosts : true}
             />
@@ -56,7 +64,9 @@ const PermisosAdminModal = (props) => {
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='deleteVotes'
+              value={permisos.deleteVotes}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault4'
               disabled={Permission ? !Permission.deleteVotes : true}
             />
@@ -68,7 +78,9 @@ const PermisosAdminModal = (props) => {
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='deleteUsers'
+              value={permisos.deleteUsers}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault5'
               disabled={Permission ? !Permission.deleteUsers : true}
             />
@@ -80,7 +92,9 @@ const PermisosAdminModal = (props) => {
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='addGroup'
+              value={permisos.addGroup}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault6'
               disabled={Permission ? !Permission.addGroup : true}
             />
@@ -92,7 +106,9 @@ const PermisosAdminModal = (props) => {
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='changeRoutine'
+              value={permisos.changeRoutine}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault7'
               disabled={Permission ? !Permission.changeRoutine : true}
             />
@@ -104,7 +120,9 @@ const PermisosAdminModal = (props) => {
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='changePermissionsAdmins'
+              value={permisos.changePermissionsAdmins}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault8'
               disabled={Permission ? !Permission.changePermissionsAdmins : true}
             />
@@ -116,7 +134,9 @@ const PermisosAdminModal = (props) => {
             <input
               className='form-check-input'
               type='checkbox'
-              value=''
+              name='changeGroupUser'
+              value={permisos.changeGroupUser}
+              onChange={handleChangeCheckList}
               id='flexCheckDefault9'
               disabled={Permission ? !Permission.changeGroupUser : true}
             />
@@ -130,7 +150,7 @@ const PermisosAdminModal = (props) => {
         <div className='mt-2'>
           <button
             type='submit'
-            onClick={onDesignAdmin}
+            onClick={onSubmit}
             className='btn btn-primary me-2'
           >
             Confirmar
