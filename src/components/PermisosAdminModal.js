@@ -23,7 +23,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='addNewAdmins'
-              value={permisos.addNewAdmins}
+              checked={permisos.addNewAdmins}
               onChange={handleChangeCheckList}
               id='flexCheckDefault'
               disabled={Permission ? !Permission.addNewAdmins : true}
@@ -37,7 +37,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='changeGroupInfo'
-              value={permisos.changeGroupInfo}
+              checked={permisos.changeGroupInfo}
               onChange={handleChangeCheckList}
               id='flexCheckDefault2'
               disabled={Permission ? !Permission.changeGroupInfo : true}
@@ -51,7 +51,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='deletePosts'
-              value={permisos.deletePosts}
+              checked={permisos.deletePosts}
               onChange={handleChangeCheckList}
               id='flexCheckDefault3'
               disabled={Permission ? !Permission.deletePosts : true}
@@ -65,7 +65,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='deleteVotes'
-              value={permisos.deleteVotes}
+              checked={permisos.deleteVotes}
               onChange={handleChangeCheckList}
               id='flexCheckDefault4'
               disabled={Permission ? !Permission.deleteVotes : true}
@@ -79,7 +79,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='deleteUsers'
-              value={permisos.deleteUsers}
+              checked={permisos.deleteUsers}
               onChange={handleChangeCheckList}
               id='flexCheckDefault5'
               disabled={Permission ? !Permission.deleteUsers : true}
@@ -93,7 +93,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='addGroup'
-              value={permisos.addGroup}
+              checked={permisos.addGroup}
               onChange={handleChangeCheckList}
               id='flexCheckDefault6'
               disabled={Permission ? !Permission.addGroup : true}
@@ -107,7 +107,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='changeRoutine'
-              value={permisos.changeRoutine}
+              checked={permisos.changeRoutine}
               onChange={handleChangeCheckList}
               id='flexCheckDefault7'
               disabled={Permission ? !Permission.changeRoutine : true}
@@ -121,7 +121,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='changePermissionsAdmins'
-              value={permisos.changePermissionsAdmins}
+              checked={permisos.changePermissionsAdmins}
               onChange={handleChangeCheckList}
               id='flexCheckDefault8'
               disabled={Permission ? !Permission.changePermissionsAdmins : true}
@@ -135,7 +135,7 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='changeGroupUser'
-              value={permisos.changeGroupUser}
+              checked={permisos.changeGroupUser}
               onChange={handleChangeCheckList}
               id='flexCheckDefault9'
               disabled={Permission ? !Permission.changeGroupUser : true}

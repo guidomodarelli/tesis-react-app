@@ -190,7 +190,6 @@ const UserForm = (props) => {
       validated && (value ? 'is-invalid' : 'is-valid'),
     );
   };
-  console.log(formValues);
   return (
     <form onSubmit={handleSubmit} noValidate>
       {!login && (
