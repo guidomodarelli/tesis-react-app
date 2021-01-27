@@ -18,9 +18,7 @@ import RouteAuth from './RouteAuth';
 const App = (props) => {
   const { restoreToken } = props;
 
-  useEffect(() => {
-    restoreToken();
-  }, []);
+  useEffect(() => restoreToken(), []);
 
   return (
     <BrowserRouter>
@@ -29,8 +27,18 @@ const App = (props) => {
           <Route exact path='/' component={Home} />
           {/* https://stackoverflow.com/questions/52540050/if-condition-to-change-route-using-react-router-v4 */}
           <RouteAuth auth exact path='/users' component={Users} />
-          <RouteAuth auth exact path='/users/:userId' component={UserDetailsContainer} />
-          <RouteAuth auth exact path='/users/:userId/edit' component={UserEdit} />
+          <RouteAuth
+            auth
+            exact
+            path='/users/:userId'
+            component={UserDetailsContainer}
+          />
+          <RouteAuth
+            auth
+            exact
+            path='/users/:userId/edit'
+            component={UserEdit}
+          />
           <RouteAuth exact path='/login' component={Login} />
           <RouteAuth exact path='/signup' component={UserNew} />
           <Route component={NotFound} />

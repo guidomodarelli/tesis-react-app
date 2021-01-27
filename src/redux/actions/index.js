@@ -8,7 +8,7 @@ import {
   SIGN_OUT,
   SING_UP,
 } from '../types';
-import { SET_CURRENT_USER, USER_NOT_LOADING } from '../types/usersTypes';
+import { SET_CURRENT_USER } from '../types/usersTypes';
 
 export const signIn = (user) => async (dispatch) => {
   dispatch({ type: LOADING });
@@ -75,7 +75,7 @@ export const signUp = (user) => async (dispatch) => {
   }
 };
 
-export const restoreToken = () => async (dispatch) => {
+export const restoreToken = () => async (dispatch, getState) => {
   dispatch({ type: LOADING });
   try {
     let data = await api.get.loggedIn();
@@ -86,7 +86,6 @@ export const restoreToken = () => async (dispatch) => {
       dispatch({ type: SET_CURRENT_USER, payload: data });
     }
     dispatch({ type: RESTORE_TOKEN, payload: userToken });
-    dispatch({ type: USER_NOT_LOADING });
   } catch (error) {
     console.error(`Error: ${error.message}`);
     dispatch({

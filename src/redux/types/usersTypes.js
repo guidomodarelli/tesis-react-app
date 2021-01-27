@@ -5,6 +5,7 @@ export const USER_ERROR = 'USER_ERROR';
 export const DELETE_USER = 'DELETE_USER';
 export const ADD_USER = 'ADD_USER';
 export const PUT_USER = 'PUT_USER';
+export const PUT_OTHER_USER = 'PUT_OTHER_USER';
 export const SET_FORM = 'SET_FORM';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const RESET_FORM = 'RESET_FORM';

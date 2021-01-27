@@ -4,12 +4,22 @@ import Modal from './Modal';
 
 const PermisosAdminModal = (props) => {
   const {
-    currentUser: { Permission },
+    currentUser: {
+      addGroup,
+      addNewAdmins,
+      changeGroupInfo,
+      changeGroupUser,
+      changePermissionsAdmins,
+      changeRoutine,
+      deletePosts,
+      deleteUsers,
+      deleteVotes,
+    },
     handleChangeCheckList,
     isOpen,
     onClose,
     onDesignAdmin: onSubmit,
-    permisos,
+    form,
   } = props;
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -23,10 +33,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='addNewAdmins'
-              checked={permisos.addNewAdmins}
+              checked={form.addNewAdmins}
               onChange={handleChangeCheckList}
               id='flexCheckDefault'
-              disabled={Permission ? !Permission.addNewAdmins : true}
+              disabled={!addNewAdmins}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault'>
               Añadir administradores
@@ -37,10 +47,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='changeGroupInfo'
-              checked={permisos.changeGroupInfo}
+              checked={form.changeGroupInfo}
               onChange={handleChangeCheckList}
               id='flexCheckDefault2'
-              disabled={Permission ? !Permission.changeGroupInfo : true}
+              disabled={!changeGroupInfo}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault2'>
               Editar info. del grupo
@@ -51,10 +61,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='deletePosts'
-              checked={permisos.deletePosts}
+              checked={form.deletePosts}
               onChange={handleChangeCheckList}
               id='flexCheckDefault3'
-              disabled={Permission ? !Permission.deletePosts : true}
+              disabled={!deletePosts}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault3'>
               Eliminar Publicaciones
@@ -65,10 +75,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='deleteVotes'
-              checked={permisos.deleteVotes}
+              checked={form.deleteVotes}
               onChange={handleChangeCheckList}
               id='flexCheckDefault4'
-              disabled={Permission ? !Permission.deleteVotes : true}
+              disabled={!deleteVotes}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault4'>
               Eliminar votos
@@ -79,10 +89,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='deleteUsers'
-              checked={permisos.deleteUsers}
+              checked={form.deleteUsers}
               onChange={handleChangeCheckList}
               id='flexCheckDefault5'
-              disabled={Permission ? !Permission.deleteUsers : true}
+              disabled={!deleteUsers}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault5'>
               Eliminar usuarios
@@ -93,10 +103,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='addGroup'
-              checked={permisos.addGroup}
+              checked={form.addGroup}
               onChange={handleChangeCheckList}
               id='flexCheckDefault6'
-              disabled={Permission ? !Permission.addGroup : true}
+              disabled={!addGroup}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault6'>
               Crear grupo
@@ -107,10 +117,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='changeRoutine'
-              checked={permisos.changeRoutine}
+              checked={form.changeRoutine}
               onChange={handleChangeCheckList}
               id='flexCheckDefault7'
-              disabled={Permission ? !Permission.changeRoutine : true}
+              disabled={!changeRoutine}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault7'>
               Modificar rutinas
@@ -121,10 +131,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='changePermissionsAdmins'
-              checked={permisos.changePermissionsAdmins}
+              checked={form.changePermissionsAdmins}
               onChange={handleChangeCheckList}
               id='flexCheckDefault8'
-              disabled={Permission ? !Permission.changePermissionsAdmins : true}
+              disabled={!changePermissionsAdmins}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault8'>
               Modificar permisos de otros admins.
@@ -135,10 +145,10 @@ const PermisosAdminModal = (props) => {
               className='form-check-input'
               type='checkbox'
               name='changeGroupUser'
-              checked={permisos.changeGroupUser}
+              checked={form.changeGroupUser}
               onChange={handleChangeCheckList}
               id='flexCheckDefault9'
-              disabled={Permission ? !Permission.changeGroupUser : true}
+              disabled={!changeGroupUser}
             />
             <label className='form-check-label' htmlFor='flexCheckDefault9'>
               Cambiar al usuario de grupo

@@ -33,23 +33,21 @@ async function callAPI(endpoint, options = {}) {
 
 function saveUser(user, url, method) {
   const urlencoded = new URLSearchParams();
-  urlencoded.append('email', user.email);
-  urlencoded.append('firstname', user.firstname);
-  urlencoded.append('lastname', user.lastname);
-  urlencoded.append('birthdate', user.birthdate);
-  if (user.jobtitle) {
-    urlencoded.append('jobtitle', user.jobtitle);
+  const entries = Object.entries(user);
+  let hasValue = false;
+  for (let i = 0; i < entries.length; i++) {
+    const [key, value] = entries[i];
+    if (value) {
+      hasValue = true;
+      urlencoded.append(key, value);
+    }
   }
-  if (user.instagram) {
-    urlencoded.append('instagram', user.instagram);
-  }
-  if (user.password) {
-    urlencoded.append('password', user.password);
-  }
-  return callAPI(url, {
-    method,
-    body: urlencoded,
-  });
+  return hasValue ?
+    callAPI(url, {
+      method,
+      body: urlencoded,
+    }) :
+    Promise.resolve();
 }
 
 const api = {

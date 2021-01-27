@@ -3,7 +3,12 @@ import { connect, useSelector } from 'react-redux';
 import PageEmpty from '../components/PageEmpty';
 import PageError from '../components/PageError';
 import PageLoading from '../components/PageLoading';
-import { deleteUser, getAll as getUsers } from '../redux/actions/usersActions';
+import {
+  deleteUser,
+  getAll as getUsers,
+  handleChangeForm,
+  putOtherUser,
+} from '../redux/actions/usersActions';
 import UserDetails from './presentational/UserDetails';
 
 const UserDetailsContainer = (props) => {
@@ -14,30 +19,28 @@ const UserDetailsContainer = (props) => {
     reducer,
     usersReducer,
     usersReducer: {
+      form,
       users,
       currentUser,
-      currentUser: { Permission },
+      currentUser: { addNewAdmins, deleteUsers, changePermissionsAdmins },
     },
     getUsers,
     deleteUser,
+    putOtherUser,
+    handleChangeForm,
     history,
   } = props;
 
   const [modalDeleteUserIsOpen, setModalDeleteUserIsOpen] = useState(false);
   const [modalPermisosIsOpen, setModalPermisosIsOpen] = useState(false);
-  const [permisos, setPermisos] = useState({
-    addNewAdmins: false,
-    changeGroupInfo: false,
-    deletePosts: false,
-    deleteVotes: false,
-    deleteUsers: false,
-    addGroup: false,
-    changeRoutine: false,
-    changePermissionsAdmins: false,
-    changeGroupUser: false,
-  });
 
-  useEffect(() => !users.length && getUsers(), []);
+  const currentUserDetails = useSelector(() => users.find((el) => el.id === userId));
+
+  useEffect(async () => {
+    if (!users.length) await getUsers();
+    const user = users.find((el) => el.id === userId);
+    handleChangeForm({ ...user });
+  }, []);
 
   const handleOpenModalDeleteUser = () => setModalDeleteUserIsOpen(true);
 
@@ -53,23 +56,24 @@ const UserDetailsContainer = (props) => {
   };
 
   const handleDesignAdmin = () => {
+    putOtherUser(userId);
   };
 
   const handleChangeCheckList = (e) => {
-    setPermisos({ ...permisos, [e.target.name]: e.target.checked });
+    handleChangeForm({ ...form, [e.target.name]: e.target.checked });
   };
 
   const isMyProfile = currentUser.id === userId;
-
-  const currentUserDetails = useSelector(() => users.find((el) => el.id === userId));
 
   if (reducer.error || usersReducer.error) return <PageError />;
   if (reducer.loading || usersReducer.loading) return <PageLoading />;
   if (!currentUserDetails) return <PageEmpty />;
   return (
     <UserDetails
-      addAdmin={Permission ? Permission.addNewAdmins : false}
-      deleteUser={Permission ? Permission.deleteUsers : false}
+      addAdmin={addNewAdmins}
+      changePermissionsAdmins={changePermissionsAdmins}
+      deleteUser={deleteUsers}
+      form={form}
       handleChangeCheckList={handleChangeCheckList}
       modalDeleteUserIsOpen={modalDeleteUserIsOpen}
       modalPermisosIsOpen={modalPermisosIsOpen}
@@ -79,7 +83,6 @@ const UserDetailsContainer = (props) => {
       onDesignAdmin={handleDesignAdmin}
       onOpenModalDeleteUser={handleOpenModalDeleteUser}
       onOpenModalPermisos={handleOpenModalPermisos}
-      permisos={permisos}
       profile={isMyProfile}
       user={currentUserDetails}
     />
@@ -93,6 +96,8 @@ const mapStateToProps = ({ reducer, usersReducer }) => ({
 
 const mapDispatchToProps = {
   deleteUser,
+  handleChangeForm,
+  putOtherUser,
   getUsers,
 };
 
