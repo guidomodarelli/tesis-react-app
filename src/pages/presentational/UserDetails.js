@@ -21,6 +21,7 @@ const Actions = (props) => {
     onOpenModalPermisos,
     profile,
     userId,
+    userRole,
   } = props;
   return (
     <div className='col d-flex flex-column align-items-center justify-content-center my-4'>
@@ -54,8 +55,8 @@ const Actions = (props) => {
               onClick={onOpenModalPermisos}
               className='btn btn-outline-primary ms-2'
             >
-              {changePermissionsAdmins && <>Modificar permisos</>}
-              {addAdmin && !changePermissionsAdmins && <>Designar como admin.</>}
+              {userRole === 'admin' && changePermissionsAdmins && <>Modificar permisos</>}
+              {userRole === 'normal' && addAdmin && <>Designar como admin.</>}
             </button>
             <PermisosAdminModal
               form={form}
@@ -125,6 +126,7 @@ const UserDetails = (props) => {
             form={form}
             profile={profile}
             userId={user.id}
+            userRole={user.role}
           />
         )}
       </div>
