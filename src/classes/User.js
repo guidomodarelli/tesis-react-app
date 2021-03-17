@@ -1,4 +1,13 @@
 import validator from 'validator';
+import { toTitleCase } from '../utils';
+
+function isString(val) {
+  return typeof val === 'string';
+}
+
+function isBoolean(val) {
+  return typeof val === 'boolean';
+}
 
 class User {
   /**
@@ -25,6 +34,7 @@ class User {
   constructor(user = {}) {
     this.setId(user.id);
     this.setEmail(user.email);
+    this.setPassword(user.password);
     this.setName(user.name);
     this.setBirthdate(user.birthdate);
     this.setBio(user.bio);
@@ -43,21 +53,10 @@ class User {
 
   /**
    *
-   * @param {any} value
-   * @param {string} field
-   */
-  hasValue(value, field) {
-    if (!value) {
-      throw new Error(`${field} esta indefinido`);
-    }
-  }
-
-  /**
-   *
    * @param {string} id
    */
   setId(id) {
-    if (id && typeof id === 'string') {
+    if (id && !isString(id)) {
       if (!validator.isUUID(id, 4)) {
         throw new Error('El id debe ser un UUIDv4');
       }
@@ -70,7 +69,9 @@ class User {
    * @param {string} email
    */
   setEmail(email) {
-    this.hasValue(email, 'email');
+    if (!email) {
+      throw new Error('email esta indefinido');
+    }
     if (!validator.isEmail(email)) {
       throw new Error('email no es válido');
     }
@@ -79,11 +80,27 @@ class User {
 
   /**
    *
+   * @param {string} password
+   */
+  setPassword(password) {
+    if (password && !isString(password)) {
+      throw new Error('password no es de tipo string');
+    }
+    this.password = password;
+  }
+
+  /**
+   *
    * @param {string} name
    */
   setName(name) {
-    this.hasValue(name, 'name');
-    this.name = name;
+    if (!name) {
+      throw new Error('name esta indefinido');
+    }
+    if (!isString(name)) {
+      throw new Error('name no es de tipo string');
+    }
+    this.name = toTitleCase(name);
   }
 
   /**
@@ -91,7 +108,9 @@ class User {
    * @param {string} birthdate
    */
   setBirthdate(birthdate) {
-    this.hasValue(birthdate, 'birthdate');
+    if (!birthdate) {
+      throw new Error('birthdate esta indefinido');
+    }
     if (!validator.isDate(birthdate)) {
       throw new Error('birthdate no es válido');
     }
@@ -102,7 +121,7 @@ class User {
    *
    * @param {string?} bio
    */
-  setBio(bio = null) {
+  setBio(bio = '') {
     if (bio && typeof bio !== 'string') {
       throw new Error('bio no es de tipo string');
     }
@@ -113,7 +132,7 @@ class User {
    *
    * @param {string?} instagram
    */
-  setInstagram(instagram = null) {
+  setInstagram(instagram = '') {
     if (instagram && typeof instagram !== 'string') {
       throw new Error('instagram no es de tipo string');
     }
@@ -126,7 +145,6 @@ class User {
    * @default
    */
   setRole(role = 'normal') {
-    this.hasValue(role, 'role');
     const allowedValues = ['admin', 'normal'];
     if (!validator.isIn(role, allowedValues)) {
       throw new Error(
@@ -141,7 +159,7 @@ class User {
    * @param {boolean} value
    */
   setAddGroup(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.addGroup = value;
@@ -152,7 +170,7 @@ class User {
    * @param {boolean} value
    */
   setAddNewAdmins(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.addNewAdmins = value;
@@ -163,7 +181,7 @@ class User {
    * @param {boolean} value
    */
   setChangeGroupInfo(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.changeGroupInfo = value;
@@ -174,7 +192,7 @@ class User {
    * @param {boolean} value
    */
   setChangeGroupUser(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.changeGroupUser = value;
@@ -185,7 +203,7 @@ class User {
    * @param {boolean} value
    */
   setChangePermissionsAdmins(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.changePermissionsAdmins = value;
@@ -196,7 +214,7 @@ class User {
    * @param {boolean} value
    */
   setChangeRoutine(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.changeRoutine = value;
@@ -207,7 +225,7 @@ class User {
    * @param {boolean} value
    */
   setDeletePosts(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.deletePosts = value;
@@ -218,7 +236,7 @@ class User {
    * @param {boolean} value
    */
   setDeleteUsers(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.deleteUsers = value;
@@ -229,7 +247,7 @@ class User {
    * @param {boolean} value
    */
   setDeleteVotes(value = false) {
-    if (typeof value !== 'boolean') {
+    if (!isBoolean(value)) {
       throw new Error('el valor no es de tipo boolean');
     }
     this.deleteVotes = value;

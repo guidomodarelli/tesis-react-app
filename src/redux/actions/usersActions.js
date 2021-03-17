@@ -1,6 +1,6 @@
 import axios from '../../config';
 import User from '../../classes/User';
-import { filterNonNull } from '../../utils';
+import { filterNonNull, toTitleCase } from '../../utils';
 import {
   DELETE_USER,
   GET_USERS,
@@ -11,14 +11,9 @@ import {
   USER_ERROR,
   USER_LOADING,
 } from '../types/usersTypes';
+import { MESSAGE_ERRORS } from '../types';
 
 export const handleChangeForm = (form) => (dispatch) => {
-  function toTitleCase(str) {
-    if (!str) return '';
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
   const newForm = {
     ...form,
     name: toTitleCase(form.name),
@@ -51,6 +46,7 @@ export const putUser = (id) => async (dispatch, getState) => {
     const form = new User(filterNonNull(userFrom));
     await axios.put(`/users/${id}`, form);
     dispatch({ type: PUT_USER, payload: form });
+    dispatch({ type: MESSAGE_ERRORS, payload: [] });
   } catch (error) {
     console.error(`Error: ${error.message}`);
     dispatch({ type: USER_ERROR, payload: error.message });

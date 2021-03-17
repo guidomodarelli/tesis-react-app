@@ -25,7 +25,7 @@ const Login = (props) => {
   const handleSumbit = (e) => {
     e.preventDefault();
     signIn({
-      email: form.email || '@',
+      email: form.email,
       password: form.password,
     });
   };

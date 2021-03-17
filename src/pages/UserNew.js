@@ -33,8 +33,14 @@ const UserNew = (props) => {
     history.push('/login');
   };
 
+  const fetchUsers = async () => {
+    if (!users.length) {
+      await getUsers();
+    }
+  };
+
   useEffect(() => {
-    !users.length && getUsers();
+    fetchUsers();
   }, []);
 
   if (uploading) return <PageUpload />;
