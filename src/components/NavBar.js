@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { signOut } from '../redux/actions';
 import { resetForm } from '../redux/actions/usersActions';
 
@@ -9,7 +10,7 @@ const NavBar = (props) => {
   const { userToken, signOut, resetForm } = props;
 
   return (
-    <Navbar bg='light' expand='lg' className='px-2'>
+    <Navbar expand='md' className='px-2'>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
@@ -57,6 +58,12 @@ const NavBar = (props) => {
       )}
     </Navbar>
   );
+};
+
+NavBar.propTypes = {
+  userToken: PropTypes.string,
+  signOut: PropTypes.func.isRequired,
+  resetForm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ reducer }) => reducer;

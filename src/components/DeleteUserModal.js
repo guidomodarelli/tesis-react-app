@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from './Modal';
 
 const DeleteUserModal = (props) => {
@@ -25,6 +26,12 @@ const DeleteUserModal = (props) => {
       </div>
     </Modal>
   );
+};
+
+DeleteUserModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onDeleteUser: PropTypes.func.isRequired,
 };
 
 export default DeleteUserModal;

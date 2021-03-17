@@ -1,21 +1,20 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import logo from '../assets/images/CALISTEP.png';
 import '../assets/styles/components/Badge.css';
 import Gravatar from './Gravatar';
 
 const Badge = (props) => {
-  const { email, firstname, lastname, birthdate, jobtitle, instagram } = props;
+  const { email, name, bio, instagram } = props;
 
-  const calcularEdad = () => {
-    const hoy = new Date();
-    const cumpleanos = new Date(birthdate);
-    let edad = hoy.getFullYear() - cumpleanos.getFullYear();
-    const m = hoy.getMonth() - cumpleanos.getMonth();
-
-    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+  const age = () => {
+    const today = new Date();
+    const birthdate = new Date(props.birthdate);
+    let edad = today.getFullYear() - birthdate.getFullYear();
+    const m = today.getMonth() - birthdate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthdate.getDate())) {
       edad--;
     }
-
     return edad;
   };
 
@@ -30,22 +29,18 @@ const Badge = (props) => {
           email={email}
           alt='Avatar'
         />
-        <h1>
-          {firstname}
-          <br />
-          {lastname}
-        </h1>
+        <h1>{name}</h1>
       </div>
       <div className='Badge__section-age'>
         <h3>
           Edad:
           {' '}
-          {calcularEdad()}
+          {age()}
         </h3>
       </div>
-      {(jobtitle || instagram) && (
+      {(bio || instagram) && (
         <div className='Badge__section-info'>
-          {jobtitle && <h3>{jobtitle}</h3>}
+          {bio && <h3>{bio}</h3>}
           {instagram && (
             <div>
               @
@@ -56,6 +51,14 @@ const Badge = (props) => {
       )}
     </div>
   );
+};
+
+Badge.propTypes = {
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  birthdate: PropTypes.string.isRequired,
+  bio: PropTypes.string,
+  instagram: PropTypes.string,
 };
 
 export default Badge;

@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import '../assets/styles/App.css';
 import '../assets/styles/index.css';
 import Layout from '../components/Layout';
 import Home from '../pages/presentational/Home';
@@ -18,7 +17,7 @@ import RouteAuth from './RouteAuth';
 const App = (props) => {
   const { restoreToken } = props;
 
-  useEffect(() => restoreToken(), []);
+  useEffect(async () => { await restoreToken(); }, []);
 
   return (
     <BrowserRouter>

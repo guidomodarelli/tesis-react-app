@@ -1,44 +1,53 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import instagramLogo from '../assets/images/Instagram.svg';
 import '../assets/styles/components/UsersList.css';
 import Gravatar from './Gravatar';
-import PageEmpty from './PageEmpty';
+import PageEmpty from './screens/PageEmpty';
+
+const Div = styled.div({
+  border: '1px solid rgba(0, 0, 0, 0.16)',
+  borderRadius: '2%',
+});
 
 const UserListItem = (props) => {
   const { user } = props;
 
   return (
-    <div className='UserListItem'>
+    <Div className='UserListItem'>
       <figure>
         <Gravatar
           className='UserListItem__avatar'
           email={user.email}
-          alt={`${user.firstname} ${user.lastname}`}
+          alt={user.name}
         />
       </figure>
       <div className='UserListItem__details'>
-        <p className='UserListItem__fullname'>
-          {user.firstname}
-          {' '}
-          {user.lastname}
-        </p>
-        <div className='UserListItem__twitter'>
-          <img src={instagramLogo} alt='Twitter logo' />
-          <p className='UserListItem__twitter text-break pr-3'>
-            @
-            {user.instagram || '{Sin cuenta}'}
-          </p>
-        </div>
-        <p className='UserListItem__jobTitle'>{user.jobtitle || ''}</p>
+        <p className='UserListItem__fullname'>{user.name}</p>
+        {user.instagram && (
+          <div className='UserListItem__twitter'>
+            <img src={instagramLogo} alt='Twitter logo' />
+            <p className='UserListItem__twitter text-break pr-3'>
+              @
+              {user.instagram}
+            </p>
+          </div>
+        )}
+        <p className='UserListItem__jobTitle'>{user.bio}</p>
       </div>
-    </div>
+    </Div>
   );
 };
 
+UserListItem.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
 const UsersList = (props) => {
-  const { users } = props;
-  if (!(users instanceof Array) || users.length === 0) {
+  const { users = [] } = props;
+  if (!users.length) {
     return <PageEmpty />;
   }
   return (
@@ -57,6 +66,10 @@ const UsersList = (props) => {
       })}
     </ul>
   );
+};
+
+UsersList.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default UsersList;

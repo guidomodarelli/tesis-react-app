@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import PageError from '../components/PageError';
-import PageLoading from '../components/PageLoading';
+import PageError from '../components/screens/PageError';
+import PageLoading from '../components/screens/PageLoading';
 
 class RouteAuth extends Component {
   isAuthorizated = (auth, token) => (auth && token) || (!auth && !token);

@@ -9,14 +9,14 @@ import {
   SET_FORM,
   USER_ERROR,
   USER_LOADING,
+  UPLOADING,
 } from '../types/usersTypes';
 
 const initialForm = () => ({
   email: '',
-  firstname: '',
-  lastname: '',
+  name: '',
   birthdate: '',
-  jobtitle: '',
+  bio: '',
   instagram: '',
   password: '',
   role: 'normal',
@@ -35,44 +35,14 @@ const INITIAL_STATE = {
   users: [],
   loading: true,
   error: '',
+  uploading: false,
   currentUser: {
     id: '',
-    email: '',
-    firstname: '',
-    lastname: '',
-    birthdate: '',
-    jobtitle: null,
+    ...initialForm(),
+    bio: null,
     instagram: null,
-    role: 'normal',
-    addGroup: false,
-    addNewAdmins: false,
-    changeGroupInfo: false,
-    changeGroupUser: false,
-    changePermissionsAdmins: false,
-    changeRoutine: false,
-    deletePosts: false,
-    deleteUsers: false,
-    deleteVotes: false,
   },
-  form: {
-    email: '',
-    firstname: '',
-    lastname: '',
-    birthdate: '',
-    jobtitle: '',
-    instagram: '',
-    password: '',
-    role: 'normal',
-    addGroup: false,
-    addNewAdmins: false,
-    changeGroupInfo: false,
-    changeGroupUser: false,
-    changePermissionsAdmins: false,
-    changeRoutine: false,
-    deletePosts: false,
-    deleteUsers: false,
-    deleteVotes: false,
-  },
+  form: initialForm(),
 };
 
 const deleteCurrentUser = (users, id) => {
@@ -80,11 +50,12 @@ const deleteCurrentUser = (users, id) => {
 };
 
 const updateUserList = (users, userId, payload) => {
-  const user = users.find((el) => el.id === userId);
-  return [
-    ...users.filter((el) => el.id !== userId),
-    { ...user, ...payload },
-  ];
+  return users.map((el) => {
+    if (el.id === userId) {
+      return { ...el, ...payload, id: el.id };
+    }
+    return el;
+  });
 };
 
 const usersReducers = (state = INITIAL_STATE, action) => {
@@ -96,10 +67,15 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         error: '',
         users: action.payload,
       };
+    case UPLOADING:
+      return {
+        ...state,
+        uploading: action.payload,
+      };
     case USER_LOADING:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case USER_ERROR:
       return {
@@ -151,6 +127,7 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         currentUser: {
           ...state.currentUser,
           ...action.payload,
+          id: state.currentUser.id,
         },
         users: updateUserList(state.users, state.currentUser.id, action.payload),
       };

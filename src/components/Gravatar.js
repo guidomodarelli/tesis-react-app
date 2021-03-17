@@ -1,8 +1,9 @@
 import md5 from 'md5';
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Gravatar(props) {
-  const { email, className } = props;
+const Gravatar = (props) => {
+  const { email = '', className } = props;
   const hash = md5(email);
   return (
     <img
@@ -11,6 +12,11 @@ function Gravatar(props) {
       alt='Avatar'
     />
   );
-}
+};
+
+Gravatar.propTypes = {
+  email: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
+};
 
 export default Gravatar;

@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PageError from '../components/PageError';
-import PageLoading from '../components/PageLoading';
-import UserForm from '../components/UserForm';
-import { signIn } from '../redux/actions';
-import { handleChangeForm, resetForm } from '../redux/actions/usersActions';
+import PageError from '../../components/screens/PageError';
+import PageLoading from '../../components/screens/PageLoading';
+import UserForm from '../../components/UserForm';
+import { signIn } from '../../redux/actions';
+import { handleChangeForm, resetForm } from '../../redux/actions/usersActions';
+import Div from './styles';
 
 const Login = (props) => {
   const {
@@ -23,13 +24,16 @@ const Login = (props) => {
 
   const handleSumbit = (e) => {
     e.preventDefault();
-    signIn(form);
+    signIn({
+      email: form.email || '@',
+      password: form.password,
+    });
   };
 
   if (reducer.loading || usersReducer.loading) return <PageLoading />;
   if (reducer.error || usersReducer.error) return <PageError />;
   return (
-    <div className='container mt-4 Login'>
+    <Div className='container mt-4'>
       <h1>Iniciar sesión</h1>
       <UserForm
         onChange={handleChange}
@@ -38,14 +42,20 @@ const Login = (props) => {
         passwordRequired
         login
       />
-      {reducer.message && <p className='text-danger'>{reducer.message}</p>}
-      <p className='mt-3'>
+      {reducer.messageErrors && (
+        <div className='mt-3 text-danger'>
+          {reducer.messageErrors.map((obj) => (
+            <p key={obj}>{obj.message}</p>
+          ))}
+        </div>
+      )}
+      <p className='mt-2'>
         ¿No tienes una cuenta?&nbsp;
         <Link to='/signup' className='text-decoration-none' onClick={resetForm}>
           Registrate
         </Link>
       </p>
-    </div>
+    </Div>
   );
 };
 

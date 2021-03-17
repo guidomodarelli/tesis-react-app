@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import PageEmpty from '../components/PageEmpty';
-import PageError from '../components/PageError';
-import PageLoading from '../components/PageLoading';
+import { createSelector } from 'reselect';
+import PageEmpty from '../components/screens/PageEmpty';
+import PageError from '../components/screens/PageError';
+import PageLoading from '../components/screens/PageLoading';
 import {
   deleteUser,
   getAll as getUsers,
@@ -10,6 +11,11 @@ import {
   putOtherUser,
 } from '../redux/actions/usersActions';
 import UserDetails from './presentational/UserDetails';
+
+const selectCurrentUserDetails = (userId) => createSelector(
+  (state) => state.usersReducer.users,
+  (users) => users.find((el) => el.id === userId),
+);
 
 const UserDetailsContainer = (props) => {
   const {
@@ -34,12 +40,16 @@ const UserDetailsContainer = (props) => {
   const [modalDeleteUserIsOpen, setModalDeleteUserIsOpen] = useState(false);
   const [modalPermisosIsOpen, setModalPermisosIsOpen] = useState(false);
 
-  const currentUserDetails = useSelector(() => users.find((el) => el.id === userId));
+  const currentUserDetails = useSelector(selectCurrentUserDetails(userId));
 
-  useEffect(async () => {
-    if (!users.length) await getUsers();
-    const user = users.find((el) => el.id === userId);
-    handleChangeForm({ ...user });
+  const fetchUsers = async () => {
+    if (!users.length) {
+      await getUsers();
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
   const handleOpenModalDeleteUser = () => setModalDeleteUserIsOpen(true);
@@ -70,9 +80,9 @@ const UserDetailsContainer = (props) => {
   if (!currentUserDetails) return <PageEmpty />;
   return (
     <UserDetails
-      addAdmin={addNewAdmins}
-      changePermissionsAdmins={changePermissionsAdmins}
-      deleteUser={deleteUsers}
+      addAdmin={addNewAdmins || false}
+      changePermissionsAdmins={changePermissionsAdmins || false}
+      deleteUser={deleteUsers || false}
       form={form}
       handleChangeCheckList={handleChangeCheckList}
       modalDeleteUserIsOpen={modalDeleteUserIsOpen}

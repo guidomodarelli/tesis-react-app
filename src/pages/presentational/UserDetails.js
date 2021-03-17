@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Badge from '../../components/Badge';
 import DeleteUserModal from '../../components/DeleteUserModal';
 import PermisosAdminModal from '../../components/PermisosAdminModal';
@@ -72,6 +73,25 @@ const Actions = (props) => {
   );
 };
 
+Actions.propTypes = {
+  addAdmin: PropTypes.bool.isRequired,
+  changePermissionsAdmins: PropTypes.bool.isRequired,
+  deleteUser: PropTypes.bool.isRequired,
+  form: PropTypes.object.isRequired,
+  handleChangeCheckList: PropTypes.func.isRequired,
+  modalDeleteUserIsOpen: PropTypes.bool.isRequired,
+  modalPermisosIsOpen: PropTypes.bool.isRequired,
+  onCloseModalDeleteUser: PropTypes.func.isRequired,
+  onCloseModalPermisos: PropTypes.func.isRequired,
+  onDeleteUser: PropTypes.func.isRequired,
+  onDesignAdmin: PropTypes.func.isRequired,
+  onOpenModalDeleteUser: PropTypes.func.isRequired,
+  onOpenModalPermisos: PropTypes.func.isRequired,
+  profile: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired,
+  userRole: PropTypes.string.isRequired,
+};
+
 const UserDetails = (props) => {
   const {
     addAdmin,
@@ -98,12 +118,11 @@ const UserDetails = (props) => {
       <div className='row mt-3 flex-column'>
         <div className='col px-2 d-flex justify-content-center'>
           <Badge
-            firstname={user.firstname || ''}
-            lastname={user.lastname || ''}
+            name={user.name || ''}
             email={user.email || ''}
             instagram={user.instagram || ''}
-            birthdate={user.birthdate || ''}
-            jobtitle={user.jobtitle || ''}
+            birthdate={user.birthdate || new Date().toISOString()}
+            bio={user.bio || ''}
           />
         </div>
         {(profile ||
@@ -132,6 +151,24 @@ const UserDetails = (props) => {
       </div>
     </div>
   );
+};
+
+UserDetails.propTypes = {
+  addAdmin: PropTypes.bool.isRequired,
+  changePermissionsAdmins: PropTypes.bool.isRequired,
+  deleteUser: PropTypes.bool.isRequired,
+  form: PropTypes.object.isRequired,
+  handleChangeCheckList: PropTypes.func.isRequired,
+  modalDeleteUserIsOpen: PropTypes.bool.isRequired,
+  modalPermisosIsOpen: PropTypes.bool.isRequired,
+  onCloseModalDeleteUser: PropTypes.func.isRequired,
+  onCloseModalPermisos: PropTypes.func.isRequired,
+  onDeleteUser: PropTypes.func.isRequired,
+  onDesignAdmin: PropTypes.func.isRequired,
+  onOpenModalDeleteUser: PropTypes.func.isRequired,
+  onOpenModalPermisos: PropTypes.func.isRequired,
+  profile: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default UserDetails;

@@ -1,97 +1,89 @@
-import api from '../../api';
+import axios from '../../config';
+import User from '../../classes/User';
 import {
-  AUTH_FAIL,
   ERROR,
   LOADING,
   RESTORE_TOKEN,
   SIGN_IN,
   SIGN_OUT,
+  MESSAGE_ERRORS,
   SING_UP,
 } from '../types';
-import { SET_CURRENT_USER } from '../types/usersTypes';
+import { SET_CURRENT_USER, UPLOADING, USER_LOADING } from '../types/usersTypes';
+import { filterNonNull } from '../../utils';
 
-export const signIn = (user) => async (dispatch) => {
-  dispatch({ type: LOADING });
-  try {
-    const data = await api.post.signIn(user);
-    let token = null;
-    let userData = null;
-    if (data) {
-      if (data.message) {
-        dispatch({
-          type: AUTH_FAIL,
-          payload: data.message,
-        });
-      } else {
-        ({ token } = data);
-        ({ user: userData } = data);
-        dispatch({
-          type: SET_CURRENT_USER,
-          payload: userData,
-        });
-        dispatch({
-          type: SIGN_IN,
-          payload: token,
-        });
-        localStorage.setItem('token', token);
-      }
-    }
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
+function catchError(error, dispatch) {
+  console.error(error);
+  if (error.isAxiosError && error.response.status !== 500) {
+    const { response } = error;
+    const { data } = response;
+    const { errors } = data;
+    dispatch({
+      type: MESSAGE_ERRORS,
+      payload: errors,
+    });
+  } else {
     dispatch({
       type: ERROR,
-      payload: error.message,
+      payload: error,
     });
+  }
+}
+
+export const signIn = (form) => async (dispatch) => {
+  dispatch({ type: LOADING, payload: true });
+  try {
+    const {
+      data: { token, user },
+    } = await axios.post('/login', form);
+    dispatch({ type: SET_CURRENT_USER, payload: new User(user) });
+    dispatch({ type: SIGN_IN, payload: token });
+    localStorage.setItem('token', token);
+  } catch (error) {
+    catchError(error, dispatch);
   }
 };
 
 export const signOut = () => (dispatch) => {
-  dispatch({ type: LOADING });
+  dispatch({ type: LOADING, payload: true });
   try {
     dispatch({ type: SIGN_OUT });
     localStorage.removeItem('token');
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    dispatch({
-      type: ERROR,
-      payload: error.message,
-    });
+    catchError(error, dispatch);
   }
 };
 
-export const signUp = (user) => async (dispatch) => {
-  dispatch({ type: LOADING });
+export const signUp = (form, history) => async (dispatch) => {
+  dispatch({ type: UPLOADING, payload: true });
   try {
-    await api.post.signUp(user);
-    dispatch({
-      type: SING_UP,
-    });
+    await axios.post('/signup', filterNonNull(form));
+    dispatch({ type: SING_UP });
+    dispatch({ type: UPLOADING, payload: false });
+    history.push('/login');
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    dispatch({
-      type: ERROR,
-      payload: error.message,
-    });
+    catchError(error, dispatch);
   }
 };
 
-export const restoreToken = () => async (dispatch, getState) => {
-  dispatch({ type: LOADING });
+export const restoreToken = () => async (dispatch) => {
+  dispatch({ type: LOADING, payload: true });
   try {
-    let data = await api.get.loggedIn();
-    let userToken = null;
-    if (data && data.loggedIn) {
-      userToken = localStorage.getItem('token');
-      data = await api.get.users.myProfile();
-      dispatch({ type: SET_CURRENT_USER, payload: data });
+    const { data } = await axios.get('/current/user');
+    const token = localStorage.getItem('token');
+    const user = new User(data.user);
+    dispatch({ type: SET_CURRENT_USER, payload: user });
+    dispatch({ type: RESTORE_TOKEN, payload: token });
+  } catch (error) {
+    dispatch({ type: USER_LOADING, payload: false });
+    dispatch({ type: LOADING, payload: false });
+    console.error(error);
+    if (error.isAxiosError && error.response.status === 500) {
+      dispatch({
+        type: ERROR,
+        payload: error,
+      });
     }
-    dispatch({ type: RESTORE_TOKEN, payload: userToken });
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    dispatch({
-      type: ERROR,
-      payload: error.message,
-    });
     localStorage.removeItem('token');
   }
 };

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Badge from '../components/Badge';
-import PageError from '../components/PageError';
-import PageLoading from '../components/PageLoading';
-import PageUpload from '../components/PageUpload';
+import PageError from '../components/screens/PageError';
+import PageLoading from '../components/screens/PageLoading';
+import PageUpload from '../components/screens/PageUpload';
 import UserForm from '../components/UserForm';
 import {
-  handleChangeForm,
+  getAll as getUsers, handleChangeForm,
   putUser,
   resetForm,
-  getAll as getUsers,
 } from '../redux/actions/usersActions';
 
 const UserEdit = (props) => {
@@ -27,28 +26,15 @@ const UserEdit = (props) => {
     users,
     error,
     getUsers,
+    uploading,
   } = props;
-
-  const [uploading, setUploading] = useState(false);
-  const [emailUnique, setEmailUnique] = useState('');
 
   const handleChange = (e) => handleChangeForm({ ...form, [e.target.name]: e.target.value });
 
-  const emailIsUnique = () => {
-    return users
-      .filter((el) => el.email !== currentUser.email)
-      .find((el) => el.email === form.email);
-  };
-
   const handleSumbit = (e) => {
     e.preventDefault();
-    if (emailIsUnique()) {
-      setEmailUnique('El correo electronico proporcionado ya existe. Por favor, introduzca uno diferente.');
-    } else {
-      setUploading(true);
-      putUser(userId);
-      history.push(`/users/${userId}`);
-    }
+    putUser(userId);
+    history.push(`/users/${userId}`);
   };
 
   const handleCancel = () => {
@@ -58,21 +44,19 @@ const UserEdit = (props) => {
 
   useEffect(() => {
     const {
-      firstname,
-      lastname,
+      name,
       birthdate,
-      jobtitle,
+      bio,
       instagram,
       email,
     } = currentUser;
     handleChangeForm({
-      firstname,
-      lastname,
+      ...form,
+      name,
       birthdate,
-      jobtitle: jobtitle || '',
+      bio: bio || '',
       instagram: instagram || '',
       email,
-      password: '',
     });
     !users.length && getUsers();
   }, []);
@@ -86,11 +70,10 @@ const UserEdit = (props) => {
         <div className='row'>
           <div className='col mt-4 mx-2'>
             <Badge
-              firstname={form.firstname}
-              lastname={form.lastname}
+              name={form.name}
               email={form.email}
-              birthdate={form.birthdate}
-              jobtitle={form.jobtitle}
+              birthdate={form.birthdate || new Date().toISOString()}
+              bio={form.bio}
               instagram={form.instagram}
             />
           </div>
@@ -101,8 +84,8 @@ const UserEdit = (props) => {
               onChange={handleChange}
               formValues={form}
               onSubmit={handleSumbit}
-              emailUnique={emailUnique}
               onCancel={handleCancel}
+              login={false}
             />
           </div>
         </div>

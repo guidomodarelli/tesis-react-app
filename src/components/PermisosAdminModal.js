@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Modal from './Modal';
 
 const PermisosAdminModal = (props) => {
@@ -172,6 +173,15 @@ const PermisosAdminModal = (props) => {
       </div>
     </Modal>
   );
+};
+
+PermisosAdminModal.propTypes = {
+  currentUser: PropTypes.objectOf(PropTypes.bool).isRequired,
+  handleChangeCheckList: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onDesignAdmin: PropTypes.func.isRequired,
+  form: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = ({ usersReducer }) => ({

@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import {
-  LOADING,
   ERROR,
+  LOADING,
+  MESSAGE_ERRORS,
+  RESTORE_TOKEN,
   SIGN_IN,
   SIGN_OUT,
-  RESTORE_TOKEN,
   SING_UP,
-  AUTH_FAIL,
 } from '../types';
 import { DELETE_USER } from '../types/usersTypes';
 import usersReducer from './usersReducer';
@@ -14,8 +14,8 @@ import usersReducer from './usersReducer';
 const INITIAL_STATE = {
   loading: true, // es el unico que empieza en true
   error: '',
+  messageErrors: [],
   userToken: null,
-  message: '',
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -23,7 +23,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case LOADING:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case ERROR:
       return {
@@ -31,12 +31,20 @@ const reducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.payload,
       };
+    case MESSAGE_ERRORS:
+      return {
+        ...state,
+        loading: false,
+        error: '',
+        messageErrors: action.payload,
+      };
     case SIGN_IN:
     case RESTORE_TOKEN:
       return {
         ...state,
         loading: false,
         error: '',
+        messageErrors: [],
         userToken: action.payload,
       };
     case DELETE_USER:
@@ -49,12 +57,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-      };
-    case AUTH_FAIL:
-      return {
-        ...state,
-        loading: false,
-        message: action.payload,
       };
     default:
       return state;
