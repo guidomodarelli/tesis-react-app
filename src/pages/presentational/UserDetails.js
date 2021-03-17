@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Badge from '../../components/Badge';
 import DeleteUserModal from '../../components/DeleteUserModal';
 import PermisosAdminModal from '../../components/PermisosAdminModal';
+import { resetMessageErrors } from '../../redux/actions';
+import { resetForm } from '../../redux/actions/usersActions';
 
 const Actions = (props) => {
   const {
@@ -23,13 +26,21 @@ const Actions = (props) => {
     profile,
     userId,
     userRole,
+    resetForm,
+    resetMessageErrors,
   } = props;
+
+  const handleClick = () => {
+    resetForm();
+    resetMessageErrors();
+  };
+
   return (
-    <div className='col d-flex flex-column align-items-center justify-content-center my-4'>
+    <div className='col d-flex flex-column align-items-center justify-content-center mb-4'>
       <h2 className='mb-3'>Acciones:</h2>
       <div className='w-100 justify-content-center d-flex'>
         {profile && (
-          <Link className='btn btn-primary me-2' to={`/users/${userId}/edit`}>
+          <Link className='btn btn-primary me-2' to={`/users/${userId}/edit`} onClick={handleClick}>
             Editar
           </Link>
         )}
@@ -92,6 +103,13 @@ Actions.propTypes = {
   userRole: PropTypes.string.isRequired,
 };
 
+const mapDispatchToProps = {
+  resetForm,
+  resetMessageErrors,
+};
+
+const ActionConnect = connect(null, mapDispatchToProps)(Actions);
+
 const UserDetails = (props) => {
   const {
     addAdmin,
@@ -129,7 +147,7 @@ const UserDetails = (props) => {
           deleteUser ||
           (addAdmin && user.role === 'normal') ||
           (changePermissionsAdmins && user.role === 'admin')) && (
-          <Actions
+          <ActionConnect
             addAdmin={addAdmin}
             changePermissionsAdmins={changePermissionsAdmins}
             deleteUser={deleteUser}

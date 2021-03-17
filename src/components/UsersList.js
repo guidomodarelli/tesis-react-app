@@ -2,40 +2,37 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import instagramLogo from '../assets/images/Instagram.svg';
 import '../assets/styles/components/UsersList.css';
 import Gravatar from './Gravatar';
+import InstagramAccount from './InstagramAccount';
 import PageEmpty from './screens/PageEmpty';
 
 const Div = styled.div({
   border: '1px solid rgba(0, 0, 0, 0.16)',
   borderRadius: '8px',
+  boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+  marginTop: '1em',
+  display: 'flex',
 });
+
+const Figure = styled.figure`
+  margin: 15px;
+`;
 
 const UserListItem = (props) => {
   const { user } = props;
 
   return (
-    <Div className='UserListItem'>
-      <figure>
-        <Gravatar
-          className='UserListItem__avatar'
-          email={user.email}
-          alt={user.name}
-        />
-      </figure>
-      <div className='UserListItem__details'>
-        <p className='UserListItem__fullname'>{user.name}</p>
+    <Div>
+      <Figure>
+        <Gravatar email={user.email} />
+      </Figure>
+      <div className='d-flex flex-column justify-content-evenly'>
+        <p className='fw-bold mt-3 mb-0 text-break me-3'>{user.name}</p>
         {user.instagram && (
-          <div className='UserListItem__twitter'>
-            <img src={instagramLogo} alt='Twitter logo' />
-            <p className='UserListItem__twitter text-break pr-3'>
-              @
-              {user.instagram}
-            </p>
-          </div>
+          <InstagramAccount instagram={user.instagram} />
         )}
-        <p className='UserListItem__jobTitle'>{user.bio}</p>
+        <p className='fs-6 text-break me-3'>{user.bio}</p>
       </div>
     </Div>
   );

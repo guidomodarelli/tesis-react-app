@@ -30,6 +30,10 @@ export function catchError(error, dispatch) {
   }
 }
 
+export const resetMessageErrors = () => (dispatch) => {
+  dispatch({ type: MESSAGE_ERRORS, payload: [] });
+};
+
 export const signIn = (form) => async (dispatch) => {
   dispatch({ type: LOADING, payload: true });
   try {

@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { resetMessageErrors } from '../redux/actions';
+import { resetForm } from '../redux/actions/usersActions';
 
 /**
  *
@@ -18,7 +21,15 @@ const UserForm = (props) => {
     formValues,
     login,
     messageErrors,
+    resetForm,
+    resetMessageErrors,
   } = props;
+
+  const handleCancel = () => {
+    resetForm();
+    resetMessageErrors();
+    onCancel();
+  };
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -117,13 +128,13 @@ const UserForm = (props) => {
       </div>
       <div className='d-flex'>
         <button type='submit' className='btn btn-primary'>
-          {login ? <>Iniciar sesión</> : <>Guardar</>}
+          {login ? <>Ingresar</> : <>Guardar</>}
         </button>
         {!login && (
           <button
             type='button'
             className='btn btn-danger ms-2'
-            onClick={onCancel}
+            onClick={handleCancel}
           >
             Cancelar
           </button>
@@ -141,4 +152,9 @@ UserForm.propTypes = {
   login: PropTypes.bool.isRequired,
 };
 
-export default UserForm;
+const mapDispatchToProps = {
+  resetForm,
+  resetMessageErrors,
+};
+
+export default connect(null, mapDispatchToProps)(UserForm);

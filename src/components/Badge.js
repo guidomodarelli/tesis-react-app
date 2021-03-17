@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import logo from '../assets/images/CALISTEP.png';
 import '../assets/styles/components/Badge.css';
+import DivContainer from '../pages/Users/styles';
 import Gravatar from './Gravatar';
+import InstagramAccount from './InstagramAccount';
 
 const Badge = (props) => {
   const { email, name, bio, instagram } = props;
@@ -19,37 +21,33 @@ const Badge = (props) => {
   };
 
   return (
-    <div className='Badge'>
-      <div className='Badge__header mx-3'>
-        <img src={logo} alt='Logo' className='img-fluid m-2' />
-      </div>
-      <div className='Badge__section-name p-5'>
-        <Gravatar
-          className='Badge__avatar img-fluid'
-          email={email}
-          alt='Avatar'
-        />
-        <h1>{name}</h1>
-      </div>
-      <div className='Badge__section-age'>
-        <h3>
-          Edad:
-          {' '}
-          {age()}
-        </h3>
-      </div>
-      {(bio || instagram) && (
-        <div className='Badge__section-info'>
-          {bio && <h3>{bio}</h3>}
-          {instagram && (
-            <div>
-              @
-              {instagram}
-            </div>
-          )}
+    <DivContainer>
+      <div className='Badge'>
+        <div className='Badge__header mx-3'>
+          <img src={logo} alt='Logo' className='img-fluid m-2' />
         </div>
-      )}
-    </div>
+        <figure className='d-flex justify-content-center pt-3'>
+          <Gravatar email={email} />
+        </figure>
+        <h1 className='text-center text-break m-0 p-3 pt-0'>{name}</h1>
+        {/* <div className='Badge__section-name p-2 pb-4' /> */}
+        <div className='Badge__section-age'>
+          <h3>
+            {age()}
+            {' '}
+            años
+          </h3>
+        </div>
+        {(bio || instagram) && (
+          <div className='Badge__section-info'>
+            {bio && (
+              <p className='text-break m-0 me-3 ms-3 text-center'>{bio}</p>
+            )}
+            {instagram && <InstagramAccount instagram={instagram} />}
+          </div>
+        )}
+      </div>
+    </DivContainer>
   );
 };
 

@@ -143,6 +143,7 @@ const usersReducers = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
+        uploading: false,
       };
     case SIGN_OUT:
       return {

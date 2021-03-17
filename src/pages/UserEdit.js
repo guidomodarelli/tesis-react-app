@@ -8,7 +8,6 @@ import UserForm from '../components/UserForm';
 import {
   getAll as getUsers, handleChangeForm,
   putUser,
-  resetForm,
 } from '../redux/actions/usersActions';
 
 const UserEdit = (props) => {
@@ -22,7 +21,6 @@ const UserEdit = (props) => {
     form,
     handleChangeForm,
     putUser,
-    resetForm,
     users,
     error,
     getUsers,
@@ -38,7 +36,6 @@ const UserEdit = (props) => {
   };
 
   const handleCancel = () => {
-    resetForm();
     history.push(`/users/${userId}`);
   };
 
@@ -100,7 +97,6 @@ const mapStateToProps = ({ usersReducer, reducer: { messageErrors } }) => ({ ...
 const mapDispatchToProps = {
   handleChangeForm,
   putUser,
-  resetForm,
   getUsers,
 };
 

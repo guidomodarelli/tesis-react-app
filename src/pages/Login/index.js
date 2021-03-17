@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PageError from '../../components/screens/PageError';
 import PageLoading from '../../components/screens/PageLoading';
 import UserForm from '../../components/UserForm';
-import { signIn } from '../../redux/actions';
+import { signIn, resetMessageErrors } from '../../redux/actions';
 import { handleChangeForm, resetForm } from '../../redux/actions/usersActions';
 import Div from './styles';
 
@@ -16,6 +16,7 @@ const Login = (props) => {
     signIn,
     handleChangeForm,
     resetForm,
+    resetMessageErrors,
   } = props;
 
   const handleChange = (e) => {
@@ -28,6 +29,11 @@ const Login = (props) => {
       email: form.email,
       password: form.password,
     });
+  };
+
+  const handleClick = () => {
+    resetForm();
+    resetMessageErrors();
   };
 
   if (reducer.loading || usersReducer.loading) return <PageLoading />;
@@ -51,7 +57,7 @@ const Login = (props) => {
       )}
       <p className='mt-2'>
         ¿No tienes una cuenta?&nbsp;
-        <Link to='/signup' className='text-decoration-none' onClick={resetForm}>
+        <Link to='/signup' className='text-decoration-none' onClick={handleClick}>
           Registrate
         </Link>
       </p>
@@ -68,6 +74,7 @@ const mapDispatchToProps = {
   signIn,
   handleChangeForm,
   resetForm,
+  resetMessageErrors,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

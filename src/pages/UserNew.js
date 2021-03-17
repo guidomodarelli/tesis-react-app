@@ -8,14 +8,12 @@ import UserForm from '../components/UserForm';
 import { signUp } from '../redux/actions';
 import {
   getAll as getUsers, handleChangeForm,
-  resetForm,
 } from '../redux/actions/usersActions';
 
 const UserNew = (props) => {
   const {
     usersReducer: { form, users, uploading },
     handleChangeForm,
-    resetForm,
     signUp,
     history,
     reducer,
@@ -29,7 +27,6 @@ const UserNew = (props) => {
   };
 
   const handleCancel = () => {
-    resetForm();
     history.push('/login');
   };
 
@@ -55,7 +52,7 @@ const UserNew = (props) => {
               name={form.name || 'Nombre'}
               email={form.email || ''}
               birthdate={form.birthdate || new Date().toISOString()}
-              bio={form.jobtitle || 'Presentación'}
+              bio={form.bio || 'Presentación'}
               instagram={form.instagram || 'cuenta_intagram'}
             />
           </div>
@@ -85,7 +82,6 @@ const mapStateToProps = ({ reducer, usersReducer }) => ({
 
 const mapDispatchToProps = {
   handleChangeForm,
-  resetForm,
   signUp,
   getUsers,
 };

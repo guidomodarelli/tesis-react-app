@@ -3,11 +3,16 @@ import { Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { signOut } from '../redux/actions';
+import { signOut, resetMessageErrors } from '../redux/actions';
 import { resetForm } from '../redux/actions/usersActions';
 
 const NavBar = (props) => {
-  const { userToken, signOut, resetForm } = props;
+  const { userToken, signOut, resetForm, resetMessageErrors } = props;
+
+  const handleClick = () => {
+    resetForm();
+    resetMessageErrors();
+  };
 
   return (
     <Navbar expand='md' className='px-2'>
@@ -51,7 +56,7 @@ const NavBar = (props) => {
         <Link
           to='/login'
           className='btn btn-primary text-nowrap'
-          onClick={resetForm}
+          onClick={handleClick}
         >
           <span>Iniciar sesión</span>
         </Link>
@@ -71,6 +76,7 @@ const mapStateToProps = ({ reducer }) => reducer;
 const mapDispatchToProps = {
   signOut,
   resetForm,
+  resetMessageErrors,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
