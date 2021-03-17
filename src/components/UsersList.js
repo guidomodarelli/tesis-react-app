@@ -9,7 +9,7 @@ import PageEmpty from './screens/PageEmpty';
 
 const Div = styled.div({
   border: '1px solid rgba(0, 0, 0, 0.16)',
-  borderRadius: '2%',
+  borderRadius: '8px',
 });
 
 const UserListItem = (props) => {

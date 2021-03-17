@@ -12,7 +12,7 @@ import {
 import { SET_CURRENT_USER, UPLOADING, USER_LOADING } from '../types/usersTypes';
 import { filterNonNull } from '../../utils';
 
-function catchError(error, dispatch) {
+export function catchError(error, dispatch) {
   console.error(error);
   if (error.isAxiosError && error.response.status !== 500) {
     const { response } = error;

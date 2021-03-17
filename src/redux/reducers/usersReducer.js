@@ -1,8 +1,8 @@
-import { SIGN_OUT } from '../types';
+import { MESSAGE_ERRORS, SIGN_OUT } from '../types';
 import {
   DELETE_USER,
   GET_USERS,
-  PUT_OTHER_USER,
+  PUT_ADMIN_PERMISSIONS,
   PUT_USER,
   RESET_FORM,
   SET_CURRENT_USER,
@@ -131,13 +131,18 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         },
         users: updateUserList(state.users, state.currentUser.id, action.payload),
       };
-    case PUT_OTHER_USER:
+    case PUT_ADMIN_PERMISSIONS:
       return {
         ...state,
         loading: false,
         error: '',
         form: initialForm(),
         users: updateUserList(state.users, action.userId, action.payload),
+      };
+    case MESSAGE_ERRORS:
+      return {
+        ...state,
+        loading: false,
       };
     case SIGN_OUT:
       return {

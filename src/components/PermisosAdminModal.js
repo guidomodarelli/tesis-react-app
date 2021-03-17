@@ -176,7 +176,7 @@ const PermisosAdminModal = (props) => {
 };
 
 PermisosAdminModal.propTypes = {
-  currentUser: PropTypes.objectOf(PropTypes.bool).isRequired,
+  currentUser: PropTypes.object.isRequired,
   handleChangeCheckList: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

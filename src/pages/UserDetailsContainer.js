@@ -8,13 +8,15 @@ import {
   deleteUser,
   getAll as getUsers,
   handleChangeForm,
-  putOtherUser,
+  putAdminPermissions,
 } from '../redux/actions/usersActions';
 import UserDetails from './presentational/UserDetails';
 
 const selectCurrentUserDetails = (userId) => createSelector(
   (state) => state.usersReducer.users,
-  (users) => users.find((el) => el.id === userId),
+  (users) => users.find((el) => {
+    return el.id === userId;
+  }),
 );
 
 const UserDetailsContainer = (props) => {
@@ -32,7 +34,7 @@ const UserDetailsContainer = (props) => {
     },
     getUsers,
     deleteUser,
-    putOtherUser,
+    putAdminPermissions,
     handleChangeForm,
     history,
   } = props;
@@ -42,15 +44,15 @@ const UserDetailsContainer = (props) => {
 
   const currentUserDetails = useSelector(selectCurrentUserDetails(userId));
 
-  const fetchUsers = async () => {
-    if (!users.length) {
-      await getUsers();
-    }
-  };
-
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (!users.length) {
+      getUsers();
+    }
+    const currentUserDetails = users.find((el) => {
+      return el.id === userId;
+    });
+    handleChangeForm({ ...currentUserDetails });
+  }, [users]);
 
   const handleOpenModalDeleteUser = () => setModalDeleteUserIsOpen(true);
 
@@ -66,7 +68,7 @@ const UserDetailsContainer = (props) => {
   };
 
   const handleDesignAdmin = () => {
-    putOtherUser(userId);
+    putAdminPermissions(userId);
   };
 
   const handleChangeCheckList = (e) => {
@@ -107,7 +109,7 @@ const mapStateToProps = ({ reducer, usersReducer }) => ({
 const mapDispatchToProps = {
   deleteUser,
   handleChangeForm,
-  putOtherUser,
+  putAdminPermissions,
   getUsers,
 };
 

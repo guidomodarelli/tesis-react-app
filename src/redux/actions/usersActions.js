@@ -1,17 +1,17 @@
+import { catchError } from '.';
 import axios from '../../config';
-import User from '../../classes/User';
 import { filterNonNull, toTitleCase } from '../../utils';
+import { MESSAGE_ERRORS } from '../types';
 import {
   DELETE_USER,
   GET_USERS,
+  PUT_ADMIN_PERMISSIONS,
   PUT_USER,
-  PUT_OTHER_USER,
   RESET_FORM,
   SET_FORM,
   USER_ERROR,
   USER_LOADING,
 } from '../types/usersTypes';
-import { MESSAGE_ERRORS } from '../types';
 
 export const handleChangeForm = (form) => (dispatch) => {
   const newForm = {
@@ -32,38 +32,39 @@ export const getAll = () => async (dispatch) => {
   dispatch({ type: USER_LOADING, payload: true });
   try {
     const { data: users } = await axios.get('/users');
-    dispatch({ type: GET_USERS, payload: users.map((user) => new User(user)) });
+    dispatch({ type: GET_USERS, payload: users });
   } catch (error) {
     console.error(`Error: ${error.message}`);
     dispatch({ type: USER_ERROR, payload: error.message });
   }
 };
 
-export const putUser = (id) => async (dispatch, getState) => {
+export const putUser = (userId, history) => async (dispatch, getState) => {
   const { form: userFrom } = getState().usersReducer;
   dispatch({ type: USER_LOADING, payload: true });
   try {
-    const form = new User(filterNonNull(userFrom));
-    await axios.put(`/users/${id}`, form);
+    const form = filterNonNull(userFrom);
+    await axios.put(`/users/${userId}`, form);
     dispatch({ type: PUT_USER, payload: form });
     dispatch({ type: MESSAGE_ERRORS, payload: [] });
+    history.push(`/users/${userId}`);
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    dispatch({ type: USER_ERROR, payload: error.message });
+    catchError(error, dispatch);
   }
 };
 
-export const putOtherUser = (userId) => async (dispatch, getState) => {
-  const { form } = getState().usersReducer;
+export const putAdminPermissions = (userId) => async (dispatch, getState) => {
+  const { form: userFrom } = getState().usersReducer;
   dispatch({ type: USER_LOADING, payload: true });
   try {
-    const formNonNull = filterNonNull(form);
-    formNonNull.role = 'admin';
-    await axios.put(`/users/${userId}`, formNonNull);
-    dispatch({ type: PUT_OTHER_USER, payload: formNonNull, userId });
+    const form = filterNonNull(userFrom);
+    if (form.role === 'normal') {
+      form.role = 'admin';
+    }
+    await axios.put(`/users/${userId}`, form);
+    dispatch({ type: PUT_ADMIN_PERMISSIONS, payload: form, userId });
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    dispatch({ type: USER_ERROR, payload: error.message });
+    catchError(error, dispatch);
   }
 };
 
@@ -77,7 +78,6 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
     }
     dispatch({ type: DELETE_USER, id: userId });
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    dispatch({ type: USER_ERROR, payload: error.message });
+    catchError(error, dispatch);
   }
 };

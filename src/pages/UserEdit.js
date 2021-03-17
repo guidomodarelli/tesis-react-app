@@ -27,14 +27,14 @@ const UserEdit = (props) => {
     error,
     getUsers,
     uploading,
+    messageErrors,
   } = props;
 
   const handleChange = (e) => handleChangeForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSumbit = (e) => {
     e.preventDefault();
-    putUser(userId);
-    history.push(`/users/${userId}`);
+    putUser(userId, history);
   };
 
   const handleCancel = () => {
@@ -86,6 +86,7 @@ const UserEdit = (props) => {
               onSubmit={handleSumbit}
               onCancel={handleCancel}
               login={false}
+              messageErrors={messageErrors}
             />
           </div>
         </div>
@@ -94,7 +95,7 @@ const UserEdit = (props) => {
   );
 };
 
-const mapStateToProps = ({ usersReducer }) => usersReducer;
+const mapStateToProps = ({ usersReducer, reducer: { messageErrors } }) => ({ ...usersReducer, messageErrors });
 
 const mapDispatchToProps = {
   handleChangeForm,
