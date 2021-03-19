@@ -27,21 +27,11 @@ const NavBar = (props) => {
               Usuarios
             </Link>
           )}
-          <Link className='nav-link' to='#galery'>
-            Galeria
-          </Link>
-          <Link className='nav-link' to='#events'>
-            Eventos
-          </Link>
-          <Link className='nav-link' to='#faq'>
-            Preguntas frecuentes
-          </Link>
-          <Link className='nav-link' to='#aboutus'>
-            ¿Quienes somos?
-          </Link>
-          <Link className='nav-link' to='#contact'>
-            Contacto
-          </Link>
+          {userToken && (
+            <Link className='nav-link' to='/pubs'>
+              Publicaciones
+            </Link>
+          )}
         </Nav>
       </Navbar.Collapse>
       {userToken ? (

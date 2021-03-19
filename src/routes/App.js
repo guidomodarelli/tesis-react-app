@@ -13,6 +13,7 @@ import UserNew from '../pages/UserNew';
 import Users from '../pages/Users';
 import { restoreToken } from '../redux/actions';
 import RouteAuth from './RouteAuth';
+import Pubs from '../pages/Pubs';
 
 const App = (props) => {
   const { restoreToken } = props;
@@ -40,6 +41,7 @@ const App = (props) => {
           />
           <RouteAuth exact path='/login' component={Login} />
           <RouteAuth exact path='/signup' component={UserNew} />
+          <RouteAuth auth exact path='/pubs' component={Pubs} />
           <Route component={NotFound} />
         </Switch>
       </Layout>

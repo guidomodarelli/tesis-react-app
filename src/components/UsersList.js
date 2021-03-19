@@ -10,7 +10,7 @@ import PageEmpty from './screens/PageEmpty';
 const Div = styled.div({
   border: '1px solid rgba(0, 0, 0, 0.16)',
   borderRadius: '8px',
-  boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+  boxShadow: '0 4px 8px 2px rgba(0, 0, 0, 0.2)',
   marginTop: '1em',
   display: 'flex',
 });
