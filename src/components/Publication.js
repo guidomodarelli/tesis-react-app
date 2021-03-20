@@ -1,31 +1,38 @@
-import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React, { useRef, useState } from 'react';
+import '../assets/styles/components/Publication.css';
+import TextareaAutosize from 'react-textarea-autosize';
+import { formatNumber } from '../utils';
 import Gravatar from './Gravatar';
 
-const Publication = () => {
-  const [like, setLike] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [date, setDate] = useState(new Date());
+const Publication = (props) => {
+  const {
+    name = '',
+    createdAt = '',
+    body = '',
+    favs = 0,
+    fav = false,
+    email = '',
+  } = props;
+  const [like, setLike] = useState(fav);
   const inputRef = useRef(null);
 
   return (
     <div className='Badge p-3 mb-4'>
       <div className='d-flex align-items-center'>
-        <Gravatar height='50px' width='50px' />
+        <Gravatar height='50px' width='50px' email={email} />
         <div className='ms-2'>
-          <div className='fw-bold'>Anne Henderson</div>
-          <div className='text-secondary fw-bold'>{date.toLocaleString()}</div>
+          <div className='fw-bold text-break'>{name}</div>
+          <div className='text-secondary fw-bold'>
+            {new Date(createdAt).toLocaleString()}
+          </div>
         </div>
       </div>
-      <div className='mt-3'>
-        Donec iaculis rhoncus vehicula. Mauris id euismod libero. Vestibulum
-        ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-        curae; Nam condimentum dolor sit amet varius iaculis. Aliquam euismod
-        turpis purus, non euismod leo euismod non est.
-      </div>
+      <div className='mt-3 text-break'>{body}</div>
       <div className='mt-2'>
         <i className={classNames('fa', 'fa-heart', 'me-1')} />
-        <span className='fw-bold'>1k</span>
+        <span className='fw-bold'>{formatNumber(favs)}</span>
       </div>
       <div className='d-flex justify-content-evenly mt-2'>
         {' '}
@@ -57,15 +64,35 @@ const Publication = () => {
         </button>
       </div>
       <div className='mt-2'>
-        <input
-          type='text'
-          className='form-control'
-          placeholder='Escribe un comentario...'
-          ref={inputRef}
-        />
+        <form onSubmit={() => {}}>
+          <TextareaAutosize
+            className='form-control resize-none'
+            placeholder='Escribe un comentario...'
+            ref={inputRef}
+            type='text'
+            maxRows={6}
+          />
+          <div className='d-flex justify-content-end'>
+            {' '}
+            <button type='submit' className='btn btn-outline-primary mt-2'>
+              <i className='fa fa-comment me-1' />
+              Agregar comentario
+            </button>
+
+          </div>
+        </form>
       </div>
     </div>
   );
+};
+
+Publication.propTypes = {
+  name: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  favs: PropTypes.number.isRequired,
+  fav: PropTypes.bool.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default Publication;

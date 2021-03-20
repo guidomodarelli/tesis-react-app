@@ -45,7 +45,7 @@ UserListItem.propTypes = {
 const UsersList = (props) => {
   const { users = [] } = props;
   if (!users.length) {
-    return <PageEmpty />;
+    return <PageEmpty msg='No encontramos ningún usuario' />;
   }
   return (
     <ul className='list-unstyled'>

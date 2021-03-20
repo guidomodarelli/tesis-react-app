@@ -15,11 +15,11 @@ const NavBar = (props) => {
   };
 
   return (
-    <Navbar expand='md' className='px-2'>
+    <Navbar expand='sm' className='px-2'>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='mr-auto'>
-          <Link className='nav-link active' to='/'>
+          <Link className='nav-link' to='/'>
             Inicio
           </Link>
           {userToken && (

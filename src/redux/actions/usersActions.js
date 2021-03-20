@@ -49,7 +49,7 @@ export const putUser = (userId, history) => async (dispatch, getState) => {
     dispatch({ type: MESSAGE_ERRORS, payload: [] });
     history.push(`/users/${userId}`);
   } catch (error) {
-    catchError(error, dispatch);
+    catchError(error, dispatch, USER_ERROR);
   }
 };
 
@@ -64,7 +64,7 @@ export const putAdminPermissions = (userId) => async (dispatch, getState) => {
     await axios.put(`/users/${userId}`, form);
     dispatch({ type: PUT_ADMIN_PERMISSIONS, payload: form, userId });
   } catch (error) {
-    catchError(error, dispatch);
+    catchError(error, dispatch, USER_ERROR);
   }
 };
 
@@ -78,6 +78,6 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
     }
     dispatch({ type: DELETE_USER, id: userId });
   } catch (error) {
-    catchError(error, dispatch);
+    catchError(error, dispatch, USER_ERROR);
   }
 };

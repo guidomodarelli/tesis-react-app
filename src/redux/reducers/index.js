@@ -10,6 +10,7 @@ import {
 } from '../types';
 import { DELETE_USER } from '../types/usersTypes';
 import usersReducer from './usersReducer';
+import pubsReducer from './pubsReducer';
 
 const INITIAL_STATE = {
   loading: true, // es el unico que empieza en true
@@ -67,4 +68,5 @@ const reducer = (state = INITIAL_STATE, action) => {
 export default combineReducers({
   usersReducer,
   reducer,
+  pubsReducer,
 });

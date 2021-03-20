@@ -8,5 +8,5 @@ export const Figure = styled.figure({
 });
 
 export const Img = styled.img({
-  height: '500px',
+  maxHeight: '500px',
 });

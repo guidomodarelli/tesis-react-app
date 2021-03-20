@@ -12,9 +12,9 @@ import {
 import { SET_CURRENT_USER, UPLOADING, USER_LOADING } from '../types/usersTypes';
 import { filterNonNull } from '../../utils';
 
-export function catchError(error, dispatch) {
+export function catchError(error, dispatch, type = ERROR) {
   console.error(error);
-  if (error.isAxiosError && error.response.status !== 500) {
+  if (error.isAxiosError && error.response && error.response.status !== 500) {
     const { response } = error;
     const { data } = response;
     const { errors } = data;
@@ -24,7 +24,7 @@ export function catchError(error, dispatch) {
     });
   } else {
     dispatch({
-      type: ERROR,
+      type,
       payload: error,
     });
   }
@@ -82,7 +82,7 @@ export const restoreToken = () => async (dispatch) => {
     dispatch({ type: USER_LOADING, payload: false });
     dispatch({ type: LOADING, payload: false });
     console.error(error);
-    if (error.isAxiosError && error.response.status === 500) {
+    if (error.isAxiosError && error.response && error.response.status === 500) {
       dispatch({
         type: ERROR,
         payload: error,

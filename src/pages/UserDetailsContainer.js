@@ -79,7 +79,7 @@ const UserDetailsContainer = (props) => {
 
   if (reducer.error || usersReducer.error) return <PageError />;
   if (reducer.loading || usersReducer.loading) return <PageLoading />;
-  if (!currentUserDetails) return <PageEmpty />;
+  if (!currentUserDetails) return <PageEmpty msg='No encontramos ningún usuario' />;
   return (
     <UserDetails
       addAdmin={addNewAdmins || false}
