@@ -1,7 +1,9 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
+import { toggleFavPub } from '../redux/actions/pubsActions';
 import { formatNumber } from '../utils';
 import Gravatar from './Gravatar';
 
@@ -14,8 +16,9 @@ const Publication = (props) => {
     fav = false,
     scope = 'private',
     email = '',
+    toggleFavPub,
+    id,
   } = props;
-  const [like, setLike] = useState(fav);
   const inputRef = useRef(null);
 
   return (
@@ -45,14 +48,12 @@ const Publication = (props) => {
         <button
           type='button'
           className='btn text-secondary fw-bold'
-          onClick={() => {
-            setLike(!like);
-          }}
+          onClick={() => toggleFavPub(id, fav)}
         >
           <i
             className={classNames(
               'fa',
-              like ? 'fa-heart' : 'fa-heart-o',
+              fav ? 'fa-heart' : 'fa-heart-o',
               'me-1',
             )}
           />
@@ -104,4 +105,8 @@ Publication.propTypes = {
   email: PropTypes.string.isRequired,
 };
 
-export default Publication;
+const mapDispatchToProps = {
+  toggleFavPub,
+};
+
+export default connect(null, mapDispatchToProps)(Publication);

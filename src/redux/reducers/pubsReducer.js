@@ -1,11 +1,13 @@
 import {
   GET_PUBS,
+  LIKE_PUB,
   POST_PUBS,
   PUBS_CHANGE_FORM,
   PUBS_ERROR,
   PUBS_LOADING,
   PUBS_MESSAGE_ERRORS,
   PUBS_UPLOADING,
+  UNLIKE_PUB,
 } from '../types/pubsTypes';
 
 const initialForm = () => ({
@@ -24,6 +26,34 @@ const INITIAL_STATE = {
 
 const pubsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case UNLIKE_PUB:
+      return {
+        ...state,
+        pubs: state.pubs.map((pub) => {
+          if (pub.id === action.pubId) {
+            return {
+              ...pub,
+              favUsers: pub.favUsers.filter((userId) => userId !== action.userId),
+              favs: pub.favs - 1,
+            };
+          }
+          return pub;
+        }),
+      };
+    case LIKE_PUB:
+      return {
+        ...state,
+        pubs: state.pubs.map((pub) => {
+          if (pub.id === action.pubId) {
+            return {
+              ...pub,
+              favUsers: [...pub.favUsers, action.userId],
+              favs: pub.favs + 1,
+            };
+          }
+          return pub;
+        }),
+      };
     case PUBS_UPLOADING:
       return {
         ...state,

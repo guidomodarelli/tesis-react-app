@@ -48,13 +48,14 @@ const Pubs = (props) => {
           return (
             <Publication
               key={pub.id}
+              id={pub.id}
               name={creator.name}
               body={pub.body}
               favs={pub.favs}
               createdAt={pub.createdAt}
               email={creator.email}
               scope={pub.scope}
-              fav={false}
+              fav={pub.favUsers.includes(pub.creator)}
             />
           );
         })
