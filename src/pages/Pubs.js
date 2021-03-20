@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import Publicar from '../components/Publicar';
 import Publication from '../components/Publication';
 import PageEmpty from '../components/screens/PageEmpty';
 import PageError from '../components/screens/PageError';
@@ -43,6 +44,7 @@ const Pubs = (props) => {
   return (
     <DivContainer>
       <h1 className='text-center fw-bold mb-4'>Publicaciones</h1>
+      <Publicar />
       {pubs.map((pub) => {
         const creator = getCreator(pub.creator);
         return (
