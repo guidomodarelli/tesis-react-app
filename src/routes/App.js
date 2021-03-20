@@ -3,17 +3,18 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import '../assets/styles/index.css';
+import '../assets/styles/App.css';
 import Layout from '../components/Layout';
-import Home from '../pages/presentational/Home';
 import Login from '../pages/Login';
+import Home from '../pages/presentational/Home';
 import NotFound from '../pages/presentational/NotFound';
+import Pubs from '../pages/Pubs';
 import UserDetailsContainer from '../pages/UserDetailsContainer';
 import UserEdit from '../pages/UserEdit';
 import UserNew from '../pages/UserNew';
 import Users from '../pages/Users';
 import { restoreToken } from '../redux/actions';
 import RouteAuth from './RouteAuth';
-import Pubs from '../pages/Pubs';
 
 const App = (props) => {
   const { restoreToken } = props;

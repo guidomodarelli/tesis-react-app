@@ -38,27 +38,29 @@ const Pubs = (props) => {
 
   if (pubsReducer.loading || usersReducer.loading) return <PageLoading />;
   if (pubsReducer.error || usersReducer.error) return <PageError />;
-  if (!pubs.length) {
-    return <PageEmpty msg='No encontramos ninguna publicación' />;
-  }
   return (
     <DivContainer>
       <h1 className='text-center fw-bold mb-4'>Publicaciones</h1>
       <Publicar />
-      {pubs.map((pub) => {
-        const creator = getCreator(pub.creator);
-        return (
-          <Publication
-            key={pub.id}
-            name={creator.name}
-            body={pub.body}
-            favs={pub.favs}
-            createdAt={pub.createdAt}
-            email={creator.email}
-            fav={false}
-          />
-        );
-      })}
+      {pubs.length ? (
+        pubs.map((pub) => {
+          const creator = getCreator(pub.creator);
+          return (
+            <Publication
+              key={pub.id}
+              name={creator.name}
+              body={pub.body}
+              favs={pub.favs}
+              createdAt={pub.createdAt}
+              email={creator.email}
+              scope={pub.scope}
+              fav={false}
+            />
+          );
+        })
+      ) : (
+        <PageEmpty msg='No encontramos ninguna publicación' />
+      )}
     </DivContainer>
   );
 };

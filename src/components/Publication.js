@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
-import '../assets/styles/components/Publication.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { formatNumber } from '../utils';
 import Gravatar from './Gravatar';
@@ -13,6 +12,7 @@ const Publication = (props) => {
     body = '',
     favs = 0,
     fav = false,
+    scope = 'private',
     email = '',
   } = props;
   const [like, setLike] = useState(fav);
@@ -26,6 +26,12 @@ const Publication = (props) => {
           <div className='fw-bold text-break'>{name}</div>
           <div className='text-secondary fw-bold'>
             {new Date(createdAt).toLocaleString()}
+            <span>
+              {' '}
+              -
+              {' '}
+              <i className={classNames('fa', scope === 'private' ? 'fa-user' : 'fa-users')} />
+            </span>
           </div>
         </div>
       </div>
@@ -64,7 +70,11 @@ const Publication = (props) => {
         </button>
       </div>
       <div className='mt-2'>
-        <form onSubmit={(e) => { e.preventDefault(); }}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <TextareaAutosize
             className='form-control resize-none'
             placeholder='Escribe un comentario...'
@@ -78,7 +88,6 @@ const Publication = (props) => {
               <i className='fa fa-comment me-1' />
               Agregar comentario
             </button>
-
           </div>
         </form>
       </div>

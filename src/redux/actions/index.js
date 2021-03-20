@@ -12,14 +12,14 @@ import {
 import { SET_CURRENT_USER, UPLOADING, USER_LOADING } from '../types/usersTypes';
 import { filterNonNull } from '../../utils';
 
-export function catchError(error, dispatch, type = ERROR) {
+export function catchError(error, dispatch, type = ERROR, axiosType = MESSAGE_ERRORS) {
   console.error(error);
   if (error.isAxiosError && error.response && error.response.status !== 500) {
     const { response } = error;
     const { data } = response;
     const { errors } = data;
     dispatch({
-      type: MESSAGE_ERRORS,
+      type: axiosType,
       payload: errors,
     });
   } else {
