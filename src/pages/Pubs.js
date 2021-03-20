@@ -42,9 +42,7 @@ const Pubs = (props) => {
   }
   return (
     <DivContainer>
-      <div className='d-flex align-items-baseline justify-content-center mb-4'>
-        <h1 className='fw-bold'>Publicaciones</h1>
-      </div>
+      <h1 className='text-center fw-bold mb-4'>Publicaciones</h1>
       {pubs.map((pub) => {
         const creator = getCreator(pub.creator);
         return (
@@ -52,7 +50,7 @@ const Pubs = (props) => {
             key={pub.id}
             name={creator.name}
             body={pub.body}
-            favs={pub.numberOfFavs}
+            favs={pub.favs}
             createdAt={pub.createdAt}
             email={creator.email}
             fav={false}

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import logo from '../../assets/images/CALISTEP.png';
 import PageError from '../../components/screens/PageError';
 import PageLoading from '../../components/screens/PageLoading';
 import UsersList from '../../components/UsersList';
@@ -16,14 +15,10 @@ const Users = (props) => {
   if (error) return <PageError />;
   if (loading) return <PageLoading />;
   return (
-    <>
-      <DivContainer>
-        <img className='img-fluid' src={logo} alt='logo' />
-      </DivContainer>
-      <DivContainer>
-        <UsersList users={users} />
-      </DivContainer>
-    </>
+    <DivContainer>
+      <h1 className='text-center fw-bold mb-4'>Usuarios</h1>
+      <UsersList users={users} />
+    </DivContainer>
   );
 };
 

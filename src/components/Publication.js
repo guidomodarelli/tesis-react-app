@@ -64,7 +64,7 @@ const Publication = (props) => {
         </button>
       </div>
       <div className='mt-2'>
-        <form onSubmit={() => {}}>
+        <form onSubmit={(e) => { e.preventDefault(); }}>
           <TextareaAutosize
             className='form-control resize-none'
             placeholder='Escribe un comentario...'
