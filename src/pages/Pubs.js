@@ -14,7 +14,7 @@ const Pubs = (props) => {
     pubsReducer,
     usersReducer,
     pubsReducer: { pubs, page, pages },
-    usersReducer: { users },
+    usersReducer: { users, currentUser },
     getAllPubs,
     getAllUsers,
     getNextPage,
@@ -61,7 +61,7 @@ const Pubs = (props) => {
               createdAt={pub.createdAt}
               email={user.email}
               scope={pub.scope}
-              fav={favUsers ? favUsers.includes(user.id) : false}
+              fav={favUsers ? favUsers.includes(currentUser.id) : false}
             />
           );
         })
