@@ -5,7 +5,7 @@ import Publication from '../components/Publication';
 import PageEmpty from '../components/screens/PageEmpty';
 import PageError from '../components/screens/PageError';
 import PageLoading from '../components/screens/PageLoading';
-import { getAllPubs } from '../redux/actions/pubsActions';
+import { getAllPubs, getNextPage } from '../redux/actions/pubsActions';
 import { getAll as getAllUsers } from '../redux/actions/usersActions';
 import DivContainer from './Users/styles';
 
@@ -13,10 +13,11 @@ const Pubs = (props) => {
   const {
     pubsReducer,
     usersReducer,
-    pubsReducer: { pubs },
+    pubsReducer: { pubs, page, pages },
     usersReducer: { users },
     getAllPubs,
     getAllUsers,
+    getNextPage,
   } = props;
 
   useEffect(() => {
@@ -36,6 +37,10 @@ const Pubs = (props) => {
     return '';
   };
 
+  function handleClick() {
+    getNextPage();
+  }
+
   if (pubsReducer.loading || usersReducer.loading) return <PageLoading />;
   if (pubsReducer.error || usersReducer.error) return <PageError />;
   return (
@@ -44,23 +49,35 @@ const Pubs = (props) => {
       <Publicar />
       {pubs.length ? (
         pubs.map((pub) => {
-          const creator = getCreator(pub.creator);
+          const user = getCreator(pub.creator);
+          const { favUsers } = pub;
           return (
             <Publication
               key={pub.id}
               id={pub.id}
-              name={creator.name}
+              name={user.name}
               body={pub.body}
               favs={pub.favs}
               createdAt={pub.createdAt}
-              email={creator.email}
+              email={user.email}
               scope={pub.scope}
-              fav={pub.favUsers.includes(pub.creator)}
+              fav={favUsers ? favUsers.includes(user.id) : false}
             />
           );
         })
       ) : (
         <PageEmpty msg='No encontramos ninguna publicación' />
+      )}
+      {page < pages && (
+        <div className='d-flex justify-content-center'>
+          <button
+            type='button'
+            className='btn btn-outline-secondary'
+            onClick={handleClick}
+          >
+            Cargar más...
+          </button>
+        </div>
       )}
     </DivContainer>
   );
@@ -76,6 +93,7 @@ const mapStateToProps = ({ pubsReducer, usersReducer }) => {
 const mapDispatchToProps = {
   getAllPubs,
   getAllUsers,
+  getNextPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pubs);

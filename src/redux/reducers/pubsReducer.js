@@ -1,4 +1,5 @@
 import {
+  GET_NEXT_PUBS,
   GET_PUBS,
   LIKE_PUB,
   POST_PUBS,
@@ -20,6 +21,8 @@ const INITIAL_STATE = {
   uploading: false,
   error: '',
   pubs: [],
+  page: 1,
+  pages: 1,
   form: initialForm(),
   messageErrors: [],
 };
@@ -75,6 +78,17 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: '',
         pubs: action.payload,
+        page: action.page,
+        pages: action.pages,
+      };
+    case GET_NEXT_PUBS:
+      return {
+        ...state,
+        loading: false,
+        error: '',
+        pubs: [...state.pubs, ...action.payload],
+        page: action.page,
+        pages: action.pages,
       };
     case POST_PUBS:
       return {

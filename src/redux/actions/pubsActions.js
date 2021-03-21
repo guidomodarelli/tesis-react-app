@@ -2,6 +2,7 @@ import { catchError } from '.';
 import axios from '../../config';
 import {
   GET_PUBS,
+  GET_NEXT_PUBS,
   LIKE_PUB,
   POST_PUBS,
   PUBS_CHANGE_FORM,
@@ -17,7 +18,35 @@ export const getAllPubs = () => async (dispatch) => {
   try {
     dispatch({ type: PUBS_LOADING });
     const { data } = await axios.get('/pubs');
-    dispatch({ type: GET_PUBS, payload: data.results });
+    dispatch({
+      type: GET_PUBS,
+      payload: data.results,
+      page: 1,
+      pages: data.info.pages,
+    });
+  } catch (err) {
+    catchError(err, dispatch, PUBS_ERROR);
+  }
+};
+
+export const getNextPage = () => async (dispatch, getState) => {
+  const {
+    pubsReducer: { page },
+  } = getState();
+  try {
+    const newPage = page + 1;
+    dispatch({ type: PUBS_LOADING });
+    const { data } = await axios.get('/pubs', {
+      params: {
+        page: newPage,
+      },
+    });
+    dispatch({
+      type: GET_NEXT_PUBS,
+      payload: data.results,
+      page: newPage,
+      pages: data.info.pages,
+    });
   } catch (err) {
     catchError(err, dispatch, PUBS_ERROR);
   }
