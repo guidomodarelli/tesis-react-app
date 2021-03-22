@@ -14,13 +14,20 @@ import {
 } from '../types/pubsTypes';
 
 /**
- * @typedef {import("redux").Dispatch} Dispatch
  * @typedef {import("../reducers/pubsReducer").PubForm} PubForm
+ * @typedef {import(".").callbackDispatch} callbackDispatch
+ *
+ * @typedef {Object} DispatchsPubsReducer
+ * @property {getAllPubs} getAllPubs
+ * @property {getNextPage} getNextPage
+ * @property {handleChangeFormPub} handleChangeFormPub
+ * @property {postPub} postPub
+ * @property {toggleFavPub} toggleFavPub
  */
 
 /**
  *
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const getAllPubs = () => async (dispatch) => {
   try {
@@ -39,7 +46,7 @@ export const getAllPubs = () => async (dispatch) => {
 
 /**
  *
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const getNextPage = () => async (dispatch, getState) => {
   const {
@@ -67,7 +74,7 @@ export const getNextPage = () => async (dispatch, getState) => {
 /**
  *
  * @param {PubForm} form
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const handleChangeFormPub = (form) => (dispatch) => {
   try {
@@ -79,7 +86,7 @@ export const handleChangeFormPub = (form) => (dispatch) => {
 
 /**
  *
- * @returns {(dispatch: Dispatch, getState: function(): {}) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const postPub = () => async (dispatch, getState) => {
   const { form } = getState().pubsReducer;
@@ -97,7 +104,7 @@ export const postPub = () => async (dispatch, getState) => {
  *
  * @param {number} pubId
  * @param {boolean} fav
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const toggleFavPub = (pubId, fav) => async (dispatch, getState) => {
   const {

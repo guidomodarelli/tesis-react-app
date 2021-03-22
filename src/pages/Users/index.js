@@ -9,15 +9,12 @@ import DivContainer from './styles';
 
 /**
  *
- * @typedef {import("../../redux/reducers/usersReducer").User} User
+ * @typedef {import("../../redux/reducers/usersReducer").StateUserReducer} StateUserReducer
  */
 
 /**
  *
- * @param {{
- *  loading: boolean;
- *  error: string;
- *  users: User[];
+ * @param {StateUserReducer & {
  *  getUsers: getUsers;
  * }} props
  * @returns

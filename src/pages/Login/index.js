@@ -9,23 +9,12 @@ import { handleChangeForm, resetForm } from '../../redux/actions/usersActions';
 import Div from './styles';
 
 /**
- * @typedef {import("../../redux/reducers").FormError} FormError
- * @typedef {import("../../redux/reducers/usersReducer").UserForm} UserForm
+ * @typedef {import("../../redux/reducers").GlobalState} GlobalState
  */
 
 /**
  *
- * @param {{
- *  reducer: {
- *    error: string;
- *    loading: boolean;
- *    messageErrors: FormError[];
- *  };
- *  usersReducer: {
- *    error: string;
- *    loading: boolean;
- *    form: UserForm;
- *  };
+ * @param {GlobalState & {
  *  signIn: signIn;
  *  handleChangeForm: handleChangeForm;
  *  resetForm: resetForm;

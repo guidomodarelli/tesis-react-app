@@ -15,14 +15,22 @@ import {
 
 /**
  *
- * @typedef {import("redux").Dispatch} Dispatch
  * @typedef {import('../reducers/usersReducer').UserForm} UserForm
+ * @typedef {import(".").callbackDispatch} callbackDispatch
+ *
+ * @typedef {Object} DispatchsUsersReducer
+ * @property {handleChangeForm} handleChangeForm
+ * @property {resetForm} resetForm
+ * @property {getAll} getAll
+ * @property {putUser} putUser
+ * @property {putAdminPermissions} putAdminPermissions
+ * @property {deleteUser} deleteUser
  */
 
 /**
  *
  * @param {UserForm} form
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const handleChangeForm = (form) => (dispatch) => {
   /** @type {UserForm} */
@@ -38,7 +46,7 @@ export const handleChangeForm = (form) => (dispatch) => {
 
 /**
  *
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const resetForm = () => (dispatch) => {
   dispatch({ type: RESET_FORM });
@@ -46,7 +54,7 @@ export const resetForm = () => (dispatch) => {
 
 /**
  *
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const getAll = () => async (dispatch) => {
   dispatch({ type: USER_LOADING, payload: true });
@@ -63,7 +71,7 @@ export const getAll = () => async (dispatch) => {
  *
  * @param {string} userId
  * @param {unknown[]} history
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const putUser = (userId, history) => async (dispatch, getState) => {
   const { form: userFrom } = getState().usersReducer;
@@ -82,7 +90,7 @@ export const putUser = (userId, history) => async (dispatch, getState) => {
 /**
  *
  * @param {string} userId
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const putAdminPermissions = (userId) => async (dispatch, getState) => {
   const { form: userFrom } = getState().usersReducer;
@@ -102,7 +110,7 @@ export const putAdminPermissions = (userId) => async (dispatch, getState) => {
 /**
  *
  * @param {string} userId
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const deleteUser = (userId) => async (dispatch, getState) => {
   dispatch({ type: USER_LOADING, payload: true });

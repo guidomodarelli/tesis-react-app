@@ -6,35 +6,18 @@ import PageEmpty from '../components/screens/PageEmpty';
 import PageError from '../components/screens/PageError';
 import PageLoading from '../components/screens/PageLoading';
 import { getAllPubs, getNextPage } from '../redux/actions/pubsActions';
-import { getAll as getAllUsers } from '../redux/actions/usersActions';
+import { getAll } from '../redux/actions/usersActions';
 import DivContainer from './Users/styles';
 
 /**
- *
- * @typedef {import('../redux/reducers/pubsReducer').Publication} Publication
  * @typedef {import("../redux/reducers/usersReducer").User} User
+ * @typedef {import("../redux/reducers").GlobalState} GlobalState
+ * @typedef {import("../redux/actions").GlobalDispatchs} GlobalDispatchs
  */
 
 /**
  *
- * @param {{
- *  pubsReducer: {
- *    pubs: Publication[];
- *    page: number;
- *    pages: number;
- *    loading: boolean;
- *    error: string;
- *  };
- *  usersReducer: {
- *    users: User[];
- *    currentUser: User;
- *    loading: boolean;
- *    error: string;
- *  };
- *  getAllPubs: getAllPubs;
- *  getAllUsers: getAllUsers;
- *  getNextPage: getNextPage;
- * }} props
+ * @param {GlobalState & GlobalDispatchs} props
  * @returns
  */
 const Pubs = (props) => {
@@ -44,7 +27,7 @@ const Pubs = (props) => {
     pubsReducer: { pubs, page, pages },
     usersReducer: { users, currentUser },
     getAllPubs,
-    getAllUsers,
+    getAll: getAllUsers,
     getNextPage,
   } = props;
 
@@ -67,7 +50,7 @@ const Pubs = (props) => {
     if (user) {
       return user;
     }
-    return '';
+    return {};
   };
 
   function handleClick() {
@@ -125,7 +108,7 @@ const mapStateToProps = ({ pubsReducer, usersReducer }) => {
 
 const mapDispatchToProps = {
   getAllPubs,
-  getAllUsers,
+  getAll,
   getNextPage,
 };
 

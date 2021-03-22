@@ -15,6 +15,7 @@ import { filterNonNull } from '../../utils';
  *
  * @typedef {import("redux").Dispatch} Dispatch
  * @typedef {import("../reducers/usersReducer").UserForm} UserForm
+ * @typedef {import("../reducers").GlobalState} GlobalState
  */
 
 /**
@@ -24,7 +25,12 @@ import { filterNonNull } from '../../utils';
  * @param {string} type
  * @param {string} axiosType
  */
-export function catchError(error, dispatch, type = ERROR, axiosType = MESSAGE_ERRORS) {
+export function catchError(
+  error,
+  dispatch,
+  type = ERROR,
+  axiosType = MESSAGE_ERRORS,
+) {
   console.error(error);
   if (error.isAxiosError && error.response && error.response.status !== 500) {
     const { response } = error;
@@ -43,8 +49,24 @@ export function catchError(error, dispatch, type = ERROR, axiosType = MESSAGE_ER
 }
 
 /**
+ * @typedef {(dispatch: Dispatch, getState: ?GlobalState) => Promise<void>} callbackDispatch
  *
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @typedef {Object} DispatchsReducer
+ * @property {resetMessageErrors} resetMessageErrors
+ * @property {signIn} signIn
+ * @property {signOut} signOut
+ * @property {signUp} signUp
+ * @property {restoreToken} restoreToken
+ *
+ * @typedef {import("./pubsActions").DispatchsPubsReducer} DispatchsPubsReducer
+ * @typedef {import("./usersActions").DispatchsUsersReducer} DispatchsUsersReducer
+ *
+ * @typedef {DispatchsReducer & DispatchsPubsReducer & DispatchsUsersReducer} GlobalDispatchs
+ */
+
+/**
+ *
+ * @returns {callbackDispatch}
  */
 export const resetMessageErrors = () => (dispatch) => {
   dispatch({ type: MESSAGE_ERRORS, payload: [] });
@@ -53,7 +75,7 @@ export const resetMessageErrors = () => (dispatch) => {
 /**
  *
  * @param {UserForm} form
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const signIn = (form) => async (dispatch) => {
   dispatch({ type: LOADING, payload: true });
@@ -71,7 +93,7 @@ export const signIn = (form) => async (dispatch) => {
 
 /**
  *
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const signOut = () => (dispatch) => {
   dispatch({ type: LOADING, payload: true });
@@ -87,7 +109,7 @@ export const signOut = () => (dispatch) => {
  *
  * @param {UserForm} form
  * @param {unknown[]} history
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const signUp = (form, history) => async (dispatch) => {
   dispatch({ type: UPLOADING, payload: true });
@@ -103,7 +125,7 @@ export const signUp = (form, history) => async (dispatch) => {
 
 /**
  *
- * @returns {(dispatch: Dispatch) => Promise<void>}
+ * @returns {callbackDispatch}
  */
 export const restoreToken = () => async (dispatch) => {
   dispatch({ type: LOADING, payload: true });
