@@ -12,6 +12,38 @@ import {
   UPLOADING,
 } from '../types/usersTypes';
 
+/**
+ * @typedef {"normal" | "admin"} ROLE
+ */
+
+/**
+ * @typedef {Object} UserForm
+ * @property {string} email
+ * @property {string} name
+ * @property {Date} birthdate
+ * @property {string} bio
+ * @property {string} instagram
+ * @property {string} password
+ * @property {ROLE} role
+ * @property {boolean} addGroup
+ * @property {boolean} addNewAdmins
+ * @property {boolean} changeGroupInfo
+ * @property {boolean} changeGroupUser
+ * @property {boolean} changePermissionsAdmins
+ * @property {boolean} changeRoutine
+ * @property {boolean} deletePosts
+ * @property {boolean} deleteUsers
+ * @property {boolean} deleteVotes
+ */
+
+/**
+ * @typedef {UserForm & {id: string, bio: ?string, instagram: ?string, password: ?string}} User
+ */
+
+/**
+ *
+ * @returns {UserForm}
+ */
 const initialForm = () => ({
   email: '',
   name: '',
@@ -32,10 +64,16 @@ const initialForm = () => ({
 });
 
 const INITIAL_STATE = {
+  /**
+   * @type {User[]}
+   */
   users: [],
   loading: true,
   error: '',
   uploading: false,
+  /**
+   * @type {User}
+   */
   currentUser: {
     id: '',
     ...initialForm(),
@@ -45,19 +83,38 @@ const INITIAL_STATE = {
   form: initialForm(),
 };
 
+/**
+ *
+ * @param {User[]} users
+ * @param {string} id
+ * @returns {User[]}
+ */
 const deleteCurrentUser = (users, id) => {
   return [...users.filter((el) => el.id !== id)];
 };
 
+/**
+ *
+ * @param {User[]} users
+ * @param {string} userId
+ * @param {User} payload
+ * @returns
+ */
 const updateUserList = (users, userId, payload) => {
-  return users.map((el) => {
-    if (el.id === userId) {
-      return { ...el, ...payload, id: el.id };
+  return users.map((user) => {
+    if (user.id === userId) {
+      return { ...user, ...payload, id: user.id };
     }
-    return el;
+    return user;
   });
 };
 
+/**
+ *
+ * @param {INITIAL_STATE} state
+ * @param {Record<string, any>} action
+ * @returns {INITIAL_STATE}
+ */
 const usersReducers = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_USERS:
@@ -129,7 +186,11 @@ const usersReducers = (state = INITIAL_STATE, action) => {
           ...action.payload,
           id: state.currentUser.id,
         },
-        users: updateUserList(state.users, state.currentUser.id, action.payload),
+        users: updateUserList(
+          state.users,
+          state.currentUser.id,
+          action.payload,
+        ),
       };
     case PUT_ADMIN_PERMISSIONS:
       return {

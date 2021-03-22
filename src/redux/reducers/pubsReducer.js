@@ -10,7 +10,30 @@ import {
   PUBS_UPLOADING,
   UNLIKE_PUB,
 } from '../types/pubsTypes';
+/**
+ * @typedef {"private" | "public"} SCOPE
+ */
 
+/**
+ * @typedef {Object} Form
+ * @property {string} body
+ * @property {SCOPE} scope
+ */
+
+/**
+ * @typedef {Object} Publication
+ * @property {number} id
+ * @property {string} creator
+ * @property {string} string
+ * @property {SCOPE} scope
+ * @property {number} favs
+ * @property {Date} createdAt
+ * @property {string[]} favUsers
+ */
+
+/**
+ * @returns {Form}
+ */
 const initialForm = () => ({
   body: '',
   scope: 'private',
@@ -20,13 +43,25 @@ const INITIAL_STATE = {
   loading: true,
   uploading: false,
   error: '',
+  /**
+   * @type {Publication[]}
+   */
   pubs: [],
   page: 1,
   pages: 1,
   form: initialForm(),
+  /**
+   * @type {import('.').FormError[]}
+   */
   messageErrors: [],
 };
 
+/**
+ *
+ * @param {INITIAL_STATE} state
+ * @param {{userId: string, pubId: string, payload: any}} action
+ * @returns
+ */
 const pubsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UNLIKE_PUB:

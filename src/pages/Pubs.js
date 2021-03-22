@@ -29,6 +29,11 @@ const Pubs = (props) => {
     }
   }, []);
 
+  /**
+   *
+   * @param {string} creator
+   * @returns {import('../redux/reducers/usersReducer').User}
+   */
   const getCreator = (creator) => {
     const user = users.find((user) => user.id === creator);
     if (user) {

@@ -12,13 +12,27 @@ import { DELETE_USER } from '../types/usersTypes';
 import usersReducer from './usersReducer';
 import pubsReducer from './pubsReducer';
 
+/**
+ * @typedef {Object} FormError
+ * @property {string} path
+ * @property {string} message
+ */
+
 const INITIAL_STATE = {
   loading: true, // es el unico que empieza en true
   error: '',
+  /** @type {FormError[]} */
   messageErrors: [],
+  /** @type {?string} */
   userToken: null,
 };
 
+/**
+ *
+ * @param {INITIAL_STATE} state
+ * @param {Record<string, any>} action
+ * @returns
+ */
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOADING:

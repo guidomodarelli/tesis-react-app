@@ -11,25 +11,7 @@ function isBoolean(val) {
 
 class User {
   /**
-   *
-   * @param {Record<string, {
-   *  id: string,
-   *  email: string,
-   *  name: string,
-   *  birthdate: string,
-   *  bio?: string,
-   *  instagram?: string,
-   *  role: 'admin' | 'normal',
-   *  addGroup: boolean,
-   *  addNewAdmins: boolean,
-   *  changeGroupInfo: boolean,
-   *  changeGroupUser: boolean,
-   *  changePermissionsAdmins: boolean,
-   *  changeRoutine: boolean,
-   *  deletePosts: boolean,
-   *  deleteUsers: boolean,
-   *  deleteVotes: boolean
-   * }>} user
+   * @param {import('../redux/reducers/usersReducer').User} user
    */
   constructor(user = {}) {
     this.setId(user.id);

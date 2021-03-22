@@ -1,5 +1,4 @@
 import axios from '../../config';
-import User from '../../classes/User';
 import {
   ERROR,
   LOADING,
@@ -12,6 +11,13 @@ import {
 import { SET_CURRENT_USER, UPLOADING, USER_LOADING } from '../types/usersTypes';
 import { filterNonNull } from '../../utils';
 
+/**
+ *
+ * @param {import("axios").AxiosError | Error} error
+ * @param {*} dispatch
+ * @param {string} type
+ * @param {string} axiosType
+ */
 export function catchError(error, dispatch, type = ERROR, axiosType = MESSAGE_ERRORS) {
   console.error(error);
   if (error.isAxiosError && error.response && error.response.status !== 500) {
@@ -40,7 +46,7 @@ export const signIn = (form) => async (dispatch) => {
     const {
       data: { token, user },
     } = await axios.post('/login', form);
-    dispatch({ type: SET_CURRENT_USER, payload: new User(user) });
+    dispatch({ type: SET_CURRENT_USER, payload: user });
     dispatch({ type: SIGN_IN, payload: token });
     localStorage.setItem('token', token);
   } catch (error) {
@@ -73,9 +79,8 @@ export const signUp = (form, history) => async (dispatch) => {
 export const restoreToken = () => async (dispatch) => {
   dispatch({ type: LOADING, payload: true });
   try {
-    const { data } = await axios.get('/current/user');
+    const { data: { user } } = await axios.get('/current/user');
     const token = localStorage.getItem('token');
-    const user = new User(data.user);
     dispatch({ type: SET_CURRENT_USER, payload: user });
     dispatch({ type: RESTORE_TOKEN, payload: token });
   } catch (error) {
