@@ -8,6 +8,31 @@ import { signIn, resetMessageErrors } from '../../redux/actions';
 import { handleChangeForm, resetForm } from '../../redux/actions/usersActions';
 import Div from './styles';
 
+/**
+ * @typedef {import("../../redux/reducers").FormError} FormError
+ * @typedef {import("../../redux/reducers/usersReducer").UserForm} UserForm
+ */
+
+/**
+ *
+ * @param {{
+ *  reducer: {
+ *    error: string;
+ *    loading: boolean;
+ *    messageErrors: FormError[];
+ *  };
+ *  usersReducer: {
+ *    error: string;
+ *    loading: boolean;
+ *    form: UserForm;
+ *  };
+ *  signIn: signIn;
+ *  handleChangeForm: handleChangeForm;
+ *  resetForm: resetForm;
+ *  resetMessageErrors: resetMessageErrors;
+ * }} props
+ * @returns
+ */
 const Login = (props) => {
   const {
     reducer,
@@ -19,10 +44,18 @@ const Login = (props) => {
     resetMessageErrors,
   } = props;
 
+  /**
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e
+   */
   const handleChange = (e) => {
     handleChangeForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  /**
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e
+   */
   const handleSumbit = (e) => {
     e.preventDefault();
     signIn({

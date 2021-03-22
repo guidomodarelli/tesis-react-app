@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NavBar from './NavBar';
 
+/**
+ *
+ * @param {{
+ *  children: JSX.Element;
+ * }} props
+ * @returns
+ */
 const Layout = (props) => {
   const { children } = props;
   // FIXME: Warning: findDOMNode is deprecated in

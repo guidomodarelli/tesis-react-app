@@ -3,6 +3,19 @@ import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import { handleChangeFormPub, postPub } from '../redux/actions/pubsActions';
 
+/**
+ * @typedef {import("../redux/reducers").FormError} FormError
+ * @typedef {import('../redux/reducers/usersReducer').UserForm} UserForm
+ * @typedef {import("../redux/reducers/pubsReducer").PubForm} PubForm
+ */
+
+/**
+ *
+ * @param {{
+ *  errors: FormError[]
+ * }} props
+ * @returns
+ */
 function ErrorMessages(props) {
   const { errors } = props;
   return (
@@ -22,6 +35,16 @@ function ErrorMessages(props) {
   );
 }
 
+/**
+ *
+ * @param {{
+ *  form: UserForm;
+ *  handleChangeFormPub: (form: PubForm) => (dispatch: Dispatch) => Promise<void>;
+ *  postPub: () => (dispatch: Dispatch, getState: function(): {}) => Promise<void>;
+ *  messageErrors: FormError[];
+ * }} props
+ * @returns
+ */
 function Publicar(props) {
   const { form, handleChangeFormPub, postPub, messageErrors } = props;
   const [checked, setChecked] = useState(true);

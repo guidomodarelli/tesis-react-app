@@ -2,6 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from './Modal';
 
+/**
+ *
+ * @param {{
+ *  isOpen: boolean;
+ *  onClose: () => void;
+ *  onDeleteUser: () => void;
+ * }} props
+ * @returns
+ */
 const DeleteUserModal = (props) => {
   const { isOpen, onClose, onDeleteUser } = props;
   return (

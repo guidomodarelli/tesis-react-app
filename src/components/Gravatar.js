@@ -10,6 +10,16 @@ const Img = styled.img.attrs(({ height, width }) => ({
   border-radius: 50%;
 `;
 
+/**
+ *
+ * @param {{
+ *  email: string;
+ *  className: string;
+ *  height: string;
+ *  width: string;
+ * }} props
+ * @returns
+ */
 const Gravatar = (props) => {
   const { email = '', className, height, width } = props;
   const hash = md5(email);

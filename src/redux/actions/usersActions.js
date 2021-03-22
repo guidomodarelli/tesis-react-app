@@ -13,7 +13,19 @@ import {
   USER_LOADING,
 } from '../types/usersTypes';
 
+/**
+ *
+ * @typedef {import("redux").Dispatch} Dispatch
+ * @typedef {import('../reducers/usersReducer').UserForm} UserForm
+ */
+
+/**
+ *
+ * @param {UserForm} form
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const handleChangeForm = (form) => (dispatch) => {
+  /** @type {UserForm} */
   const newForm = {
     ...form,
     name: toTitleCase(form.name),
@@ -24,10 +36,18 @@ export const handleChangeForm = (form) => (dispatch) => {
   dispatch({ type: SET_FORM, payload: newForm });
 };
 
+/**
+ *
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const resetForm = () => (dispatch) => {
   dispatch({ type: RESET_FORM });
 };
 
+/**
+ *
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const getAll = () => async (dispatch) => {
   dispatch({ type: USER_LOADING, payload: true });
   try {
@@ -39,6 +59,12 @@ export const getAll = () => async (dispatch) => {
   }
 };
 
+/**
+ *
+ * @param {string} userId
+ * @param {unknown[]} history
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const putUser = (userId, history) => async (dispatch, getState) => {
   const { form: userFrom } = getState().usersReducer;
   dispatch({ type: USER_LOADING, payload: true });
@@ -53,6 +79,11 @@ export const putUser = (userId, history) => async (dispatch, getState) => {
   }
 };
 
+/**
+ *
+ * @param {string} userId
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const putAdminPermissions = (userId) => async (dispatch, getState) => {
   const { form: userFrom } = getState().usersReducer;
   dispatch({ type: USER_LOADING, payload: true });
@@ -68,6 +99,11 @@ export const putAdminPermissions = (userId) => async (dispatch, getState) => {
   }
 };
 
+/**
+ *
+ * @param {string} userId
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const deleteUser = (userId) => async (dispatch, getState) => {
   dispatch({ type: USER_LOADING, payload: true });
   const { currentUser } = getState().usersReducer;

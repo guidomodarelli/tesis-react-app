@@ -10,6 +10,32 @@ import {
   getAll as getUsers, handleChangeForm,
 } from '../redux/actions/usersActions';
 
+/**
+ * @typedef {import("../redux/reducers/usersReducer").UserForm} UserForm
+ * @typedef {import("../redux/reducers/usersReducer").User} User
+ * @typedef {import("../redux/reducers").FormError} FormError
+ */
+
+/**
+ *
+ * @param {{
+ *  usersReducer: {
+ *    form: UserForm,
+ *    users: User[];
+ *    uploading: boolean;
+ *  };
+ *  history: unknown[];
+ *  reducer: {
+ *    loading: boolean;
+ *    error: string;
+ *    messageErrors: FormError;
+ *  };
+ *  handleChangeForm: handleChangeForm;
+ *  signUp: signUp;
+ *  getUsers: getUsers;
+ * }} props
+ * @returns
+ */
 const UserNew = (props) => {
   const {
     usersReducer: { form, users, uploading },
@@ -21,18 +47,18 @@ const UserNew = (props) => {
   } = props;
   const handleChange = (e) => handleChangeForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSumbit = async (e) => {
+  const handleSumbit = (e) => {
     e.preventDefault();
-    await signUp(form, history);
+    signUp(form, history);
   };
 
   const handleCancel = () => {
     history.push('/login');
   };
 
-  const fetchUsers = async () => {
+  const fetchUsers = () => {
     if (!users.length) {
-      await getUsers();
+      getUsers();
     }
   };
 

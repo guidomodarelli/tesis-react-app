@@ -5,12 +5,22 @@ import { resetMessageErrors } from '../redux/actions';
 import { resetForm } from '../redux/actions/usersActions';
 
 /**
+ * @typedef {import('../redux/reducers/usersReducer').UserForm} UserFormType
+ * @typedef {import("../redux/reducers").FormError} FormError
+ */
+
+/**
  *
- * @param {Record<string, {
- *  onCancel: (event) => {},
- *  onSubmit: () => {},
- *  onChange: () => {},
- * }>} props
+ * @param {{
+ *  onCancel: function(): void;
+ *  onSubmit: function(): void;
+ *  onChange: function(): void;
+ *  formValues: UserFormType;
+ *  login: boolean;
+ *  messageErrors: FormError[];
+ *  resetForm: resetForm;
+ *  resetMessageErrors: resetMessageErrors;
+ * }} props
  * @returns
  */
 const UserForm = (props) => {

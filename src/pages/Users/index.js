@@ -7,6 +7,21 @@ import UsersList from '../../components/UsersList';
 import { getAll as getUsers } from '../../redux/actions/usersActions';
 import DivContainer from './styles';
 
+/**
+ *
+ * @typedef {import("../../redux/reducers/usersReducer").User} User
+ */
+
+/**
+ *
+ * @param {{
+ *  loading: boolean;
+ *  error: string;
+ *  users: User[];
+ *  getUsers: getUsers;
+ * }} props
+ * @returns
+ */
 const Users = (props) => {
   const { loading, error, users, getUsers } = props;
 

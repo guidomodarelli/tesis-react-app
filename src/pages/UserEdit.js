@@ -10,6 +10,35 @@ import {
   putUser,
 } from '../redux/actions/usersActions';
 
+/**
+ *
+ * @typedef {import("../redux/reducers/usersReducer").User} User
+ * @typedef {import("../redux/reducers/usersReducer").UserForm} UserForm
+ * @typedef {import("../redux/reducers").FormError} FormError
+ */
+
+/**
+ *
+ * @param {{
+ *  match: {
+ *    params: {
+ *      userId: string;
+ *    };
+ *  };
+ *  history: unknown[];
+ *  loading: boolean;
+ *  currentUser: User;
+ *  form: UserForm;
+ *  users: User[];
+ *  error: string;
+ *  uploading: boolean;
+ *  messageErrors: FormError[];
+ *  handleChangeForm: handleChangeForm;
+ *  putUser: putUser;
+ *  getUsers: getUsers;
+ * }} props
+ * @returns
+ */
 const UserEdit = (props) => {
   const {
     match: {

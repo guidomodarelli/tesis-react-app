@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import emptyImage from '../../assets/images/empty.svg';
 import { Figure, Img } from './styles';
 
+/**
+ *
+ * @param {{
+ *  msg: string;
+ * }} props
+ * @returns
+ */
 const PageEmpty = (props) => {
   const { msg } = props;
   return (

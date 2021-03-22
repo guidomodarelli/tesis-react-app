@@ -20,7 +20,7 @@ import {
  * @typedef {Object} UserForm
  * @property {string} email
  * @property {string} name
- * @property {Date} birthdate
+ * @property {string} birthdate
  * @property {string} bio
  * @property {string} instagram
  * @property {string} password
@@ -63,17 +63,25 @@ const initialForm = () => ({
   deleteVotes: false,
 });
 
+/**
+ * @typedef {{
+ *  users: User[];
+ *  loading: boolean;
+ *  error: string;
+ *  uploading: boolean;
+ *  currentUser: User;
+ *  form: UserForm;
+ * }} StateUserReducer
+ */
+
+/**
+ * @type {StateUserReducer}
+ */
 const INITIAL_STATE = {
-  /**
-   * @type {User[]}
-   */
   users: [],
   loading: true,
   error: '',
   uploading: false,
-  /**
-   * @type {User}
-   */
   currentUser: {
     id: '',
     ...initialForm(),
@@ -111,9 +119,9 @@ const updateUserList = (users, userId, payload) => {
 
 /**
  *
- * @param {INITIAL_STATE} state
+ * @param {StateUserReducer} state
  * @param {Record<string, any>} action
- * @returns {INITIAL_STATE}
+ * @returns {StateUserReducer}
  */
 const usersReducers = (state = INITIAL_STATE, action) => {
   switch (action.type) {

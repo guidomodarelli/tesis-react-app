@@ -15,7 +15,7 @@ import {
  */
 
 /**
- * @typedef {Object} Form
+ * @typedef {Object} PubForm
  * @property {string} body
  * @property {SCOPE} scope
  */
@@ -24,43 +24,57 @@ import {
  * @typedef {Object} Publication
  * @property {number} id
  * @property {string} creator
- * @property {string} string
+ * @property {string} body
  * @property {SCOPE} scope
  * @property {number} favs
- * @property {Date} createdAt
+ * @property {string} createdAt
  * @property {string[]} favUsers
  */
 
 /**
- * @returns {Form}
+ * @typedef {import('.').FormError} FormError
+ */
+
+/**
+ * @returns {PubForm}
  */
 const initialForm = () => ({
   body: '',
   scope: 'private',
 });
 
+/**
+ * @typedef {{
+ *  loading: boolean;
+ *  uploading: boolean;
+ *  error: string;
+ *  pubs: Publication[];
+ *  page: number;
+ *  pages: number;
+ *  form: PubForm;
+ *  messageErrors: FormError[];
+ * }} StatePubReducer
+ */
+
+/**
+ * @type {StatePubReducer}
+ */
 const INITIAL_STATE = {
   loading: true,
   uploading: false,
   error: '',
-  /**
-   * @type {Publication[]}
-   */
   pubs: [],
   page: 1,
   pages: 1,
   form: initialForm(),
-  /**
-   * @type {import('.').FormError[]}
-   */
   messageErrors: [],
 };
 
 /**
  *
- * @param {INITIAL_STATE} state
+ * @param {StatePubReducer} state
  * @param {{userId: string, pubId: string, payload: any}} action
- * @returns
+ * @returns {StatePubReducer}
  */
 const pubsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {

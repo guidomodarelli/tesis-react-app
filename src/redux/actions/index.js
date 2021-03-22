@@ -13,8 +13,14 @@ import { filterNonNull } from '../../utils';
 
 /**
  *
+ * @typedef {import("redux").Dispatch} Dispatch
+ * @typedef {import("../reducers/usersReducer").UserForm} UserForm
+ */
+
+/**
+ *
  * @param {import("axios").AxiosError | Error} error
- * @param {*} dispatch
+ * @param {Dispatch} dispatch
  * @param {string} type
  * @param {string} axiosType
  */
@@ -36,10 +42,19 @@ export function catchError(error, dispatch, type = ERROR, axiosType = MESSAGE_ER
   }
 }
 
+/**
+ *
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const resetMessageErrors = () => (dispatch) => {
   dispatch({ type: MESSAGE_ERRORS, payload: [] });
 };
 
+/**
+ *
+ * @param {UserForm} form
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const signIn = (form) => async (dispatch) => {
   dispatch({ type: LOADING, payload: true });
   try {
@@ -54,6 +69,10 @@ export const signIn = (form) => async (dispatch) => {
   }
 };
 
+/**
+ *
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const signOut = () => (dispatch) => {
   dispatch({ type: LOADING, payload: true });
   try {
@@ -64,6 +83,12 @@ export const signOut = () => (dispatch) => {
   }
 };
 
+/**
+ *
+ * @param {UserForm} form
+ * @param {unknown[]} history
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const signUp = (form, history) => async (dispatch) => {
   dispatch({ type: UPLOADING, payload: true });
   try {
@@ -76,12 +101,18 @@ export const signUp = (form, history) => async (dispatch) => {
   }
 };
 
+/**
+ *
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const restoreToken = () => async (dispatch) => {
   dispatch({ type: LOADING, payload: true });
   try {
-    const { data: { user } } = await axios.get('/current/user');
+    const response = await axios.get('/current/user');
+    /** @type {import('../reducers/usersReducer').User} */
+    const userObj = response.data.user;
     const token = localStorage.getItem('token');
-    dispatch({ type: SET_CURRENT_USER, payload: user });
+    dispatch({ type: SET_CURRENT_USER, payload: userObj });
     dispatch({ type: RESTORE_TOKEN, payload: token });
   } catch (error) {
     dispatch({ type: USER_LOADING, payload: false });

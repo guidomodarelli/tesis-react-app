@@ -3,6 +3,15 @@ import ReactDOM from 'react-dom';
 import '../assets/styles/components/Modal.css';
 import PropTypes from 'prop-types';
 
+/**
+ *
+ * @param {{
+ *  isOpen: boolean;
+ *  onClose: () => void;
+ *  children: JSX.Element;
+ * }} props
+ * @returns
+ */
 const Modal = (props) => {
   const { isOpen, onClose, children } = props;
   if (!isOpen) {

@@ -9,6 +9,34 @@ import { getAllPubs, getNextPage } from '../redux/actions/pubsActions';
 import { getAll as getAllUsers } from '../redux/actions/usersActions';
 import DivContainer from './Users/styles';
 
+/**
+ *
+ * @typedef {import('../redux/reducers/pubsReducer').Publication} Publication
+ * @typedef {import("../redux/reducers/usersReducer").User} User
+ */
+
+/**
+ *
+ * @param {{
+ *  pubsReducer: {
+ *    pubs: Publication[];
+ *    page: number;
+ *    pages: number;
+ *    loading: boolean;
+ *    error: string;
+ *  };
+ *  usersReducer: {
+ *    users: User[];
+ *    currentUser: User;
+ *    loading: boolean;
+ *    error: string;
+ *  };
+ *  getAllPubs: getAllPubs;
+ *  getAllUsers: getAllUsers;
+ *  getNextPage: getNextPage;
+ * }} props
+ * @returns
+ */
 const Pubs = (props) => {
   const {
     pubsReducer,
@@ -21,21 +49,21 @@ const Pubs = (props) => {
   } = props;
 
   useEffect(() => {
-    if (!pubs.lenght) {
+    if (!pubs.length) {
       getAllPubs();
     }
-    if (!users.lenght) {
+    if (!users.length) {
       getAllUsers();
     }
   }, []);
 
   /**
    *
-   * @param {string} creator
-   * @returns {import('../redux/reducers/usersReducer').User}
+   * @param {string} userId
+   * @returns {User}
    */
-  const getCreator = (creator) => {
-    const user = users.find((user) => user.id === creator);
+  const getCreator = (userId) => {
+    const user = users.find((user) => user.id === userId);
     if (user) {
       return user;
     }

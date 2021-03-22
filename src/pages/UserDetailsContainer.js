@@ -19,6 +19,42 @@ const selectCurrentUserDetails = (userId) => createSelector(
   }),
 );
 
+/**
+ *
+ * @typedef {import("../redux/reducers/usersReducer").User} User
+ * @typedef {import("../redux/reducers/usersReducer").UserForm} UserForm
+ */
+
+/**
+ *
+ * @param {{
+ *  reducer: {
+ *    loading: boolean;
+ *    error: string;
+ *  };
+ *  usersReducer: {
+ *    loading: boolean;
+ *    error: string;
+ *    form: UserForm;
+ *    users: User[];
+ *    currentUser: User;
+ *    addNewAdmins: boolean;
+ *    deleteUser: boolean;
+ *    changePermissionsAdmins: boolean;
+ *  };
+ *  match: {
+ *    params: {
+ *      userId: string;
+ *    };
+ *  };
+ *  history: unknown[];
+ *  getUsers: getUsers;
+ *  deleteUser: deleteUser;
+ *  putAdminPermissions: putAdminPermissions;
+ *  handleChangeForm: handleChangeForm;
+ * }} props
+ * @returns
+ */
 const UserDetailsContainer = (props) => {
   const {
     match: {
@@ -42,6 +78,7 @@ const UserDetailsContainer = (props) => {
   const [modalDeleteUserIsOpen, setModalDeleteUserIsOpen] = useState(false);
   const [modalPermisosIsOpen, setModalPermisosIsOpen] = useState(false);
 
+  /** @type {User} */
   const currentUserDetails = useSelector(selectCurrentUserDetails(userId));
 
   useEffect(() => {

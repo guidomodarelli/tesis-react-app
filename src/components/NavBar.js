@@ -6,6 +6,16 @@ import PropTypes from 'prop-types';
 import { signOut, resetMessageErrors } from '../redux/actions';
 import { resetForm } from '../redux/actions/usersActions';
 
+/**
+ *
+ * @param {{
+ *  userToken: string;
+ *  signOut: signOut;
+ *  resetForm: resetForm;
+ *  resetMessageErrors: resetMessageErrors;
+ * }} props
+ * @returns
+ */
 const NavBar = (props) => {
   const { userToken, signOut, resetForm, resetMessageErrors } = props;
 

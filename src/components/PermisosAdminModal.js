@@ -3,6 +3,23 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Modal from './Modal';
 
+/**
+ * @typedef {import("../redux/reducers/usersReducer").User} User
+ * @typedef {import("../redux/reducers/usersReducer").UserForm} UserForm
+ */
+
+/**
+ *
+ * @param {{
+ *  currentUser: User;
+ *  handleChangeCheckList: (event: React.ChangeEvent<HTMLInputElement>) => void;
+ *  isOpen: boolean;
+ *  onClose: () => void;
+ *  onDesignAdmin: () => void;
+ *  form: UserForm;
+ * }} props
+ * @returns
+ */
 const PermisosAdminModal = (props) => {
   const {
     currentUser: {

@@ -7,6 +7,25 @@ import { toggleFavPub } from '../redux/actions/pubsActions';
 import { formatNumber } from '../utils';
 import Gravatar from './Gravatar';
 
+/**
+ * @typedef {import("../redux/reducers/pubsReducer").SCOPE} SCOPE
+ */
+
+/**
+ *
+ * @param {{
+ *  name: string;
+ *  createdAt: string;
+ *  body: string;
+ *  favs: number;
+ *  fav: boolean;
+ *  scope: SCOPE;
+ *  email: string;
+ *  toggleFavPub: toggleFavPub;
+ *  id: string;
+ * }} props
+ * @returns
+ */
 const Publication = (props) => {
   const {
     name = '',

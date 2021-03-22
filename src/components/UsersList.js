@@ -7,6 +7,10 @@ import Gravatar from './Gravatar';
 import InstagramAccount from './InstagramAccount';
 import PageEmpty from './screens/PageEmpty';
 
+/**
+ * @typedef {import("../redux/reducers/usersReducer").User} User
+ */
+
 const Div = styled.div({
   border: '1px solid rgba(0, 0, 0, 0.16)',
   borderRadius: '8px',
@@ -19,6 +23,13 @@ const Figure = styled.figure`
   margin: 15px;
 `;
 
+/**
+ *
+ * @param {{
+ *  user: User;
+ * }} props
+ * @returns {JSX.Element}
+ */
 const UserListItem = (props) => {
   const { user } = props;
 
@@ -42,6 +53,13 @@ UserListItem.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
+/**
+ *
+ * @param {{
+ *  users: User[];
+ * }} props
+ * @returns {JSX.Element}
+ */
 const UsersList = (props) => {
   const { users = [] } = props;
   if (!users.length) {

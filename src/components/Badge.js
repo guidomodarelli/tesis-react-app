@@ -6,6 +6,16 @@ import DivContainer from '../pages/Users/styles';
 import Gravatar from './Gravatar';
 import InstagramAccount from './InstagramAccount';
 
+/**
+ *
+ * @param {{
+ *  email: string;
+ *  name: string;
+ *  bio: string;
+ *  instagram: string;
+ * }} props
+ * @returns
+ */
 const Badge = (props) => {
   const { email, name, bio, instagram } = props;
 

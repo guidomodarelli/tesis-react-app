@@ -18,20 +18,43 @@ import pubsReducer from './pubsReducer';
  * @property {string} message
  */
 
+/**
+ * @typedef {{
+ *   loading: boolean;
+ *   error: string,
+ *   messageErrors: FormError[],
+ *   userToken: ?string,
+ * }} StateReducer
+ */
+
+/**
+ * @typedef {import("./pubsReducer").StatePubReducer} StatePubReducer
+ * @typedef {import("./usersReducer").StateUserReducer} StateUserReducer
+ */
+
+/**
+ * @typedef {{
+ *  reducer: StateReducer;
+ *  pubsReducer: StatePubReducer;
+ *  usersReducer: StateUserReducer;
+ * }} GlobalState
+ */
+
+/**
+ * @type {StateReducer}
+ */
 const INITIAL_STATE = {
   loading: true, // es el unico que empieza en true
   error: '',
-  /** @type {FormError[]} */
   messageErrors: [],
-  /** @type {?string} */
   userToken: null,
 };
 
 /**
  *
- * @param {INITIAL_STATE} state
+ * @param {StateReducer} state
  * @param {Record<string, any>} action
- * @returns
+ * @returns {StateReducer}
  */
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {

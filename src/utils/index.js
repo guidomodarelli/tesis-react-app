@@ -1,3 +1,8 @@
+/**
+ * @type {{
+ *  log: (message?: any, ...optionalParams: any[]) => void;
+ * }}
+ */
 export const Console = {
   log(...params) {
     if (params.length < 2) {

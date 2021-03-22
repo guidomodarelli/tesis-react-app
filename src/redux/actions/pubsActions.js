@@ -13,7 +13,15 @@ import {
   UNLIKE_PUB,
 } from '../types/pubsTypes';
 
-// eslint-disable-next-line import/prefer-default-export
+/**
+ * @typedef {import("redux").Dispatch} Dispatch
+ * @typedef {import("../reducers/pubsReducer").PubForm} PubForm
+ */
+
+/**
+ *
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const getAllPubs = () => async (dispatch) => {
   try {
     dispatch({ type: PUBS_LOADING });
@@ -29,6 +37,10 @@ export const getAllPubs = () => async (dispatch) => {
   }
 };
 
+/**
+ *
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const getNextPage = () => async (dispatch, getState) => {
   const {
     pubsReducer: { page },
@@ -52,6 +64,11 @@ export const getNextPage = () => async (dispatch, getState) => {
   }
 };
 
+/**
+ *
+ * @param {PubForm} form
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const handleChangeFormPub = (form) => (dispatch) => {
   try {
     dispatch({ type: PUBS_CHANGE_FORM, payload: form });
@@ -60,6 +77,10 @@ export const handleChangeFormPub = (form) => (dispatch) => {
   }
 };
 
+/**
+ *
+ * @returns {(dispatch: Dispatch, getState: function(): {}) => Promise<void>}
+ */
 export const postPub = () => async (dispatch, getState) => {
   const { form } = getState().pubsReducer;
   const { currentUser } = getState().usersReducer;
@@ -72,6 +93,12 @@ export const postPub = () => async (dispatch, getState) => {
   }
 };
 
+/**
+ *
+ * @param {number} pubId
+ * @param {boolean} fav
+ * @returns {(dispatch: Dispatch) => Promise<void>}
+ */
 export const toggleFavPub = (pubId, fav) => async (dispatch, getState) => {
   const {
     currentUser: { id: userId },
