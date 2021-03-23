@@ -38,6 +38,7 @@ import {
  * @property {handleChangePubForm} handleChangePubForm
  * @property {postPub} postPub
  * @property {toggleFavPub} toggleFavPub
+ * @property {emptyMessageErrors} emptyMessageErrors
  */
 
 /**
@@ -155,4 +156,12 @@ export const toggleFavPub = (pubId, fav) => async (dispatch, getState) => {
   } catch (err) {
     catchError(err, dispatch, PUBS_ERROR, PUBS_MESSAGE_ERRORS);
   }
+};
+
+/**
+ *
+ * @returns {callbackDispatch}
+ */
+export const emptyMessageErrors = () => (dispatch) => {
+  dispatch({ type: PUBS_MESSAGE_ERRORS, messageErrors: [] });
 };

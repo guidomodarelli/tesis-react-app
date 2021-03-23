@@ -5,7 +5,7 @@ import Publication from '../components/Publication';
 import PageEmpty from '../components/screens/PageEmpty';
 import PageError from '../components/screens/PageError';
 import PageLoading from '../components/screens/PageLoading';
-import { getPubs, getPubsNextPage } from '../redux/actions/pubsActions';
+import { getPubs, getPubsNextPage, emptyMessageErrors } from '../redux/actions/pubsActions';
 import { getUsers } from '../redux/actions/usersActions';
 import DivContainer from './Users/styles';
 
@@ -29,9 +29,11 @@ const Pubs = (props) => {
     getPubs,
     getUsers,
     getPubsNextPage,
+    emptyMessageErrors,
   } = props;
 
   useEffect(() => {
+    emptyMessageErrors();
     if (!pubs.length) {
       getPubs();
     }
@@ -110,6 +112,7 @@ const mapDispatchToProps = {
   getPubs,
   getUsers,
   getPubsNextPage,
+  emptyMessageErrors,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pubs);

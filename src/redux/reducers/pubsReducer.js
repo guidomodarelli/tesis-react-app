@@ -67,17 +67,6 @@ const INITIAL_STATE = {
 
 /**
  *
- * @param {Publication[]} pubs
- * @param {Publication[]} newPubs
- * @returns {Publication[]}
- */
-function addPubs(pubs, newPubs) {
-  pubs.push(...newPubs);
-  return pubs;
-}
-
-/**
- *
  * @param {StatePubsReducer} state
  * @param {{
  *  type: string;
@@ -98,11 +87,15 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
     case UNLIKE_PUB:
       return {
         ...state,
+        loading: false,
+        error: '',
         pubs: state.pubs.map((pub) => {
           if (pub.id === action.pubId) {
             return {
               ...pub,
-              favUsers: pub.favUsers.filter((userId) => userId !== action.userId),
+              favUsers: pub.favUsers.filter(
+                (userId) => userId !== action.userId,
+              ),
               favs: pub.favs - 1,
             };
           }
@@ -112,6 +105,8 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
     case LIKE_PUB:
       return {
         ...state,
+        loading: false,
+        error: '',
         pubs: state.pubs.map((pub) => {
           if (pub.id === action.pubId) {
             return {
@@ -143,6 +138,7 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: '',
+        messageErrors: [],
         pubs: action.newPubs,
         page: action.page,
         pages: action.pages,
@@ -152,7 +148,7 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: '',
-        pubs: addPubs(state.pubs, action.newPubs),
+        pubs: [...state.pubs, ...action.newPubs],
         page: action.page,
         pages: action.pages,
       };
@@ -162,7 +158,7 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: '',
         uploading: false,
-        pubs: [action.newPub, ...state.pubs],
+        pubs: [{ ...action.newPub, favUsers: [] }, ...state.pubs],
         messageErrors: [],
         form: initialForm(),
       };
