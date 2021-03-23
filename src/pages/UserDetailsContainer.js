@@ -6,8 +6,8 @@ import PageError from '../components/screens/PageError';
 import PageLoading from '../components/screens/PageLoading';
 import {
   deleteUser,
-  getAll as getUsers,
-  handleChangeForm,
+  getUsers,
+  handleChangeUserForm,
   putAdminPermissions,
 } from '../redux/actions/usersActions';
 import UserDetails from './presentational/UserDetails';
@@ -50,8 +50,8 @@ const selectCurrentUserDetails = (userId) => createSelector(
  *  history: unknown[];
  *  getUsers: getUsers;
  *  deleteUser: deleteUser;
- *  putAdminPermissions: putAdminPermissions;
- *  handleChangeForm: handleChangeForm;
+ putAdminPermissions;
+ *  handleChangeUserForm: handleChangeUserForm;
  * }} props
  * @returns
  */
@@ -69,9 +69,8 @@ const UserDetailsContainer = (props) => {
       currentUser: { addNewAdmins, deleteUsers, changePermissionsAdmins },
     },
     getUsers,
-    deleteUser,
-    putAdminPermissions,
-    handleChangeForm,
+    deleteUser, putAdminPermissions,
+    handleChangeUserForm,
     history,
   } = props;
 
@@ -88,7 +87,7 @@ const UserDetailsContainer = (props) => {
     const currentUserDetails = users.find((el) => {
       return el.id === userId;
     });
-    handleChangeForm({ ...currentUserDetails });
+    handleChangeUserForm({ ...currentUserDetails });
   }, [users]);
 
   const handleOpenModalDeleteUser = () => setModalDeleteUserIsOpen(true);
@@ -109,7 +108,7 @@ const UserDetailsContainer = (props) => {
   };
 
   const handleChangeCheckList = (e) => {
-    handleChangeForm({ ...form, [e.target.name]: e.target.checked });
+    handleChangeUserForm({ ...form, [e.target.name]: e.target.checked });
   };
 
   const isMyProfile = currentUser.id === userId;
@@ -143,9 +142,8 @@ const mapStateToProps = ({ reducer, usersReducer }) => ({
   usersReducer,
 });
 
-const mapDispatchToProps = {
-  deleteUser,
-  handleChangeForm,
+const mapDispatchToProps = { deleteUser,
+  handleChangeUserForm,
   putAdminPermissions,
   getUsers,
 };

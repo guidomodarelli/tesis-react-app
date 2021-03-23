@@ -16,28 +16,24 @@ import pubsReducer from './pubsReducer';
  * @typedef {Object} FormError
  * @property {string} path
  * @property {string} message
- */
-
-/**
+ *
  * @typedef {{
  *   loading: boolean;
  *   error: string,
  *   messageErrors: FormError[],
  *   userToken: ?string,
  * }} StateReducer
- */
-
-/**
- * @typedef {import("./pubsReducer").StatePubReducer} StatePubReducer
- * @typedef {import("./usersReducer").StateUserReducer} StateUserReducer
- */
-
-/**
+ *
+ * @typedef {import("./pubsReducer").StatePubsReducer} StatePubsReducer
+ *
+ * @typedef {import("./usersReducer").StateUsersReducer} StateUsersReducer
+ *
  * @typedef {{
  *  reducer: StateReducer;
- *  pubsReducer: StatePubReducer;
- *  usersReducer: StateUserReducer;
+ *  pubsReducer: StatePubsReducer;
+ *  usersReducer: StateUsersReducer;
  * }} GlobalState
+ *
  */
 
 /**
@@ -53,7 +49,12 @@ const INITIAL_STATE = {
 /**
  *
  * @param {StateReducer} state
- * @param {Record<string, any>} action
+ * @param {{
+ *  type: string;
+ *  loading: boolean;
+ *  messageErrors: FormError[];
+ *  userToken: string;
+ * }} action
  * @returns {StateReducer}
  */
 const reducer = (state = INITIAL_STATE, action) => {
@@ -61,20 +62,20 @@ const reducer = (state = INITIAL_STATE, action) => {
     case LOADING:
       return {
         ...state,
-        loading: action.payload,
+        loading: action.loading,
       };
     case ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.error,
       };
     case MESSAGE_ERRORS:
       return {
         ...state,
         loading: false,
         error: '',
-        messageErrors: action.payload,
+        messageErrors: action.messageErrors,
       };
     case SIGN_IN:
     case RESTORE_TOKEN:
@@ -83,7 +84,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: '',
         messageErrors: [],
-        userToken: action.payload,
+        userToken: action.userToken,
       };
     case DELETE_USER:
     case SIGN_OUT:

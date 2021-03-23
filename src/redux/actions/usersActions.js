@@ -16,12 +16,13 @@ import {
 /**
  *
  * @typedef {import('../reducers/usersReducer').UserForm} UserForm
+ *
  * @typedef {import(".").callbackDispatch} callbackDispatch
  *
  * @typedef {Object} DispatchsUsersReducer
- * @property {handleChangeForm} handleChangeForm
- * @property {resetForm} resetForm
- * @property {getAll} getAll
+ * @property {handleChangeUserForm} handleChangeUserForm
+ * @property {resetUserForm} resetUserForm
+ * @property {getUsers} getUsers
  * @property {putUser} putUser
  * @property {putAdminPermissions} putAdminPermissions
  * @property {deleteUser} deleteUser
@@ -32,7 +33,7 @@ import {
  * @param {UserForm} form
  * @returns {callbackDispatch}
  */
-export const handleChangeForm = (form) => (dispatch) => {
+export const handleChangeUserForm = (form) => (dispatch) => {
   /** @type {UserForm} */
   const newForm = {
     ...form,
@@ -41,14 +42,14 @@ export const handleChangeForm = (form) => (dispatch) => {
     instagram: form.instagram || '',
     password: form.password || '',
   };
-  dispatch({ type: SET_FORM, payload: newForm });
+  dispatch({ type: SET_FORM, form: newForm });
 };
 
 /**
  *
  * @returns {callbackDispatch}
  */
-export const resetForm = () => (dispatch) => {
+export const resetUserForm = () => (dispatch) => {
   dispatch({ type: RESET_FORM });
 };
 
@@ -56,14 +57,13 @@ export const resetForm = () => (dispatch) => {
  *
  * @returns {callbackDispatch}
  */
-export const getAll = () => async (dispatch) => {
-  dispatch({ type: USER_LOADING, payload: true });
+export const getUsers = () => async (dispatch) => {
+  dispatch({ type: USER_LOADING, loading: true });
   try {
     const { data: users } = await axios.get('/users');
-    dispatch({ type: GET_USERS, payload: users });
+    dispatch({ type: GET_USERS, newUsers: users });
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    dispatch({ type: USER_ERROR, payload: error.message });
+    catchError(error, dispatch, USER_ERROR);
   }
 };
 
@@ -75,12 +75,12 @@ export const getAll = () => async (dispatch) => {
  */
 export const putUser = (userId, history) => async (dispatch, getState) => {
   const { form: userFrom } = getState().usersReducer;
-  dispatch({ type: USER_LOADING, payload: true });
+  dispatch({ type: USER_LOADING, loading: true });
   try {
     const form = filterNonNull(userFrom);
     await axios.put(`/users/${userId}`, form);
-    dispatch({ type: PUT_USER, payload: form });
-    dispatch({ type: MESSAGE_ERRORS, payload: [] });
+    dispatch({ type: PUT_USER, form });
+    dispatch({ type: MESSAGE_ERRORS, messageErrors: [] });
     history.push(`/users/${userId}`);
   } catch (error) {
     catchError(error, dispatch, USER_ERROR);
@@ -94,14 +94,14 @@ export const putUser = (userId, history) => async (dispatch, getState) => {
  */
 export const putAdminPermissions = (userId) => async (dispatch, getState) => {
   const { form: userFrom } = getState().usersReducer;
-  dispatch({ type: USER_LOADING, payload: true });
+  dispatch({ type: USER_LOADING, loading: true });
   try {
     const form = filterNonNull(userFrom);
     if (form.role === 'normal') {
       form.role = 'admin';
     }
     await axios.put(`/users/${userId}`, form);
-    dispatch({ type: PUT_ADMIN_PERMISSIONS, payload: form, userId });
+    dispatch({ type: PUT_ADMIN_PERMISSIONS, form, userId });
   } catch (error) {
     catchError(error, dispatch, USER_ERROR);
   }
@@ -113,14 +113,14 @@ export const putAdminPermissions = (userId) => async (dispatch, getState) => {
  * @returns {callbackDispatch}
  */
 export const deleteUser = (userId) => async (dispatch, getState) => {
-  dispatch({ type: USER_LOADING, payload: true });
+  dispatch({ type: USER_LOADING, loading: true });
   const { currentUser } = getState().usersReducer;
   try {
     await axios.delete(`/users/${userId}`);
     if (currentUser && currentUser.id === userId) {
       localStorage.removeItem('token');
     }
-    dispatch({ type: DELETE_USER, id: userId });
+    dispatch({ type: DELETE_USER, userId });
   } catch (error) {
     catchError(error, dispatch, USER_ERROR);
   }

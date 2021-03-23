@@ -7,30 +7,18 @@ import PageUpload from '../components/screens/PageUpload';
 import UserForm from '../components/UserForm';
 import { signUp } from '../redux/actions';
 import {
-  getAll as getUsers, handleChangeForm,
+  getUsers, handleChangeUserForm,
 } from '../redux/actions/usersActions';
 
 /**
- * @typedef {import("../redux/reducers/usersReducer").UserForm} UserForm
- * @typedef {import("../redux/reducers/usersReducer").User} User
- * @typedef {import("../redux/reducers").FormError} FormError
+ * @typedef {import("../redux/reducers").GlobalState} GlobalState
  */
 
 /**
  *
- * @param {{
- *  usersReducer: {
- *    form: UserForm,
- *    users: User[];
- *    uploading: boolean;
- *  };
+ * @param {GlobalState & {
  *  history: unknown[];
- *  reducer: {
- *    loading: boolean;
- *    error: string;
- *    messageErrors: FormError;
- *  };
- *  handleChangeForm: handleChangeForm;
+ *  handleChangeUserForm: handleChangeUserForm;
  *  signUp: signUp;
  *  getUsers: getUsers;
  * }} props
@@ -39,13 +27,13 @@ import {
 const UserNew = (props) => {
   const {
     usersReducer: { form, users, uploading },
-    handleChangeForm,
+    handleChangeUserForm,
     signUp,
     history,
     reducer,
     getUsers,
   } = props;
-  const handleChange = (e) => handleChangeForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => handleChangeUserForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSumbit = (e) => {
     e.preventDefault();
@@ -107,7 +95,7 @@ const mapStateToProps = ({ reducer, usersReducer }) => ({
 });
 
 const mapDispatchToProps = {
-  handleChangeForm,
+  handleChangeUserForm,
   signUp,
   getUsers,
 };

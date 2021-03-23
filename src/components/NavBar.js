@@ -4,23 +4,23 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signOut, resetMessageErrors } from '../redux/actions';
-import { resetForm } from '../redux/actions/usersActions';
+import { resetUserForm } from '../redux/actions/usersActions';
 
 /**
  *
  * @param {{
  *  userToken: string;
  *  signOut: signOut;
- *  resetForm: resetForm;
+ *  resetUserForm: resetUserForm;
  *  resetMessageErrors: resetMessageErrors;
  * }} props
  * @returns
  */
 const NavBar = (props) => {
-  const { userToken, signOut, resetForm, resetMessageErrors } = props;
+  const { userToken, signOut, resetUserForm, resetMessageErrors } = props;
 
   const handleClick = () => {
-    resetForm();
+    resetUserForm();
     resetMessageErrors();
   };
 
@@ -68,14 +68,14 @@ const NavBar = (props) => {
 NavBar.propTypes = {
   userToken: PropTypes.string,
   signOut: PropTypes.func.isRequired,
-  resetForm: PropTypes.func.isRequired,
+  resetUserForm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ reducer }) => reducer;
 
 const mapDispatchToProps = {
   signOut,
-  resetForm,
+  resetUserForm,
   resetMessageErrors,
 };
 

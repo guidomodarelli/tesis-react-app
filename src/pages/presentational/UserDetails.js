@@ -6,7 +6,7 @@ import Badge from '../../components/Badge';
 import DeleteUserModal from '../../components/DeleteUserModal';
 import PermisosAdminModal from '../../components/PermisosAdminModal';
 import { resetMessageErrors } from '../../redux/actions';
-import { resetForm } from '../../redux/actions/usersActions';
+import { resetUserForm } from '../../redux/actions/usersActions';
 
 const Actions = (props) => {
   const {
@@ -26,12 +26,12 @@ const Actions = (props) => {
     profile,
     userId,
     userRole,
-    resetForm,
+    resetUserForm,
     resetMessageErrors,
   } = props;
 
   const handleClick = () => {
-    resetForm();
+    resetUserForm();
     resetMessageErrors();
   };
 
@@ -104,7 +104,7 @@ Actions.propTypes = {
 };
 
 const mapDispatchToProps = {
-  resetForm,
+  resetUserForm,
   resetMessageErrors,
 };
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PageError from '../../components/screens/PageError';
 import PageLoading from '../../components/screens/PageLoading';
 import UsersList from '../../components/UsersList';
-import { getAll as getUsers } from '../../redux/actions/usersActions';
+import { getUsers } from '../../redux/actions/usersActions';
 import DivContainer from './styles';
 
 /**

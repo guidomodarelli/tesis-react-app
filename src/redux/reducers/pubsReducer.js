@@ -10,17 +10,15 @@ import {
   PUBS_UPLOADING,
   UNLIKE_PUB,
 } from '../types/pubsTypes';
-/**
- * @typedef {"private" | "public"} SCOPE
- */
 
 /**
+ *
+ * @typedef {"private" | "public"} SCOPE
+ *
  * @typedef {Object} PubForm
  * @property {string} body
  * @property {SCOPE} scope
- */
-
-/**
+ *
  * @typedef {Object} Publication
  * @property {number} id
  * @property {string} creator
@@ -29,10 +27,20 @@ import {
  * @property {number} favs
  * @property {string} createdAt
  * @property {string[]} favUsers
- */
-
-/**
+ *
  * @typedef {import('.').FormError} FormError
+ *
+ * @typedef {{
+ *  loading: boolean;
+ *  uploading: boolean;
+ *  error: string;
+ *  pubs: Publication[];
+ *  page: number;
+ *  pages: number;
+ *  form: PubForm;
+ *  messageErrors: FormError[];
+ * }} StatePubsReducer
+ *
  */
 
 /**
@@ -44,20 +52,7 @@ const initialForm = () => ({
 });
 
 /**
- * @typedef {{
- *  loading: boolean;
- *  uploading: boolean;
- *  error: string;
- *  pubs: Publication[];
- *  page: number;
- *  pages: number;
- *  form: PubForm;
- *  messageErrors: FormError[];
- * }} StatePubReducer
- */
-
-/**
- * @type {StatePubReducer}
+ * @type {StatePubsReducer}
  */
 const INITIAL_STATE = {
   loading: true,
@@ -72,9 +67,31 @@ const INITIAL_STATE = {
 
 /**
  *
- * @param {StatePubReducer} state
- * @param {{userId: string, pubId: string, payload: any}} action
- * @returns {StatePubReducer}
+ * @param {Publication[]} pubs
+ * @param {Publication[]} newPubs
+ * @returns {Publication[]}
+ */
+function addPubs(pubs, newPubs) {
+  pubs.push(...newPubs);
+  return pubs;
+}
+
+/**
+ *
+ * @param {StatePubsReducer} state
+ * @param {{
+ *  type: string;
+ *  userId: string;
+ *  pubId: string;
+ *  newPubs: Publication[];
+ *  newPub: Publication;
+ *  error: string;
+ *  form: PubForm;
+ *  messageErrors: FormError[];
+ *  page: number;
+ *  pages: number;
+ * }} action
+ * @returns {StatePubsReducer}
  */
 const pubsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -114,7 +131,7 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
     case PUBS_CHANGE_FORM:
       return {
         ...state,
-        form: action.payload,
+        form: action.form,
       };
     case PUBS_LOADING:
       return {
@@ -126,7 +143,7 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: '',
-        pubs: action.payload,
+        pubs: action.newPubs,
         page: action.page,
         pages: action.pages,
       };
@@ -135,7 +152,7 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: '',
-        pubs: [...state.pubs, ...action.payload],
+        pubs: addPubs(state.pubs, action.newPubs),
         page: action.page,
         pages: action.pages,
       };
@@ -145,19 +162,19 @@ const pubsReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: '',
         uploading: false,
-        pubs: [action.payload, ...state.pubs],
+        pubs: [action.newPub, ...state.pubs],
         messageErrors: [],
         form: initialForm(),
       };
     case PUBS_MESSAGE_ERRORS:
       return {
         ...state,
-        messageErrors: action.payload,
+        messageErrors: action.messageErrors,
       };
     case PUBS_ERROR:
       return {
         ...state,
-        error: action.payload,
+        error: action.error,
       };
     default:
       return state;

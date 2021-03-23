@@ -5,7 +5,7 @@ import PageError from '../../components/screens/PageError';
 import PageLoading from '../../components/screens/PageLoading';
 import UserForm from '../../components/UserForm';
 import { signIn, resetMessageErrors } from '../../redux/actions';
-import { handleChangeForm, resetForm } from '../../redux/actions/usersActions';
+import { handleChangeUserForm, resetUserForm } from '../../redux/actions/usersActions';
 import Div from './styles';
 
 /**
@@ -16,8 +16,8 @@ import Div from './styles';
  *
  * @param {GlobalState & {
  *  signIn: signIn;
- *  handleChangeForm: handleChangeForm;
- *  resetForm: resetForm;
+ *  handleChangeUserForm: handleChangeUserForm;
+ *  resetUserForm: resetUserForm;
  *  resetMessageErrors: resetMessageErrors;
  * }} props
  * @returns
@@ -28,8 +28,8 @@ const Login = (props) => {
     usersReducer,
     usersReducer: { form },
     signIn,
-    handleChangeForm,
-    resetForm,
+    handleChangeUserForm,
+    resetUserForm,
     resetMessageErrors,
   } = props;
 
@@ -38,7 +38,7 @@ const Login = (props) => {
    * @param {React.ChangeEvent<HTMLInputElement>} e
    */
   const handleChange = (e) => {
-    handleChangeForm({ ...form, [e.target.name]: e.target.value });
+    handleChangeUserForm({ ...form, [e.target.name]: e.target.value });
   };
 
   /**
@@ -54,7 +54,7 @@ const Login = (props) => {
   };
 
   const handleClick = () => {
-    resetForm();
+    resetUserForm();
     resetMessageErrors();
   };
 
@@ -94,8 +94,8 @@ const mapStateToProps = ({ reducer, usersReducer }) => ({
 
 const mapDispatchToProps = {
   signIn,
-  handleChangeForm,
-  resetForm,
+  handleChangeUserForm,
+  resetUserForm,
   resetMessageErrors,
 };
 

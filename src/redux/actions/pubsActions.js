@@ -15,12 +15,27 @@ import {
 
 /**
  * @typedef {import("../reducers/pubsReducer").PubForm} PubForm
+ *
+ * @typedef {import("../reducers/pubsReducer").Publication} Publication
+ *
  * @typedef {import(".").callbackDispatch} callbackDispatch
  *
+ * @typedef {{
+ *  data: {
+ *    info: {
+ *      count: number;
+ *      pages: number;
+ *      next: string;
+ *      prev: string;
+ *    };
+ *    results: Publication[];
+ *  };
+ * }} Data
+ *
  * @typedef {Object} DispatchsPubsReducer
- * @property {getAllPubs} getAllPubs
- * @property {getNextPage} getNextPage
- * @property {handleChangeFormPub} handleChangeFormPub
+ * @property {getPubs} getPubs
+ * @property {getPubsNextPage} getPubsNextPage
+ * @property {handleChangePubForm} handleChangePubForm
  * @property {postPub} postPub
  * @property {toggleFavPub} toggleFavPub
  */
@@ -29,13 +44,14 @@ import {
  *
  * @returns {callbackDispatch}
  */
-export const getAllPubs = () => async (dispatch) => {
+export const getPubs = () => async (dispatch) => {
   try {
     dispatch({ type: PUBS_LOADING });
+    /** @type {Data} */
     const { data } = await axios.get('/pubs');
     dispatch({
       type: GET_PUBS,
-      payload: data.results,
+      newPubs: data.results,
       page: 1,
       pages: data.info.pages,
     });
@@ -48,13 +64,22 @@ export const getAllPubs = () => async (dispatch) => {
  *
  * @returns {callbackDispatch}
  */
-export const getNextPage = () => async (dispatch, getState) => {
+export const getPubsNextPage = () => async (dispatch, getState) => {
+  /**
+   * @type {{
+   *  pubsReducer: {
+   *    page: number;
+   *  };
+   * }}
+   */
   const {
     pubsReducer: { page },
   } = getState();
   try {
     const newPage = page + 1;
     dispatch({ type: PUBS_LOADING });
+
+    /** @type {Data} */
     const { data } = await axios.get('/pubs', {
       params: {
         page: newPage,
@@ -62,7 +87,7 @@ export const getNextPage = () => async (dispatch, getState) => {
     });
     dispatch({
       type: GET_NEXT_PUBS,
-      payload: data.results,
+      newPubs: data.results,
       page: newPage,
       pages: data.info.pages,
     });
@@ -76,9 +101,9 @@ export const getNextPage = () => async (dispatch, getState) => {
  * @param {PubForm} form
  * @returns {callbackDispatch}
  */
-export const handleChangeFormPub = (form) => (dispatch) => {
+export const handleChangePubForm = (form) => (dispatch) => {
   try {
-    dispatch({ type: PUBS_CHANGE_FORM, payload: form });
+    dispatch({ type: PUBS_CHANGE_FORM, form });
   } catch (err) {
     catchError(err, dispatch, PUBS_ERROR);
   }
@@ -89,12 +114,15 @@ export const handleChangeFormPub = (form) => (dispatch) => {
  * @returns {callbackDispatch}
  */
 export const postPub = () => async (dispatch, getState) => {
-  const { form } = getState().pubsReducer;
-  const { currentUser } = getState().usersReducer;
+  const {
+    pubsReducer: { form },
+    usersReducer: { currentUser },
+  } = getState();
   try {
     dispatch({ type: PUBS_UPLOADING });
+    /** @type {Data} */
     const { data } = await axios.post(`/pubs/${currentUser.id}`, form);
-    dispatch({ type: POST_PUBS, payload: data });
+    dispatch({ type: POST_PUBS, newPub: data });
   } catch (err) {
     catchError(err, dispatch, PUBS_ERROR, PUBS_MESSAGE_ERRORS);
   }
@@ -108,8 +136,10 @@ export const postPub = () => async (dispatch, getState) => {
  */
 export const toggleFavPub = (pubId, fav) => async (dispatch, getState) => {
   const {
-    currentUser: { id: userId },
-  } = getState().usersReducer;
+    usersReducer: {
+      currentUser: { id: userId },
+    },
+  } = getState();
   try {
     if (!fav) {
       await axios.post(`/pubs/fav/${pubId}`, { userId });

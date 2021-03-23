@@ -6,7 +6,8 @@ import PageLoading from '../components/screens/PageLoading';
 import PageUpload from '../components/screens/PageUpload';
 import UserForm from '../components/UserForm';
 import {
-  getAll as getUsers, handleChangeForm,
+  getUsers,
+  handleChangeUserForm,
   putUser,
 } from '../redux/actions/usersActions';
 
@@ -33,7 +34,7 @@ import {
  *  error: string;
  *  uploading: boolean;
  *  messageErrors: FormError[];
- *  handleChangeForm: handleChangeForm;
+ *  handleChangeUserForm: handleChangeUserForm;
  *  putUser: putUser;
  *  getUsers: getUsers;
  * }} props
@@ -48,7 +49,7 @@ const UserEdit = (props) => {
     loading,
     currentUser,
     form,
-    handleChangeForm,
+    handleChangeUserForm,
     putUser,
     users,
     error,
@@ -57,7 +58,7 @@ const UserEdit = (props) => {
     messageErrors,
   } = props;
 
-  const handleChange = (e) => handleChangeForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => handleChangeUserForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSumbit = (e) => {
     e.preventDefault();
@@ -69,14 +70,8 @@ const UserEdit = (props) => {
   };
 
   useEffect(() => {
-    const {
-      name,
-      birthdate,
-      bio,
-      instagram,
-      email,
-    } = currentUser;
-    handleChangeForm({
+    const { name, birthdate, bio, instagram, email } = currentUser;
+    handleChangeUserForm({
       ...form,
       name,
       birthdate,
@@ -121,10 +116,13 @@ const UserEdit = (props) => {
   );
 };
 
-const mapStateToProps = ({ usersReducer, reducer: { messageErrors } }) => ({ ...usersReducer, messageErrors });
+const mapStateToProps = ({ usersReducer, reducer: { messageErrors } }) => ({
+  ...usersReducer,
+  messageErrors,
+});
 
 const mapDispatchToProps = {
-  handleChangeForm,
+  handleChangeUserForm,
   putUser,
   getUsers,
 };

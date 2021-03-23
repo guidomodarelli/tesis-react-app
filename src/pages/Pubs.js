@@ -5,8 +5,8 @@ import Publication from '../components/Publication';
 import PageEmpty from '../components/screens/PageEmpty';
 import PageError from '../components/screens/PageError';
 import PageLoading from '../components/screens/PageLoading';
-import { getAllPubs, getNextPage } from '../redux/actions/pubsActions';
-import { getAll } from '../redux/actions/usersActions';
+import { getPubs, getPubsNextPage } from '../redux/actions/pubsActions';
+import { getUsers } from '../redux/actions/usersActions';
 import DivContainer from './Users/styles';
 
 /**
@@ -26,17 +26,17 @@ const Pubs = (props) => {
     usersReducer,
     pubsReducer: { pubs, page, pages },
     usersReducer: { users, currentUser },
-    getAllPubs,
-    getAll: getAllUsers,
-    getNextPage,
+    getPubs,
+    getUsers,
+    getPubsNextPage,
   } = props;
 
   useEffect(() => {
     if (!pubs.length) {
-      getAllPubs();
+      getPubs();
     }
     if (!users.length) {
-      getAllUsers();
+      getUsers();
     }
   }, []);
 
@@ -54,7 +54,7 @@ const Pubs = (props) => {
   };
 
   function handleClick() {
-    getNextPage();
+    getPubsNextPage();
   }
 
   if (pubsReducer.loading || usersReducer.loading) return <PageLoading />;
@@ -107,9 +107,9 @@ const mapStateToProps = ({ pubsReducer, usersReducer }) => {
 };
 
 const mapDispatchToProps = {
-  getAllPubs,
-  getAll,
-  getNextPage,
+  getPubs,
+  getUsers,
+  getPubsNextPage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pubs);

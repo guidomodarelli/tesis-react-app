@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
-import { handleChangeFormPub, postPub } from '../redux/actions/pubsActions';
+import { handleChangePubForm, postPub } from '../redux/actions/pubsActions';
 
 /**
+ *
  * @typedef {import("../redux/reducers").FormError} FormError
- * @typedef {import('../redux/reducers/usersReducer').UserForm} UserForm
- * @typedef {import("../redux/reducers/pubsReducer").PubForm} PubForm
+ *
+ * @typedef {import("../redux/reducers/pubsReducer").StatePubsReducer} StatePubsReducer
+ *
+ * @typedef {import("../redux/actions/pubsActions").DispatchsPubsReducer} DispatchsPubsReducer
+ *
  */
 
 /**
@@ -37,16 +41,11 @@ function ErrorMessages(props) {
 
 /**
  *
- * @param {{
- *  form: UserForm;
- *  handleChangeFormPub: (form: PubForm) => (dispatch: Dispatch) => Promise<void>;
- *  postPub: () => (dispatch: Dispatch, getState: function(): {}) => Promise<void>;
- *  messageErrors: FormError[];
- * }} props
+ * @param {StatePubsReducer & DispatchsPubsReducer} props
  * @returns
  */
 function Publicar(props) {
-  const { form, handleChangeFormPub, postPub, messageErrors } = props;
+  const { form, handleChangePubForm, postPub, messageErrors } = props;
   const [checked, setChecked] = useState(true);
   /**
    *
@@ -63,11 +62,11 @@ function Publicar(props) {
    */
   const handleChange = (e) => {
     if (e.target.name === 'body') {
-      handleChangeFormPub({ ...form, body: e.target.value });
+      handleChangePubForm({ ...form, body: e.target.value });
     } else {
       const newChecked = !checked;
       setChecked(newChecked);
-      handleChangeFormPub({
+      handleChangePubForm({
         ...form,
         scope: newChecked ? 'private' : 'public',
       });
@@ -111,7 +110,7 @@ const mapStateToProps = ({ pubsReducer }) => {
 };
 
 const mapDispatchToProps = {
-  handleChangeFormPub,
+  handleChangePubForm,
   postPub,
 };
 

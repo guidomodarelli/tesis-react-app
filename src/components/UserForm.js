@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { resetMessageErrors } from '../redux/actions';
-import { resetForm } from '../redux/actions/usersActions';
+import { resetUserForm } from '../redux/actions/usersActions';
 
 /**
  * @typedef {import('../redux/reducers/usersReducer').UserForm} UserFormType
@@ -18,7 +18,7 @@ import { resetForm } from '../redux/actions/usersActions';
  *  formValues: UserFormType;
  *  login: boolean;
  *  messageErrors: FormError[];
- *  resetForm: resetForm;
+ *  resetUserForm: resetUserForm;
  *  resetMessageErrors: resetMessageErrors;
  * }} props
  * @returns
@@ -31,12 +31,12 @@ const UserForm = (props) => {
     formValues,
     login,
     messageErrors,
-    resetForm,
+    resetUserForm,
     resetMessageErrors,
   } = props;
 
   const handleCancel = () => {
-    resetForm();
+    resetUserForm();
     resetMessageErrors();
     onCancel();
   };
@@ -163,7 +163,7 @@ UserForm.propTypes = {
 };
 
 const mapDispatchToProps = {
-  resetForm,
+  resetUserForm,
   resetMessageErrors,
 };
 

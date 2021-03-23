@@ -71,11 +71,11 @@ const initialForm = () => ({
  *  uploading: boolean;
  *  currentUser: User;
  *  form: UserForm;
- * }} StateUserReducer
+ * }} StateUsersReducer
  */
 
 /**
- * @type {StateUserReducer}
+ * @type {StateUsersReducer}
  */
 const INITIAL_STATE = {
   users: [],
@@ -105,13 +105,13 @@ const deleteCurrentUser = (users, id) => {
  *
  * @param {User[]} users
  * @param {string} userId
- * @param {User} payload
+ * @param {User} newDataUser
  * @returns
  */
-const updateUserList = (users, userId, payload) => {
+const updateUserList = (users, userId, newDataUser) => {
   return users.map((user) => {
     if (user.id === userId) {
-      return { ...user, ...payload, id: user.id };
+      return { ...user, ...newDataUser, id: user.id };
     }
     return user;
   });
@@ -119,9 +119,43 @@ const updateUserList = (users, userId, payload) => {
 
 /**
  *
- * @param {StateUserReducer} state
- * @param {Record<string, any>} action
- * @returns {StateUserReducer}
+ * @param {User} currentUser
+ * @param {string} userId
+ * @param {StateUsersReducer} state
+ * @returns {StateUsersReducer}
+ */
+function deleteUser(state, userId) {
+  const newState = {
+    loading: false,
+    error: '',
+    users: deleteCurrentUser(state.users, userId),
+  };
+  if (state.currentUser.id === userId) {
+    return {
+      ...INITIAL_STATE,
+      ...newState,
+    };
+  }
+  return {
+    ...state,
+    ...newState,
+  };
+}
+
+/**
+ *
+ * @param {StateUsersReducer} state
+ * @param {{
+ *  type: string;
+ *  newUsers: User[];
+ *  loading: boolean;
+ *  uploading: boolean;
+ *  userId: string;
+ *  form: UserForm;
+ *  error: string;
+ *  newCurrentUser: User;
+ * }} action
+ * @returns {StateUsersReducer}
  */
 const usersReducers = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -130,44 +164,32 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: '',
-        users: action.payload,
+        users: action.newUsers,
       };
     case UPLOADING:
       return {
         ...state,
-        uploading: action.payload,
+        uploading: action.uploading,
       };
     case USER_LOADING:
       return {
         ...state,
-        loading: action.payload,
+        loading: action.loading,
       };
     case USER_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.error,
       };
     case DELETE_USER:
-      if (state.currentUser.id === action.id) {
-        return {
-          ...INITIAL_STATE,
-          loading: false,
-          users: deleteCurrentUser(state.users, action.id),
-        };
-      }
-      return {
-        ...state,
-        loading: false,
-        error: '',
-        users: deleteCurrentUser(state.users, action.id),
-      };
+      return deleteUser(state, action.userId);
     case SET_FORM:
       return {
         ...state,
         loading: false,
         error: '',
-        form: action.payload,
+        form: action.form,
       };
     case RESET_FORM:
       return {
@@ -181,7 +203,7 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: '',
-        currentUser: action.payload,
+        currentUser: action.newCurrentUser,
       };
     case PUT_USER:
       return {
@@ -191,13 +213,13 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         form: initialForm(),
         currentUser: {
           ...state.currentUser,
-          ...action.payload,
+          ...action.form,
           id: state.currentUser.id,
         },
         users: updateUserList(
           state.users,
           state.currentUser.id,
-          action.payload,
+          action.form,
         ),
       };
     case PUT_ADMIN_PERMISSIONS:
@@ -206,7 +228,7 @@ const usersReducers = (state = INITIAL_STATE, action) => {
         loading: false,
         error: '',
         form: initialForm(),
-        users: updateUserList(state.users, action.userId, action.payload),
+        users: updateUserList(state.users, action.userId, action.form),
       };
     case MESSAGE_ERRORS:
       return {
