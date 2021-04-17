@@ -1,0 +1,24 @@
+@use '../abstracts/colors';
+
+.InstagramAccount {
+  color: colors.$instagram-account;
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 20px;
+    margin-right: 5px;
+  }
+}
+
+.UserListItem {
+  border: 1px solid colors.$border-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 2px colors.$box-shadow-color;
+  margin-top: 1em;
+  display: flex;
+
+  picture {
+    margin: 15px;
+  }
+}

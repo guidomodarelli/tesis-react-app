@@ -78,7 +78,7 @@ function Publicar(props) {
       <ErrorMessages errors={messageErrors} />
       <TextareaAutosize
         type='text'
-        className='form-control resize-none'
+        className='form-control textArea'
         maxRows={6}
         placeholder='¿Qué quieres compartir?'
         onChange={handleChange}

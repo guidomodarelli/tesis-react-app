@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import PageError from '../../components/screens/PageError';
-import PageLoading from '../../components/screens/PageLoading';
-import UsersList from '../../components/UsersList';
-import { getUsers } from '../../redux/actions/usersActions';
-import DivContainer from './styles';
+import PageError from '../components/screens/PageError';
+import PageLoading from '../components/screens/PageLoading';
+import UsersList from '../components/UsersList';
+import { getUsers } from '../redux/actions/usersActions';
 
 /**
  *
- * @typedef {import("../../redux/reducers/usersReducer").StateUserReducer} StateUserReducer
+ * @typedef {import("../redux/reducers/usersReducer").StateUserReducer} StateUserReducer
  */
 
 /**
@@ -27,10 +26,10 @@ const Users = (props) => {
   if (error) return <PageError />;
   if (loading) return <PageLoading />;
   return (
-    <DivContainer>
+    <div className='Container'>
       <h1 className='text-center fw-bold mb-4'>Usuarios</h1>
       <UsersList users={users} />
-    </DivContainer>
+    </div>
   );
 };
 

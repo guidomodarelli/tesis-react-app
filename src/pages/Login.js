@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PageError from '../../components/screens/PageError';
-import PageLoading from '../../components/screens/PageLoading';
-import UserForm from '../../components/UserForm';
-import { signIn, resetMessageErrors } from '../../redux/actions';
-import { handleChangeUserForm, resetUserForm } from '../../redux/actions/usersActions';
-import Div from './styles';
+import PageError from '../components/screens/PageError';
+import PageLoading from '../components/screens/PageLoading';
+import UserForm from '../components/UserForm';
+import { signIn, resetMessageErrors } from '../redux/actions';
+import { handleChangeUserForm, resetUserForm } from '../redux/actions/usersActions';
 
 /**
- * @typedef {import("../../redux/reducers").GlobalState} GlobalState
+ * @typedef {import("../redux/reducers").GlobalState} GlobalState
  */
 
 /**
@@ -61,7 +60,7 @@ const Login = (props) => {
   if (reducer.loading || usersReducer.loading) return <PageLoading />;
   if (reducer.error || usersReducer.error) return <PageError />;
   return (
-    <Div className='container mt-4'>
+    <div className='Login container mt-4'>
       <h1>Iniciar sesión</h1>
       <UserForm
         onChange={handleChange}
@@ -83,7 +82,7 @@ const Login = (props) => {
           Registrate
         </Link>
       </p>
-    </Div>
+    </div>
   );
 };
 

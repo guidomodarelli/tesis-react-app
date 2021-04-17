@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import '../assets/styles/components/UsersList.css';
+import '../styles/components/UsersList.scss';
 import Gravatar from './Gravatar';
 import InstagramAccount from './InstagramAccount';
 import PageEmpty from './screens/PageEmpty';
@@ -10,18 +9,6 @@ import PageEmpty from './screens/PageEmpty';
 /**
  * @typedef {import("../redux/reducers/usersReducer").User} User
  */
-
-const Div = styled.div({
-  border: '1px solid rgba(0, 0, 0, 0.16)',
-  borderRadius: '8px',
-  boxShadow: '0 4px 8px 2px rgba(0, 0, 0, 0.2)',
-  marginTop: '1em',
-  display: 'flex',
-});
-
-const Figure = styled.figure`
-  margin: 15px;
-`;
 
 /**
  *
@@ -34,10 +21,8 @@ const UserListItem = (props) => {
   const { user } = props;
 
   return (
-    <Div>
-      <Figure>
-        <Gravatar email={user.email} />
-      </Figure>
+    <div className='UserListItem'>
+      <Gravatar email={user.email} />
       <div className='d-flex flex-column justify-content-evenly'>
         <p className='fw-bold mt-3 mb-0 text-break me-3'>{user.name}</p>
         {user.instagram && (
@@ -45,7 +30,7 @@ const UserListItem = (props) => {
         )}
         <p className='fs-6 text-break me-3'>{user.bio}</p>
       </div>
-    </Div>
+    </div>
   );
 };
 

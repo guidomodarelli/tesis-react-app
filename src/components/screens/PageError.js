@@ -1,12 +1,12 @@
 import React from 'react';
 import image from '../../assets/images/error.svg';
-import { Figure, Img } from './styles';
+import '../../styles/components/Screens.scss';
 
 const PageError = () => {
   return (
-    <Figure>
-      <Img src={image} alt='500 Internal server error' />
-    </Figure>
+    <picture className='Screen'>
+      <img src={image} alt='500 Internal server error' />
+    </picture>
   );
 };
 

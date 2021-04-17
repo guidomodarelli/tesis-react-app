@@ -7,7 +7,6 @@ import PageError from '../components/screens/PageError';
 import PageLoading from '../components/screens/PageLoading';
 import { getPubs, getPubsNextPage, emptyMessageErrors } from '../redux/actions/pubsActions';
 import { getUsers } from '../redux/actions/usersActions';
-import DivContainer from './Users/styles';
 
 /**
  * @typedef {import("../redux/reducers/usersReducer").User} User
@@ -62,7 +61,7 @@ const Pubs = (props) => {
   if (pubsReducer.loading || usersReducer.loading) return <PageLoading />;
   if (pubsReducer.error || usersReducer.error) return <PageError />;
   return (
-    <DivContainer>
+    <div className='Container'>
       <h1 className='text-center fw-bold mb-4'>Publicaciones</h1>
       <Publicar />
       {pubs.length ? (
@@ -97,7 +96,7 @@ const Pubs = (props) => {
           </button>
         </div>
       )}
-    </DivContainer>
+    </div>
   );
 };
 

@@ -96,7 +96,7 @@ const Publication = (props) => {
           }}
         >
           <TextareaAutosize
-            className='form-control resize-none'
+            className='form-control textArea'
             placeholder='Escribe un comentario...'
             ref={inputRef}
             type='text'

@@ -1,12 +1,12 @@
 import React from 'react';
 import loadingImage from '../../assets/images/loading.svg';
-import { Figure, Img } from './styles';
+import '../../styles/components/Screens.scss';
 
 const PageLoading = () => {
   return (
-    <Figure>
-      <Img src={loadingImage} alt='loading gif' />
-    </Figure>
+    <picture>
+      <img src={loadingImage} alt='loading gif' />
+    </picture>
   );
 };
 

@@ -1,0 +1,14 @@
+@use '../abstracts/colors';
+@use '../utilities/flex';
+
+.modal {
+  @extend .flex-row-center;
+  background-color: colors.$modal-background-color;
+}
+
+.btn-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 0.75rem;
+}

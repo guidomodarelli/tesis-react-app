@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../assets/styles/components/Modal.css';
+import '../styles/components/Modal.scss';
 import PropTypes from 'prop-types';
 
 /**

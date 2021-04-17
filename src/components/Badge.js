@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import logo from '../assets/images/CALISTEP.png';
-import '../assets/styles/components/Badge.css';
-import DivContainer from '../pages/Users/styles';
+import '../styles/components/Badge.scss';
 import Gravatar from './Gravatar';
 import InstagramAccount from './InstagramAccount';
 
@@ -31,33 +30,31 @@ const Badge = (props) => {
   };
 
   return (
-    <DivContainer>
+    <div className='Container'>
       <div className='Badge'>
-        <div className='Badge__header mx-3'>
-          <img src={logo} alt='Logo' className='img-fluid m-2' />
+        <div className='Badge__header'>
+          <img src={logo} alt='Logo' />
         </div>
-        <figure className='d-flex justify-content-center pt-3'>
+        <div className='Badge__content'>
+          {' '}
           <Gravatar email={email} />
-        </figure>
-        <h1 className='text-center text-break m-0 p-3 pt-0'>{name}</h1>
-        {/* <div className='Badge__section-name p-2 pb-4' /> */}
-        <div className='Badge__section-age'>
-          <h3>
-            {age()}
-            {' '}
-            años
-          </h3>
+          <h1 className='Badge__content--name'>{name}</h1>
+          <div className='Badge__content--age'>
+            <h3>
+              {age()}
+              {' '}
+              años
+            </h3>
+          </div>
         </div>
         {(bio || instagram) && (
-          <div className='Badge__section-info'>
-            {bio && (
-              <p className='text-break m-0 me-3 ms-3 text-center'>{bio}</p>
-            )}
+          <div className='Badge__footer'>
+            {bio && <p>{bio}</p>}
             {instagram && <InstagramAccount instagram={instagram} />}
           </div>
         )}
       </div>
-    </DivContainer>
+    </div>
   );
 };
 

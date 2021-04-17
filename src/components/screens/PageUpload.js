@@ -1,12 +1,12 @@
 import React from 'react';
 import uploadImage from '../../assets/images/upload.svg';
-import { Figure, Img } from './styles';
+import '../../styles/components/Screens.scss';
 
 const PageError = () => {
   return (
-    <Figure>
-      <Img src={uploadImage} alt='Upload data' />
-    </Figure>
+    <picture>
+      <img src={uploadImage} alt='Upload data' />
+    </picture>
   );
 };
 
