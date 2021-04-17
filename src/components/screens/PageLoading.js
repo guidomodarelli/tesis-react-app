@@ -4,7 +4,7 @@ import '../../styles/components/Screens.scss';
 
 const PageLoading = () => {
   return (
-    <picture>
+    <picture className='Screen'>
       <img src={loadingImage} alt='loading gif' />
     </picture>
   );

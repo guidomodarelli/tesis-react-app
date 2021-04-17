@@ -4,7 +4,7 @@ import '../../styles/components/Screens.scss';
 
 const PageError = () => {
   return (
-    <picture>
+    <picture className='Screen'>
       <img src={uploadImage} alt='Upload data' />
     </picture>
   );
