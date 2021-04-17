@@ -1,0 +1,12 @@
+@use '../abstracts/colors';
+
+.Badge {
+  background: colors.$white;
+  box-shadow: 0 16px 16px 2px colors.$box-shadow-color;
+  border-radius: 8px;
+  overflow: hidden;
+  height: fit-content;
+  max-width: 25rem;
+  margin: 0 auto;
+  border: 1px solid colors.$border-color;
+}

@@ -11,9 +11,9 @@ import instagramLogo from '../assets/images/Instagram.svg';
 const InstagramAccount = (props) => {
   const { instagram } = props;
   return (
-    <div className='InstagramAccount mb-2 mt-2 me-3'>
+    <div className='instagram'>
       <img src={instagramLogo} alt='Instagram logo' />
-      <p className='InstagramAccount text-break m-0'>
+      <p className='instagram__acount'>
         @
         {instagram}
       </p>

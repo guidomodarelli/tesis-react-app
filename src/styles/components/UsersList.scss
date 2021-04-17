@@ -1,13 +1,20 @@
 @use '../abstracts/colors';
+@use '../utilities/text';
 
-.InstagramAccount {
+.instagram {
   color: colors.$instagram-account;
   display: flex;
   align-items: center;
+  margin: 0.5rem 1rem 0.5rem 0;
 
   img {
     height: 20px;
     margin-right: 5px;
+  }
+
+  &__acount {
+    @extend .text-break;
+    margin: 0;
   }
 }
 
@@ -18,7 +25,21 @@
   margin-top: 1em;
   display: flex;
 
-  picture {
-    margin: 15px;
+  & > picture {
+    margin: 1rem;
+  }
+
+  &__details {
+    &--name {
+      @extend .text-break;
+      font-weight: bold;
+      margin: 1rem 1rem 0 0;
+      font-size: 1.125rem;
+    }
+    &--bio {
+      @extend .text-break;
+      margin-right: 1rem;
+      font-size: 1.125rem;
+    }
   }
 }

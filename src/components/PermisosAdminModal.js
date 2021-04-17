@@ -41,10 +41,10 @@ const PermisosAdminModal = (props) => {
   } = props;
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className='modal-header'>
-        <h1 className='mt-3'>¿Qué puede hacer este administrador?</h1>
+      <div className='Modal__header'>
+        <h1>¿Qué puede hacer este administrador?</h1>
       </div>
-      <div className='modal-body'>
+      <div className='Modal__body'>
         <form>
           <div className='form-check'>
             <input
@@ -174,19 +174,17 @@ const PermisosAdminModal = (props) => {
           </div>
         </form>
       </div>
-      <div className='modal-footer'>
-        <div className='mt-2'>
-          <button
-            type='submit'
-            onClick={onSubmit}
-            className='btn btn-primary me-2'
-          >
-            Confirmar
-          </button>
-          <button type='button' onClick={onClose} className='btn btn-secondary'>
-            Cancelar
-          </button>
-        </div>
+      <div className='Modal__footer'>
+        <button
+          type='submit'
+          onClick={onSubmit}
+          className='btn btn-primary Modal__footer--confirm'
+        >
+          Confirmar
+        </button>
+        <button type='button' onClick={onClose} className='btn btn-secondary'>
+          Cancelar
+        </button>
       </div>
     </Modal>
   );

@@ -49,7 +49,7 @@ const Badge = (props) => {
         </div>
         {(bio || instagram) && (
           <div className='Badge__footer'>
-            {bio && <p>{bio}</p>}
+            {bio && <p className='Badge__footer--bio'>{bio}</p>}
             {instagram && <InstagramAccount instagram={instagram} />}
           </div>
         )}

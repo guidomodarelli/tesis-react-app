@@ -2,19 +2,15 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import { handleChangePubForm, postPub } from '../redux/actions/pubsActions';
+import '../styles/components/BadgePub.scss';
 
 /**
- *
  * @typedef {import("../redux/reducers").FormError} FormError
- *
  * @typedef {import("../redux/reducers/pubsReducer").StatePubsReducer} StatePubsReducer
- *
  * @typedef {import("../redux/actions/pubsActions").DispatchsPubsReducer} DispatchsPubsReducer
- *
  */
 
 /**
- *
  * @param {{
  *  errors: FormError[]
  * }} props
@@ -25,7 +21,7 @@ function ErrorMessages(props) {
   return (
     <>
       {errors.length !== 0 && (
-        <div className='text-danger'>
+        <div className='BadgePub__Error'>
           {errors.map((obj) => (
             <p key={obj.message}>
               -
@@ -40,15 +36,14 @@ function ErrorMessages(props) {
 }
 
 /**
- *
  * @param {StatePubsReducer & DispatchsPubsReducer} props
  * @returns
  */
 function Publicar(props) {
   const { form, handleChangePubForm, postPub, messageErrors } = props;
   const [checked, setChecked] = useState(true);
+
   /**
-   *
    * @param {React.FormEvent<HTMLFormElement>} e
    */
   const handleSubmit = (e) => {
@@ -57,7 +52,6 @@ function Publicar(props) {
   };
 
   /**
-   *
    * @param {React.ChangeEvent<HTMLInputElement>} e
    */
   const handleChange = (e) => {
@@ -74,18 +68,18 @@ function Publicar(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='Badge p-3 mb-4 d-flex flex-column'>
+    <form onSubmit={handleSubmit} className='BadgePub'>
       <ErrorMessages errors={messageErrors} />
       <TextareaAutosize
         type='text'
-        className='form-control textArea'
+        className='form-control'
         maxRows={6}
         placeholder='¿Qué quieres compartir?'
         onChange={handleChange}
         value={form.body}
         name='body'
       />
-      <div className='mt-2 form-check'>
+      <div className='form-check'>
         <input
           type='checkbox'
           className='form-check-input'
@@ -98,7 +92,7 @@ function Publicar(props) {
           {checked ? 'Privado' : 'Publico'}
         </label>
       </div>
-      <button type='submit' className='btn btn-primary mt-2'>
+      <button type='submit' className='btn btn-primary BadgePub__button'>
         Publicar
       </button>
     </form>

@@ -21,7 +21,7 @@ const Modal = (props) => {
     <div className='modal'>
       <div className='modal-dialog modal-dialog-centered'>
         <div className='modal-content'>
-          <button type='button' onClick={onClose} className='btn-close'>
+          <button type='button' onClick={onClose} className='btn btn-close'>
             &nbsp;
           </button>
 

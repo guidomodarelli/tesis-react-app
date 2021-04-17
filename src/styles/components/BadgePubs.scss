@@ -1,0 +1,76 @@
+@use '../utilities/badge';
+@use '../utilities/text';
+@use '../abstracts/colors';
+
+.BadgePubs {
+  @extend .Badge;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+  &__details {
+    margin-left: 0.5rem;
+
+    &--name {
+      font-weight: bold;
+      @extend .text-break;
+    }
+    &--info {
+      color: colors.$secondary;
+      font-weight: bold;
+    }
+  }
+  &__body {
+    margin-top: 1rem;
+    @extend .text-break;
+  }
+  &__likes {
+    margin-left: 0.5rem;
+    font-weight: bold;
+
+    & > &--heart {
+      margin-right: 0.25rem;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 0.5rem;
+
+    & button {
+      font-weight: bold;
+      color: colors.$secondary;
+
+      & > i {
+        margin-right: .25rem;
+      }
+    }
+
+    &--nowrap {
+      @extend .text-nowrap;
+    }
+  }
+  &__comments {
+    margin-top: 0.5rem;
+
+    & > form > textarea {
+      resize: none;
+    }
+
+    &--add-comment {
+      display: flex;
+      justify-content: flex-end;
+
+      & > button {
+        margin-top: 0.5rem;
+        & > i {
+          margin-right: .25rem;
+        }
+      }
+    }
+  }
+}

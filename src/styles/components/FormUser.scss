@@ -1,0 +1,26 @@
+@use '../abstracts/colors';
+
+.FormUser {
+  &__Error {
+    color: colors.$danger;
+    margin: 1rem 0;
+  }
+
+  &__gruop {
+    margin-bottom: .5rem;
+
+    &--last {
+      margin-bottom: 1rem;
+    }
+
+    &--label {
+      margin-bottom: .25rem;
+    }
+  }
+
+  &__buttons {
+    &--cancel {
+      margin-left: .5rem;
+    }
+  }
+}

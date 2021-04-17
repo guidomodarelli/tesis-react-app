@@ -6,6 +6,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { toggleFavPub } from '../redux/actions/pubsActions';
 import { formatNumber } from '../utils';
 import Gravatar from './Gravatar';
+import '../styles/components/BadgePubs.scss';
 
 /**
  * @typedef {import("../redux/reducers/pubsReducer").SCOPE} SCOPE
@@ -41,71 +42,73 @@ const Publication = (props) => {
   const inputRef = useRef(null);
 
   return (
-    <div className='Badge p-3 mb-4'>
-      <div className='d-flex align-items-center'>
+    <div className='BadgePubs'>
+      <div className='BadgePubs__header'>
         <Gravatar height='50px' width='50px' email={email} />
-        <div className='ms-2'>
-          <div className='fw-bold text-break'>{name}</div>
-          <div className='text-secondary fw-bold'>
+        <div className='BadgePubs__details'>
+          <div className='BadgePubs__details--name'>{name}</div>
+          <div className='BadgePubs__details--info'>
             {new Date(createdAt).toLocaleString()}
             <span>
               {' '}
               -
               {' '}
-              <i className={classNames('fa', scope === 'private' ? 'fa-user' : 'fa-users')} />
+              <i
+                className={classNames(
+                  'fa',
+                  scope === 'private' ? 'fa-user' : 'fa-users',
+                )}
+              />
             </span>
           </div>
         </div>
       </div>
-      <div className='mt-3 text-break'>{body}</div>
-      <div className='mt-2'>
-        <i className={classNames('fa', 'fa-heart', 'me-1')} />
-        <span className='fw-bold'>{formatNumber(favs)}</span>
+      <div className='BadgePubs__body'>{body}</div>
+      <div className='BadgePubs__likes'>
+        <i
+          className={classNames('fa', 'fa-heart', 'BadgePubs__likes--heart')}
+        />
+        {formatNumber(favs)}
       </div>
-      <div className='d-flex justify-content-evenly mt-2'>
+      <div className='BadgePubs__buttons'>
         {' '}
         <button
           type='button'
-          className='btn text-secondary fw-bold'
+          className='btn'
           onClick={() => toggleFavPub(id, fav)}
         >
           <i
             className={classNames(
               'fa',
               fav ? 'fa-heart' : 'fa-heart-o',
-              'me-1',
             )}
           />
-          <span className='text-nowrap'>Me gusta</span>
+          <span className='BadgePubs__buttons--nowrap'>Me gusta</span>
         </button>
         <button
           type='button'
-          className='btn text-secondary fw-bold'
+          className='btn'
           onClick={() => {
             inputRef.current.focus();
           }}
         >
-          <i className='fa fa-comment-o me-1' />
+          <i className='fa fa-comment-o' />
           Comentar
         </button>
       </div>
-      <div className='mt-2'>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
+      <div className='BadgePubs__comments'>
+        <form onSubmit={(e) => e.preventDefault()}>
           <TextareaAutosize
-            className='form-control textArea'
+            className='form-control'
             placeholder='Escribe un comentario...'
             ref={inputRef}
             type='text'
             maxRows={6}
           />
-          <div className='d-flex justify-content-end'>
+          <div className='BadgePubs__comments--add-comment'>
             {' '}
-            <button type='submit' className='btn btn-outline-primary mt-2'>
-              <i className='fa fa-comment me-1' />
+            <button type='submit' className='btn btn-outline-primary'>
+              <i className='fa fa-comment' />
               Agregar comentario
             </button>
           </div>

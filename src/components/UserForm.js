@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { resetMessageErrors } from '../redux/actions';
 import { resetUserForm } from '../redux/actions/usersActions';
+import '../styles/components/FormUser.scss';
 
 /**
  * @typedef {import('../redux/reducers/usersReducer').UserForm} UserFormType
@@ -42,9 +43,9 @@ const UserForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={handleSubmit} noValidate className='FormUser'>
       {messageErrors && (
-        <div className='mt-3 mb-3 text-danger'>
+        <div className='FormUser__Error'>
           {messageErrors.map((obj) => (
             <p key={obj.message}>
               -
@@ -56,8 +57,8 @@ const UserForm = (props) => {
       )}
       {!login && (
         <>
-          <div className='form-group mb-2'>
-            <label htmlFor='name' className='mb-1'>
+          <div className='FormUser__gruop'>
+            <label htmlFor='name' className='FormUser__gruop--label'>
               Nombre
             </label>
             <input
@@ -69,8 +70,8 @@ const UserForm = (props) => {
               value={formValues.name}
             />
           </div>
-          <div className='form-group mb-2'>
-            <label htmlFor='birthdate' className='mb-1'>
+          <div className='FormUser__gruop'>
+            <label htmlFor='birthdate' className='FormUser__gruop--label'>
               Fecha de nacimiento
             </label>
             <input
@@ -82,8 +83,8 @@ const UserForm = (props) => {
               value={formValues.birthdate}
             />
           </div>
-          <div className='form-group mb-2'>
-            <label htmlFor='bio' className='mb-1'>
+          <div className='FormUser__gruop'>
+            <label htmlFor='bio' className='FormUser__gruop--label'>
               Presentación
             </label>
             <input
@@ -95,8 +96,8 @@ const UserForm = (props) => {
               value={formValues.bio}
             />
           </div>
-          <div className='form-group mb-2'>
-            <label htmlFor='instagram' className='mb-1'>
+          <div className='FormUser__gruop'>
+            <label htmlFor='instagram' className='FormUser__gruop--label'>
               Instagram
             </label>
             <input
@@ -110,8 +111,8 @@ const UserForm = (props) => {
           </div>
         </>
       )}
-      <div className='form-group mb-2'>
-        <label htmlFor='email' className='mb-1'>
+      <div className='FormUser__gruop'>
+        <label htmlFor='email' className='FormUser__gruop--label'>
           Correo electrónico
         </label>
         <input
@@ -123,8 +124,8 @@ const UserForm = (props) => {
           value={formValues.email}
         />
       </div>
-      <div className='form-group mb-3'>
-        <label htmlFor='password' className='mb-1'>
+      <div className='FormUser__gruop--last'>
+        <label htmlFor='password' className='FormUser__gruop--label'>
           Contraseña
         </label>
         <input
@@ -136,14 +137,14 @@ const UserForm = (props) => {
           value={formValues.password}
         />
       </div>
-      <div className='d-flex'>
+      <div className='FormUser__buttons'>
         <button type='submit' className='btn btn-primary'>
           {login ? <>Ingresar</> : <>Guardar</>}
         </button>
         {!login && (
           <button
             type='button'
-            className='btn btn-danger ms-2'
+            className='btn btn-danger FormUser__buttons--cancel'
             onClick={handleCancel}
           >
             Cancelar

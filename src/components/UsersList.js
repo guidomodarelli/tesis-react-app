@@ -23,12 +23,12 @@ const UserListItem = (props) => {
   return (
     <div className='UserListItem'>
       <Gravatar email={user.email} />
-      <div className='d-flex flex-column justify-content-evenly'>
-        <p className='fw-bold mt-3 mb-0 text-break me-3'>{user.name}</p>
+      <div className='UserListItem__details'>
+        <p className='UserListItem__details--name'>{user.name}</p>
         {user.instagram && (
           <InstagramAccount instagram={user.instagram} />
         )}
-        <p className='fs-6 text-break me-3'>{user.bio}</p>
+        <p className='UserListItem__details--bio'>{user.bio}</p>
       </div>
     </div>
   );
