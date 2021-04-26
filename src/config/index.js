@@ -1,7 +1,11 @@
 import axios from 'axios';
 import qs from 'qs';
+import * as dotenv from 'dotenv';
 
-const baseURL = 'http://localhost:5000';
+dotenv.config();
+
+const { REACT_APP_SERVER_HOST, REACT_APP_SERVER_PORT } = process.env;
+const baseURL = `http://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}`;
 
 const axiosInstance = axios.create({
   baseURL,
