@@ -50,7 +50,7 @@ const selectCurrentUserDetails = (userId) => createSelector(
  *  history: unknown[];
  *  getUsers: getUsers;
  *  deleteUser: deleteUser;
- putAdminPermissions;
+ *  putAdminPermissions;
  *  handleChangeUserForm: handleChangeUserForm;
  * }} props
  * @returns
