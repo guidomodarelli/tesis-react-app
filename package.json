@@ -40,12 +40,18 @@
     "sass": "^1.32.9"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev:build": "docker-compose up -d --build",
+    "dev:down": "docker-compose down",
+    "dev:stop": "docker-compose stop",
+    "prod:build": "docker-compose -f docker-compose.prod.yml up -d --build",
+    "deploy": "npm-run-all build prod:build",
+    "deploy:down": "docker-compose -f docker-compose.prod.yml down",
+    "deploy:logs": "docker-compose -f docker-compose.prod.yml logs",
+    "deploy:stop": "docker-compose -f docker-compose.prod.yml stop"
   },
   "eslintConfig": {
     "extends": [
