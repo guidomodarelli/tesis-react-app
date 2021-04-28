@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import { toggleFavPub } from '../redux/actions/pubsActions';
-import { formatNumber } from '../utils';
+import { formatNumber } from '../utils/numbers';
 import Gravatar from './Gravatar';
 import '../styles/components/BadgePubs.scss';
 

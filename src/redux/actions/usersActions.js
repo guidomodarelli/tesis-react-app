@@ -1,6 +1,7 @@
 import { catchError } from '.';
 import axios from '../../config';
-import { filterNonNull, toTitleCase } from '../../utils';
+import { filterNonNull } from '../../utils';
+import { toTitleCase } from '../../utils/strings';
 import { MESSAGE_ERRORS } from '../types';
 import {
   DELETE_USER,
