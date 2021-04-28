@@ -9,6 +9,7 @@ import { signUp } from '../redux/actions';
 import {
   getUsers, handleChangeUserForm,
 } from '../redux/actions/usersActions';
+import '../styles/components/UserEdit.scss';
 
 /**
  * @typedef {import("../redux/reducers").GlobalState} GlobalState
@@ -58,34 +59,31 @@ const UserNew = (props) => {
   if (reducer.loading) return <PageLoading />;
   if (reducer.error) return <PageError />;
   return (
-    <>
-      <div className='container'>
-        <div className='row'>
-          <div className='col mt-4 mx-2'>
-            <Badge
-              name={form.name || 'Nombre'}
-              email={form.email || ''}
-              birthdate={form.birthdate || new Date().toISOString()}
-              bio={form.bio || 'Presentación'}
-              instagram={form.instagram || 'cuenta_intagram'}
-            />
-          </div>
-
-          <div className='col mt-4 mb-4'>
-            <h1>Nuevo usuario</h1>
-            <UserForm
-              onChange={handleChange}
-              formValues={form}
-              onSubmit={handleSumbit}
-              onCancel={handleCancel}
-              passwordRequired
-              login={false}
-              messageErrors={reducer.messageErrors}
-            />
-          </div>
-        </div>
+    <div className='UserEdit'>
+      <div className='UserEdit__badge'>
+        <Badge
+          name={form.name || 'Nombre'}
+          email={form.email || ''}
+          birthdate={form.birthdate || new Date().toISOString()}
+          bio={form.bio}
+          instagram={form.instagram}
+        />
       </div>
-    </>
+
+      <div className='UserEdit__form'>
+        <h1 className='UserEdit__form--title'>Nuevo usuario</h1>
+        <UserForm
+          onChange={handleChange}
+          formValues={form}
+          onSubmit={handleSumbit}
+          onCancel={handleCancel}
+          passwordRequired
+          login={false}
+          messageErrors={reducer.messageErrors}
+        />
+      </div>
+    </div>
+
   );
 };
 

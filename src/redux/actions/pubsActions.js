@@ -117,12 +117,11 @@ export const handleChangePubForm = (form) => (dispatch) => {
 export const postPub = () => async (dispatch, getState) => {
   const {
     pubsReducer: { form },
-    usersReducer: { currentUser },
   } = getState();
   try {
     dispatch({ type: PUBS_UPLOADING });
     /** @type {Data} */
-    const { data } = await axios.post(`/pubs/${currentUser.id}`, form);
+    const { data } = await axios.post('/pubs', form);
     dispatch({ type: POST_PUBS, newPub: data });
   } catch (err) {
     catchError(err, dispatch, PUBS_ERROR, PUBS_MESSAGE_ERRORS);

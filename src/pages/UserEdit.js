@@ -10,6 +10,7 @@ import {
   handleChangeUserForm,
   putUser,
 } from '../redux/actions/usersActions';
+import '../styles/components/UserEdit.scss';
 
 /**
  *
@@ -86,33 +87,29 @@ const UserEdit = (props) => {
   if (uploading) return <PageUpload />;
   if (error) return <PageError />;
   return (
-    <>
-      <div className='container'>
-        <div className='row'>
-          <div className='col mt-4 mx-2'>
-            <Badge
-              name={form.name}
-              email={form.email}
-              birthdate={form.birthdate || new Date().toISOString()}
-              bio={form.bio}
-              instagram={form.instagram}
-            />
-          </div>
-
-          <div className='col mt-4 mb-4'>
-            <h1>Editar usuario</h1>
-            <UserForm
-              onChange={handleChange}
-              formValues={form}
-              onSubmit={handleSumbit}
-              onCancel={handleCancel}
-              login={false}
-              messageErrors={messageErrors}
-            />
-          </div>
-        </div>
+    <div className='UserEdit'>
+      <div className='UserEdit__badge'>
+        <Badge
+          name={form.name}
+          email={form.email}
+          birthdate={form.birthdate || new Date().toISOString()}
+          bio={form.bio}
+          instagram={form.instagram}
+        />
       </div>
-    </>
+
+      <div className='UserEdit__form'>
+        <h1 className='UserEdit__form--title'>Editar usuario</h1>
+        <UserForm
+          onChange={handleChange}
+          formValues={form}
+          onSubmit={handleSumbit}
+          onCancel={handleCancel}
+          login={false}
+          messageErrors={messageErrors}
+        />
+      </div>
+    </div>
   );
 };
 
