@@ -1,5 +1,5 @@
 import { catchError } from '.';
-import axios from '../../config';
+import axios from '../../config/axios';
 import {
   GET_PUBS,
   GET_NEXT_PUBS,
