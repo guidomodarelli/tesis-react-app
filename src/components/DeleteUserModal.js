@@ -16,7 +16,7 @@ const DeleteUserModal = (props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className='Modal__header'>
-        <h1>¿Estás seguro?</h1>
+        <h1 className='h1'>¿Estás seguro?</h1>
       </div>
       <div className='Modal__body'>
         <p>¡Estás apunto de eliminar esta cuenta!</p>

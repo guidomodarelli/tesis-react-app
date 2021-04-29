@@ -30,30 +30,26 @@ const Badge = (props) => {
   };
 
   return (
-    <div className='Container'>
-      <div className='Badge'>
-        <div className='Badge__header'>
-          <img src={logo} alt='Logo' />
-        </div>
-        <div className='Badge__content'>
-          {' '}
-          <Gravatar email={email} />
-          <h1 className='Badge__content--name'>{name}</h1>
-          <div className='Badge__content--age'>
-            <h3>
-              {age()}
-              {' '}
-              años
-            </h3>
-          </div>
-        </div>
-        {(bio || instagram) && (
-          <div className='Badge__footer'>
-            {bio && <p className='Badge__footer--bio'>{bio}</p>}
-            {instagram && <InstagramAccount instagram={instagram} />}
-          </div>
-        )}
+    <div className='Badge'>
+      <div className='Badge__header'>
+        <img src={logo} alt='Logo' />
       </div>
+      <div className='Badge__content'>
+        {' '}
+        <Gravatar email={email} />
+        <h1 className='Badge__content--name h1'>{name}</h1>
+        <h5 className='Badge__content--age'>
+          {age()}
+          {' '}
+          años
+        </h5>
+      </div>
+      {(bio || instagram) && (
+        <div className='Badge__footer'>
+          {bio && <p className='Badge__footer--bio'>{bio}</p>}
+          {instagram && <InstagramAccount instagram={instagram} />}
+        </div>
+      )}
     </div>
   );
 };

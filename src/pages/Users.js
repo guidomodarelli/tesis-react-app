@@ -27,7 +27,7 @@ const Users = (props) => {
   if (loading) return <PageLoading />;
   return (
     <div className='Container'>
-      <h1 className='text-center fw-bold mb-4'>Usuarios</h1>
+      <h1 className='text-center fw-bold mb-4 h1'>Usuarios</h1>
       <UsersList users={users} />
     </div>
   );

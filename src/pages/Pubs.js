@@ -62,7 +62,7 @@ const Pubs = (props) => {
   if (pubsReducer.error || usersReducer.error) return <PageError />;
   return (
     <div className='Container'>
-      <h1 className='text-center fw-bold mb-4'>Publicaciones</h1>
+      <h1 className='text-center fw-bold mb-4 h1'>Publicaciones</h1>
       <Publicar />
       {pubs.length ? (
         pubs.map((pub) => {

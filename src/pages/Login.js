@@ -61,7 +61,7 @@ const Login = (props) => {
   if (reducer.error || usersReducer.error) return <PageError />;
   return (
     <div className='Login container mt-4'>
-      <h1>Iniciar sesión</h1>
+      <h1 className='h1'>Iniciar sesión</h1>
       <UserForm
         onChange={handleChange}
         formValues={form}

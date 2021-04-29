@@ -42,7 +42,7 @@ const PermisosAdminModal = (props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className='Modal__header'>
-        <h1>¿Qué puede hacer este administrador?</h1>
+        <h1 className='h1'>¿Qué puede hacer este administrador?</h1>
       </div>
       <div className='Modal__body'>
         <form>

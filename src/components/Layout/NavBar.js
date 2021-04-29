@@ -1,56 +1,104 @@
-import React from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signOut, resetMessageErrors } from '../../redux/actions';
 import { resetUserForm } from '../../redux/actions/usersActions';
+import 'bulma';
 
 const NavBar = (props) => {
   const { userToken, signOut, resetUserForm, resetMessageErrors } = props;
 
+  /** @type {import("react").MutableRefObject<HTMLElement>} */
+  const refNavbarBurger = useRef(null);
+  /** @type {import("react").MutableRefObject<HTMLElement>} */
+  const refNavbarMenu = useRef(null);
+
+  const toggleActive = () => {
+    const isActive = 'is-active';
+    if (refNavbarBurger.current.classList.contains(isActive)) {
+      refNavbarBurger.current.classList.remove(isActive);
+      refNavbarMenu.current.classList.remove(isActive);
+    } else {
+      refNavbarBurger.current.classList.add(isActive);
+      refNavbarMenu.current.classList.add(isActive);
+    }
+  };
+
   const handleClick = () => {
-    resetUserForm();
-    resetMessageErrors();
+    toggleActive();
+    if (userToken) {
+      signOut();
+    } else {
+      resetUserForm();
+      resetMessageErrors();
+    }
   };
 
   return (
-    <Navbar expand='sm' className='px-2'>
-      <Navbar.Toggle aria-controls='basic-navbar-nav' />
-      <Navbar.Collapse id='basic-navbar-nav'>
-        <Nav className='mr-auto'>
-          <Link className='nav-link' to='/'>
+    <nav className='navbar' role='navigation' aria-label='main navigation'>
+      <div className='navbar-brand'>
+        <a
+          role='button'
+          className='navbar-burger'
+          aria-label='menu'
+          aria-expanded='false'
+          data-target='navbarBasicExample'
+          href='#1'
+          onClick={toggleActive}
+          ref={refNavbarBurger}
+        >
+          <span aria-hidden='true' />
+          <span aria-hidden='true' />
+          <span aria-hidden='true' />
+        </a>
+      </div>
+
+      <div id='navbarBasicExample' className='navbar-menu' ref={refNavbarMenu}>
+        <div
+          className='navbar-start'
+          onClick={toggleActive}
+          role='button'
+          tabIndex={0}
+        >
+          <Link className='navbar-item' to='/'>
             Inicio
           </Link>
           {userToken && (
-            <Link className='nav-link' to='/users'>
+            <Link className='navbar-item' to='/users'>
               Usuarios
             </Link>
           )}
           {userToken && (
-            <Link className='nav-link' to='/pubs'>
+            <Link className='navbar-item' to='/pubs'>
               Publicaciones
             </Link>
           )}
-        </Nav>
-      </Navbar.Collapse>
-      {userToken ? (
-        <Link
-          to='/login'
-          className='btn btn-primary text-nowrap'
-          onClick={signOut}
-        >
-          Cerrar sesión
-        </Link>
-      ) : (
-        <Link
-          to='/login'
-          className='btn btn-primary text-nowrap'
-          onClick={handleClick}
-        >
-          <span>Iniciar sesión</span>
-        </Link>
-      )}
-    </Navbar>
+        </div>
+
+        <div className='navbar-end'>
+          <div className='navbar-item'>
+            <div className='buttons'>
+              {!userToken && (
+                <Link
+                  to='/signup'
+                  className='btn btn-primary me-2'
+                  onClick={toggleActive}
+                >
+                  Registrarse
+                </Link>
+              )}
+              <Link
+                to='/login'
+                className='btn btn-secondary text-nowrap'
+                onClick={handleClick}
+              >
+                {userToken ? <>Cerrar sesión</> : <>Iniciar sesión</>}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 };
 

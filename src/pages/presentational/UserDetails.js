@@ -37,7 +37,7 @@ const Actions = (props) => {
 
   return (
     <div className='col d-flex flex-column align-items-center justify-content-center mb-4'>
-      <h2 className='mb-3'>Acciones:</h2>
+      <h2 className='mb-3 h2'>Acciones:</h2>
       <div className='w-100 justify-content-center d-flex'>
         {profile && (
           <Link className='btn btn-primary me-2' to={`/users/${userId}/edit`} onClick={handleClick}>

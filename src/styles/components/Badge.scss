@@ -6,6 +6,7 @@
 
 .Badge {
   @extend .Badge;
+  margin-bottom: 1.5rem;
 
   & &__header {
     padding: 0.5rem 0;
@@ -16,7 +17,7 @@
 
     img {
       @extend .img-fluid;
-      margin: .5rem;
+      margin: 0.5rem;
     }
   }
 
@@ -29,6 +30,7 @@
     }
     &--age {
       @extend .flex-row-center;
+      margin-bottom: 0.5rem;
     }
     &--name {
       text-align: center;

@@ -9,7 +9,7 @@ const Porfolio = () => (
       difícil transcurrirlo solo, y para eso estamos nosotros, para ayudarte a
       vos a que puedas cumplir tus objetivos de manera exitosa.
     </p>
-    <h3 className='text-center mt-3'>¿Cómo podemos ayudarte?</h3>
+    <h3 className='text-center mt-3 h3'>¿Cómo podemos ayudarte?</h3>
     <div className='m-0'>
       <ul>
         <li>
@@ -32,7 +32,7 @@ const Porfolio = () => (
 
 const Promotion = () => (
   <section className='container'>
-    <h3 className='text-center'>
+    <h3 className='text-center h3'>
       ¡Aprovecha tu semana
       {' '}
       <span>gratis</span>

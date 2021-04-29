@@ -99,7 +99,7 @@ const UserEdit = (props) => {
       </div>
 
       <div className='UserEdit__form'>
-        <h1 className='UserEdit__form--title'>Editar usuario</h1>
+        <h1 className='UserEdit__form--title h1'>Editar usuario</h1>
         <UserForm
           onChange={handleChange}
           formValues={form}
