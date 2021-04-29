@@ -14,6 +14,7 @@ import UserNew from '../pages/UserNew';
 import Users from '../pages/Users';
 import { restoreToken } from '../redux/actions';
 import RouteAuth from './RouteAuth';
+import ChatGral from '../components/ChatGral';
 
 const App = (props) => {
   const { restoreToken } = props;
@@ -42,6 +43,7 @@ const App = (props) => {
           <RouteAuth exact path='/login' component={Login} />
           <RouteAuth exact path='/signup' component={UserNew} />
           <RouteAuth auth exact path='/pubs' component={Pubs} />
+          <RouteAuth auth exact path='/chat' component={ChatGral} />
           <Route component={NotFound} />
         </Switch>
       </Layout>

@@ -73,6 +73,11 @@ const NavBar = (props) => {
               Publicaciones
             </Link>
           )}
+          {userToken && (
+            <Link className='navbar-item' to='/chat'>
+              Chat
+            </Link>
+          )}
         </div>
 
         <div className='navbar-end'>
