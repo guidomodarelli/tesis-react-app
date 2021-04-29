@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import logo from '../assets/images/CALISTEP.png';
+import logo from '../assets/images/logo-calistep.png';
 import '../styles/components/Badge.scss';
 import Gravatar from './Gravatar';
 import InstagramAccount from './InstagramAccount';
