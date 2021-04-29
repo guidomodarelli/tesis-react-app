@@ -1,8 +1,8 @@
 @use '../abstracts/colors';
-@use '../utilities/flex';
-@use '../utilities/text';
-@use '../utilities/image';
-@use '../utilities/badge';
+@use '../utils/flex';
+@use '../utils/text';
+@use '../utils/image';
+@use '../utils/badge';
 
 .Badge {
   @extend .Badge;

@@ -1,5 +1,5 @@
 @use '../abstracts/colors';
-@use '../utilities/flex';
+@use '../utils/flex';
 
 .modal {
   @extend .flex-row-center;
