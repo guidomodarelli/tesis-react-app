@@ -1,13 +1,8 @@
 import React from 'react';
 import uploadImage from '../../assets/images/upload.svg';
 import '../../styles/components/Screens.scss';
+import Screen from './Screen';
 
-const PageError = () => {
-  return (
-    <picture className='Screen'>
-      <img src={uploadImage} alt='Upload data' />
-    </picture>
-  );
-};
+const PageError = () => <Screen img={uploadImage} alt='Subiendo información' />;
 
 export default PageError;

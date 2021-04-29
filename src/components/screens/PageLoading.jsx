@@ -1,13 +1,8 @@
 import React from 'react';
 import loadingImage from '../../assets/images/loading.svg';
 import '../../styles/components/Screens.scss';
+import Screen from './Screen';
 
-const PageLoading = () => {
-  return (
-    <picture className='Screen'>
-      <img src={loadingImage} alt='loading gif' />
-    </picture>
-  );
-};
+const PageLoading = () => <Screen img={loadingImage} alt='Cargando' />;
 
 export default PageLoading;
