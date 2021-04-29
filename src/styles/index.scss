@@ -31,7 +31,9 @@ h6 {
 }
 
 .Login {
-  max-width: 25rem;
+  flex-direction: column;
+  max-width: 350px;
+  margin: 0 auto;
 }
 
 .Gravatar {
@@ -54,6 +56,6 @@ h6 {
   }
   .navbar-menu {
     position: absolute;
-    top: 3.5rem
+    top: 3.5rem;
   }
 }
