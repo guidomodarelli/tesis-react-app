@@ -43,9 +43,17 @@ h6 {
 }
 
 @media screen and (max-width: 1023px) {
+  .navbar-brand {
+    padding-top: 0;
+  }
   nav.navbar {
     flex-direction: column;
     align-items: flex-start;
-    padding-bottom: 0;
+    // padding-bottom: 0;
+    padding: 0;
+  }
+  .navbar-menu {
+    position: absolute;
+    top: 3.5rem
   }
 }

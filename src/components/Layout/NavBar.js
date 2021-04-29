@@ -37,20 +37,20 @@ const NavBar = (props) => {
   return (
     <nav className='navbar' role='navigation' aria-label='main navigation'>
       <div className='navbar-brand'>
-        <a
+        <div
           role='button'
           className='navbar-burger'
           aria-label='menu'
           aria-expanded='false'
           data-target='navbarBasicExample'
-          href='#1'
+          tabIndex={0}
           onClick={toggleActive}
           ref={refNavbarBurger}
         >
           <span aria-hidden='true' />
           <span aria-hidden='true' />
           <span aria-hidden='true' />
-        </a>
+        </div>
       </div>
 
       <div id='navbarBasicExample' className='navbar-menu' ref={refNavbarMenu}>
