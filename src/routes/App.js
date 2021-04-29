@@ -15,13 +15,6 @@ import Users from '../pages/Users';
 import { restoreToken } from '../redux/actions';
 import RouteAuth from './RouteAuth';
 
-/**
- *
- * @param {{
- *  restoreToken: restoreToken;
- * }} props
- * @returns
- */
 const App = (props) => {
   const { restoreToken } = props;
 

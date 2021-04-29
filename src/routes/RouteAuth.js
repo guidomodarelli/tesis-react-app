@@ -5,7 +5,9 @@ import PageError from '../components/screens/PageError';
 import PageLoading from '../components/screens/PageLoading';
 
 class RouteAuth extends Component {
-  isAuthorizated = (auth, token) => (auth && token) || (!auth && !token);
+  isAuthorizated = function (auth, token) {
+    return (auth && token) || (!auth && !token);
+  };
 
   render() {
     const {
