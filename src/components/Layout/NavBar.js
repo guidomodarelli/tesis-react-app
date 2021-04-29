@@ -2,20 +2,9 @@ import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { signOut, resetMessageErrors } from '../redux/actions';
-import { resetUserForm } from '../redux/actions/usersActions';
+import { signOut, resetMessageErrors } from '../../redux/actions';
+import { resetUserForm } from '../../redux/actions/usersActions';
 
-/**
- *
- * @param {{
- *  userToken: string;
- *  signOut: signOut;
- *  resetUserForm: resetUserForm;
- *  resetMessageErrors: resetMessageErrors;
- * }} props
- * @returns
- */
 const NavBar = (props) => {
   const { userToken, signOut, resetUserForm, resetMessageErrors } = props;
 
@@ -63,12 +52,6 @@ const NavBar = (props) => {
       )}
     </Navbar>
   );
-};
-
-NavBar.propTypes = {
-  userToken: PropTypes.string,
-  signOut: PropTypes.func.isRequired,
-  resetUserForm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ reducer }) => reducer;

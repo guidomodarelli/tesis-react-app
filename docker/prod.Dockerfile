@@ -4,7 +4,7 @@ COPY ["package.json", "package-lock.json", "/app/"]
 
 WORKDIR /app
 
-RUN npm install --silent && \ 
+RUN npm install --silent && \
   npm install react-scripts serve -g --silent
 
 COPY ["./build", "/app/build"]
