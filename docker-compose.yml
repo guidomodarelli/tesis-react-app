@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   app_dev:
@@ -16,4 +16,4 @@ services:
 
 networks:
   tesis:
-    name: tesis_net
+    name: tesis_net_dev
