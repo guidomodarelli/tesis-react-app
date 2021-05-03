@@ -35,25 +35,18 @@ function ErrorMessages(props) {
   );
 }
 
-/**
- * @param {StatePubsReducer & DispatchsPubsReducer} props
- * @returns
- */
+/** @param {StatePubsReducer & DispatchsPubsReducer} props */
 function Publicar(props) {
   const { form, handleChangePubForm, postPub, messageErrors } = props;
   const [checked, setChecked] = useState(true);
 
-  /**
-   * @param {React.FormEvent<HTMLFormElement>} e
-   */
+  /** @param {React.FormEvent<HTMLFormElement>} e */
   const handleSubmit = (e) => {
     e.preventDefault();
     postPub();
   };
 
-  /**
-   * @param {React.ChangeEvent<HTMLInputElement>} e
-   */
+  /** @param {React.ChangeEvent<HTMLInputElement>} e */
   const handleChange = (e) => {
     if (e.target.name === 'body') {
       handleChangePubForm({ ...form, body: e.target.value });

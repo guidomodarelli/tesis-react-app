@@ -1,5 +1,6 @@
 import React from 'react';
 import instagramLogo from '../assets/images/Instagram.svg';
+import '../styles/components/InstagramAccount.scss';
 
 /**
  *
@@ -11,9 +12,9 @@ import instagramLogo from '../assets/images/Instagram.svg';
 const InstagramAccount = (props) => {
   const { instagram } = props;
   return (
-    <div className='instagram'>
+    <div className='InstagramAccount'>
       <img src={instagramLogo} alt='Instagram logo' />
-      <p className='instagram__acount'>
+      <p className='InstagramAccount__perfil'>
         @
         {instagram}
       </p>

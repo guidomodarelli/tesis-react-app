@@ -2,7 +2,8 @@
 @use '../utils/flex';
 
 .modal {
-  @extend .flex-row-center;
+  display: flex;
+  justify-content: center;
   background-color: colors.$modal-background-color;
 }
 
@@ -36,7 +37,7 @@
     border-top: 1px solid colors.$modal-border-color;
 
     &--confirm {
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
   }
 }

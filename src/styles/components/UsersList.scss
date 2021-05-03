@@ -1,21 +1,9 @@
 @use '../abstracts/colors';
 @use '../utils/text';
 
-.instagram {
-  color: colors.$instagram-account;
-  display: flex;
-  align-items: center;
-  margin: 0.5rem 1rem 0.5rem 0;
-
-  img {
-    height: 20px;
-    margin-right: 5px;
-  }
-
-  &__acount {
-    @extend .text-break;
-    margin: 0;
-  }
+.UserList__link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .UserListItem {

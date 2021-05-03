@@ -15,7 +15,6 @@ import PageEmpty from './screens/PageEmpty';
  * @param {{
  *  user: User;
  * }} props
- * @returns {JSX.Element}
  */
 const UserListItem = (props) => {
   const { user } = props;
@@ -25,9 +24,7 @@ const UserListItem = (props) => {
       <Gravatar email={user.email} />
       <div className='UserListItem__details'>
         <p className='UserListItem__details--name'>{user.name}</p>
-        {user.instagram && (
-          <InstagramAccount instagram={user.instagram} />
-        )}
+        {user.instagram && <InstagramAccount instagram={user.instagram} />}
         <p className='UserListItem__details--bio'>{user.bio}</p>
       </div>
     </div>
@@ -43,7 +40,6 @@ UserListItem.propTypes = {
  * @param {{
  *  users: User[];
  * }} props
- * @returns {JSX.Element}
  */
 const UsersList = (props) => {
   const { users = [] } = props;
@@ -51,19 +47,14 @@ const UsersList = (props) => {
     return <PageEmpty msg='No encontramos ningún usuario' />;
   }
   return (
-    <ul className='list-unstyled'>
-      {users.map((user) => {
-        return (
-          <li key={user.id}>
-            <Link
-              className='text-reset text-decoration-none'
-              to={`/users/${user.id}`}
-            >
-              <UserListItem user={user} />
-            </Link>
-          </li>
-        );
-      })}
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>
+          <Link className='UserList__link' to={`/users/${user.id}`}>
+            <UserListItem user={user} />
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 };
