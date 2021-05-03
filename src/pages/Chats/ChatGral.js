@@ -2,7 +2,9 @@ import * as dotenv from 'dotenv';
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
-import '../styles/components/Chat.scss';
+import ChatInput from '../../components/Chats/ChatInput';
+import MessageList from '../../components/Chats/MessageList';
+import '../../styles/components/Chat.scss';
 
 dotenv.config();
 
@@ -14,6 +16,7 @@ const client = new W3CWebSocket(`ws://${host}:${port}`);
 
 const ChatGral = (props) => {
   const { currentUser } = props;
+  /** @type {React.MutableRefObject<HTMLInputElement>} */
   const refInput = useRef(null);
   const [messages, setMessages] = useState([]);
 
@@ -23,7 +26,7 @@ const ChatGral = (props) => {
     };
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
-      setMessages([...messages, dataFromServer]);
+      setMessages((messages) => [...messages, dataFromServer]);
     };
   }, []);
 
@@ -34,30 +37,16 @@ const ChatGral = (props) => {
       JSON.stringify({
         creator: currentUser.id,
         message: refInput.current.value,
+        createdAt: new Date(),
       }),
     );
+    refInput.current.value = '';
   };
 
   return (
     <div className='Chat'>
-      <div>{messages.map((el) => el.message)}</div>
-      <div className='Chat__form'>
-        <form className='field has-addons' onSubmit={handleSubmit}>
-          <div className='Chat__form--input control'>
-            <input
-              className='input'
-              type='text'
-              placeholder='Escribe un mensaje...'
-              ref={refInput}
-            />
-          </div>
-          <div className='Chat__form--button control'>
-            <button className='button is-info' type='submit'>
-              <i className='fa fa-send' />
-            </button>
-          </div>
-        </form>
-      </div>
+      <MessageList messages={messages} />
+      <ChatInput ref={refInput} handleSubmit={handleSubmit} />
     </div>
   );
 };
