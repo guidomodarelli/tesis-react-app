@@ -1,13 +1,47 @@
 .Chat {
   margin: auto auto 0;
 
-  &__form {
-    &--input {
-      margin: 0 0.25rem 0.25rem 0.5rem;
+  &Input {
+    display: flex;
+    justify-content: center;
+
+    &__input {
+      margin: 0 0.25rem 0.5rem;
     }
 
-    &--button {
+    &__button {
       margin-right: 0.25rem;
+    }
+  }
+
+  &Message {
+    padding: 1rem;
+    border: 1px solid gray;
+    border-radius: 20px 20px 4px 20px;
+    margin: 0 0.5rem 0.5rem;
+    max-width: 330px;
+
+    &__creator {
+      font-weight: bold;
+    }
+
+    &__message {
+      display: flex;
+      justify-content: flex-end;
+
+      &--body {
+        font-size: 1.1rem;
+        text-align: start;
+        margin-right: 1rem;
+      }
+
+      &--time {
+        text-align: end;
+        font-style: italic;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }
