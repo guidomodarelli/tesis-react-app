@@ -41,10 +41,7 @@ import {
  * @property {emptyMessageErrors} emptyMessageErrors
  */
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const getPubs = () => async (dispatch) => {
   try {
     dispatch({ type: PUBS_LOADING });
@@ -61,10 +58,7 @@ export const getPubs = () => async (dispatch) => {
   }
 };
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const getPubsNextPage = () => async (dispatch, getState) => {
   /**
    * @type {{
@@ -110,10 +104,7 @@ export const handleChangePubForm = (form) => (dispatch) => {
   }
 };
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const postPub = () => async (dispatch, getState) => {
   const {
     pubsReducer: { form },
@@ -157,10 +148,7 @@ export const toggleFavPub = (pubId, fav) => async (dispatch, getState) => {
   }
 };
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const emptyMessageErrors = () => (dispatch) => {
   dispatch({ type: PUBS_MESSAGE_ERRORS, messageErrors: [] });
 };

@@ -14,9 +14,7 @@ import { filterNonNull } from '../../utils';
 /**
  *
  * @typedef {import("redux").Dispatch} Dispatch
- *
  * @typedef {import("../reducers/usersReducer").UserForm} UserForm
- *
  * @typedef {import("../reducers").GlobalState} GlobalState
  *
  * @typedef {(dispatch: Dispatch, getState: () => GlobalState) => Promise<void>} callbackDispatch
@@ -36,7 +34,6 @@ import { filterNonNull } from '../../utils';
  */
 
 /**
- *
  * @param {import("axios").AxiosError | Error} error
  * @param {Dispatch} dispatch
  * @param {string} typeErrorGral
@@ -59,16 +56,12 @@ export function catchError(
   }
 }
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const resetMessageErrors = () => (dispatch) => {
   dispatch({ type: MESSAGE_ERRORS, messageErrors: [] });
 };
 
 /**
- *
  * @param {UserForm} form
  * @returns {callbackDispatch}
  */
@@ -86,10 +79,7 @@ export const signIn = (form) => async (dispatch) => {
   }
 };
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const signOut = () => (dispatch) => {
   dispatch({ type: LOADING, loading: true });
   try {
@@ -101,7 +91,6 @@ export const signOut = () => (dispatch) => {
 };
 
 /**
- *
  * @param {UserForm} form
  * @param {unknown[]} history
  * @returns {callbackDispatch}
@@ -118,10 +107,7 @@ export const signUp = (form, history) => async (dispatch) => {
   }
 };
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const restoreToken = () => async (dispatch) => {
   dispatch({ type: LOADING, loading: true });
   try {

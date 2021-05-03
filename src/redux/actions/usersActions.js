@@ -30,7 +30,6 @@ import {
  */
 
 /**
- *
  * @param {UserForm} form
  * @returns {callbackDispatch}
  */
@@ -46,18 +45,12 @@ export const handleChangeUserForm = (form) => (dispatch) => {
   dispatch({ type: SET_FORM, form: newForm });
 };
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const resetUserForm = () => (dispatch) => {
   dispatch({ type: RESET_FORM });
 };
 
-/**
- *
- * @returns {callbackDispatch}
- */
+/** @returns {callbackDispatch} */
 export const getUsers = () => async (dispatch) => {
   dispatch({ type: USER_LOADING, loading: true });
   try {
@@ -69,7 +62,6 @@ export const getUsers = () => async (dispatch) => {
 };
 
 /**
- *
  * @param {string} userId
  * @param {unknown[]} history
  * @returns {callbackDispatch}
@@ -89,7 +81,6 @@ export const putUser = (userId, history) => async (dispatch, getState) => {
 };
 
 /**
- *
  * @param {string} userId
  * @returns {callbackDispatch}
  */
@@ -109,7 +100,6 @@ export const putAdminPermissions = (userId) => async (dispatch, getState) => {
 };
 
 /**
- *
  * @param {string} userId
  * @returns {callbackDispatch}
  */
