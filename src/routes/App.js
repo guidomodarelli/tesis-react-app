@@ -14,7 +14,7 @@ import UserNew from '../pages/UserNew';
 import Users from '../pages/Users';
 import { restoreToken } from '../redux/actions';
 import RouteAuth from './RouteAuth';
-import ChatGral from '../components/ChatGral';
+import ChatGral from '../pages/Chats/ChatGral';
 
 const App = (props) => {
   const { restoreToken } = props;
