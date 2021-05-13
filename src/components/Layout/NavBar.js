@@ -8,9 +8,9 @@ import 'bulma';
 const NavBar = (props) => {
   const { userToken, signOut, resetUserForm, resetMessageErrors } = props;
 
-  /** @type {import("react").MutableRefObject<HTMLElement>} */
+  /** @type {import("react").LegacyRef<HTMLDivElement>} */
   const refNavbarBurger = useRef(null);
-  /** @type {import("react").MutableRefObject<HTMLElement>} */
+  /** @type {import("react").LegacyRef<HTMLDivElement>} */
   const refNavbarMenu = useRef(null);
 
   const toggleActive = () => {

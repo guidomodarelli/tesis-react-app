@@ -46,7 +46,7 @@ function Publicar(props) {
     postPub();
   };
 
-  /** @param {React.ChangeEvent<HTMLInputElement>} e */
+  /** @param {React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>} e */
   const handleChange = (e) => {
     if (e.target.name === 'body') {
       handleChangePubForm({ ...form, body: e.target.value });

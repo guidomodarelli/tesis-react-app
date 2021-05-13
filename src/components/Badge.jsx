@@ -12,6 +12,7 @@ import InstagramAccount from './InstagramAccount';
  *  name: string;
  *  bio: string;
  *  instagram: string;
+ *  birthdate: string;
  * }} props
  * @returns
  */

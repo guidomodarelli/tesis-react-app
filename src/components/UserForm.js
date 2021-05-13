@@ -168,4 +168,5 @@ const mapDispatchToProps = {
   resetMessageErrors,
 };
 
+// @ts-ignore
 export default connect(null, mapDispatchToProps)(UserForm);

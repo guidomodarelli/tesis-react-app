@@ -54,6 +54,7 @@ const INITIAL_STATE = {
  *  loading: boolean;
  *  messageErrors: FormError[];
  *  userToken: string;
+ *  error: string;
  * }} action
  * @returns {StateReducer}
  */

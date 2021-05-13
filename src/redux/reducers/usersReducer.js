@@ -105,7 +105,7 @@ const deleteCurrentUser = (users, id) => {
  *
  * @param {User[]} users
  * @param {string} userId
- * @param {User} newDataUser
+ * @param {UserForm} newDataUser
  * @returns
  */
 const updateUserList = (users, userId, newDataUser) => {
@@ -119,7 +119,6 @@ const updateUserList = (users, userId, newDataUser) => {
 
 /**
  *
- * @param {User} currentUser
  * @param {string} userId
  * @param {StateUsersReducer} state
  * @returns {StateUsersReducer}

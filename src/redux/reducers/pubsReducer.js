@@ -71,7 +71,7 @@ const INITIAL_STATE = {
  * @param {{
  *  type: string;
  *  userId: string;
- *  pubId: string;
+ *  pubId: number;
  *  newPubs: Publication[];
  *  newPub: Publication;
  *  error: string;

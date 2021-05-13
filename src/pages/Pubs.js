@@ -44,7 +44,7 @@ const Pubs = (props) => {
   /**
    *
    * @param {string} userId
-   * @returns {User}
+   * @returns {User | {}}
    */
   const getCreator = (userId) => {
     const user = users.find((user) => user.id === userId);

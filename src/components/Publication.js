@@ -23,7 +23,7 @@ import '../styles/components/BadgePubs.scss';
  *  scope: SCOPE;
  *  email: string;
  *  toggleFavPub: toggleFavPub;
- *  id: string;
+ *  id: number;
  * }} props
  * @returns
  */

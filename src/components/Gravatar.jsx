@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
  *
  * @param {{
  *  email: string;
- *  className: string;
- *  height: string;
- *  width: string;
+ *  className?: string;
+ *  height?: string;
+ *  width?: string;
  * }} props
  * @returns
  */

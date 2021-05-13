@@ -8,12 +8,11 @@ import { getUsers } from '../redux/actions/usersActions';
 
 /**
  *
- * @typedef {import("../redux/reducers/usersReducer").StateUserReducer} StateUserReducer
+ * @typedef {import("../redux/reducers/usersReducer").StateUsersReducer} StateUsersReducer
  */
 
 /**
- *
- * @param {StateUserReducer & {
+ * @param {StateUsersReducer & {
  *  getUsers: getUsers;
  * }} props
  * @returns
@@ -21,7 +20,9 @@ import { getUsers } from '../redux/actions/usersActions';
 const Users = (props) => {
   const { loading, error, users, getUsers } = props;
 
-  useEffect(() => getUsers(), []);
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   if (error) return <PageError />;
   if (loading) return <PageLoading />;

@@ -17,7 +17,10 @@ import { filterNonNull } from '../../utils';
  * @typedef {import("../reducers/usersReducer").UserForm} UserForm
  * @typedef {import("../reducers").GlobalState} GlobalState
  *
- * @typedef {(dispatch: Dispatch, getState: () => GlobalState) => Promise<void>} callbackDispatch
+ * @typedef {(
+ *    dispatch: Dispatch,
+ *    getState?: () => GlobalState
+ *  ) => Promise<void> | void} callbackDispatch
  *
  * @typedef {Object} DispatchsReducer
  * @property {resetMessageErrors} resetMessageErrors
@@ -34,7 +37,7 @@ import { filterNonNull } from '../../utils';
  */
 
 /**
- * @param {import("axios").AxiosError | Error} error
+ * @param {import("axios").AxiosError} error
  * @param {Dispatch} dispatch
  * @param {string} typeErrorGral
  * @param {string} typeAxios
@@ -62,7 +65,7 @@ export const resetMessageErrors = () => (dispatch) => {
 };
 
 /**
- * @param {UserForm} form
+ * @param {UserForm | {email: string, password: string}} form
  * @returns {callbackDispatch}
  */
 export const signIn = (form) => async (dispatch) => {
