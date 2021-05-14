@@ -11,6 +11,7 @@ import {
 import { DELETE_USER } from '../types/usersTypes';
 import usersReducer from './usersReducer';
 import pubsReducer from './pubsReducer';
+import chatReducer from './chatReducer';
 
 /**
  * @typedef {Object} FormError
@@ -108,4 +109,5 @@ export default combineReducers({
   usersReducer,
   reducer,
   pubsReducer,
+  chatReducer,
 });
