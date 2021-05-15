@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
+import { enableMapSet } from 'immer';
 import reducers from './redux/reducers';
 import App from './routes/App';
+
+enableMapSet();
 
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

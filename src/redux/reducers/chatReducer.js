@@ -1,3 +1,5 @@
+import produce from 'immer';
+import { CHAT_ADD_MESSAGE, CHAT_DELETE_MESSAGE } from '../types/chatTypes';
 /**
  * @typedef {{
  *  creator: string;
@@ -5,20 +7,20 @@
  *  createdAt: string;
  * }} Message
  *
- * @typedef {{
- *  name: string;
- *  messages: Message[];
- * }} Tag
+ * @typedef {Map<string, Message[]>} Tags
  *
  * @typedef {{
- *  id: string;
- *  tags: Tag[];
+ *  name: string;
+ *  creator: string;
+ *  createdAt: string;
+ *  tags: Tags;
  * }} Group
  *
  * @typedef {{
  *  loading: boolean;
  *  error: string;
- *  groups: Group[];
+ *  groups: Map<string, Group>;
+ *  general: Tags,
  *  page: number;
  *  pages: number;
  * }} StateChatReducer;
@@ -28,25 +30,36 @@
 const INITIAL_STATE = {
   loading: true,
   error: '',
-  groups: [],
+  groups: new Map(),
+  general: new Map(),
   page: 1,
   pages: 1,
 };
 
-/**
- *
- * @param {StateChatReducer} state
- * @param {{
- *  type: string;
- *  payload: Record<string, any>;
- * }} action
- * @returns
- */
-const chatReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+const chatReducer = produce(
+  /**
+   *
+   * @param {StateChatReducer} draft
+   * @param {{
+   *  type: string;
+   *  payload: {
+   *    tag: string;
+   *    message: Message;
+   *    pos: number;
+   *  }
+   * }} action
+   */
+  (draft, action) => {
+    switch (action.type) {
+      case CHAT_ADD_MESSAGE:
+        draft.general.get(action.payload.tag).push(action.payload.message);
+        break;
+      case CHAT_DELETE_MESSAGE:
+        draft.general.get(action.payload.tag).splice(action.payload.pos, 1);
+        break;
+    }
+  },
+  INITIAL_STATE,
+);
 
 export default chatReducer;
