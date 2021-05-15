@@ -1,5 +1,6 @@
 .Chat {
   margin: auto auto 0;
+  overflow-y: auto;
 
   &Input {
     display: flex;
@@ -20,6 +21,7 @@
     border-radius: 20px 20px 4px 20px;
     margin: 0 0.5rem 0.5rem;
     max-width: 330px;
+    min-width: 18rem;
 
     &__creator {
       font-weight: bold;

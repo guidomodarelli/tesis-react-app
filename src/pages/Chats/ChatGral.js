@@ -8,16 +8,16 @@ import '../../styles/components/Chat.scss';
 
 dotenv.config();
 
-const {
-  REACT_APP_SERVER_HOST: host,
-  REACT_APP_SERVER_WEBSOCKET_PORT: port,
-} = process.env;
+const { REACT_APP_SERVER_HOST: host, REACT_APP_SERVER_WEBSOCKET_PORT: port } =
+  process.env;
 const client = new W3CWebSocket(`ws://${host}:${port}`);
 
 const ChatGral = (props) => {
   const { currentUser } = props;
-  /** @type {React.MutableRefObject<HTMLInputElement>} */
+  /** @type {React.LegacyRef<HTMLInputElement>} */
   const refInput = useRef(null);
+  /** @type {React.LegacyRef<HTMLDivElement>} */
+  const refDiv = useRef(null);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -26,7 +26,8 @@ const ChatGral = (props) => {
     };
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
-      setMessages((messages) => [...messages, dataFromServer]);
+      setMessages((messages) => messages.concat(dataFromServer));
+      refDiv.current.scrollTop = refDiv.current?.scrollHeight;
     };
   }, []);
 
@@ -41,13 +42,16 @@ const ChatGral = (props) => {
       }),
     );
     refInput.current.value = '';
+    refInput.current.focus();
   };
 
   return (
-    <div className='Chat'>
-      <MessageList messages={messages} />
+    <>
+      <div className='Chat' ref={refDiv} scr>
+        <MessageList messages={messages} />
+      </div>
       <ChatInput ref={refInput} handleSubmit={handleSubmit} />
-    </div>
+    </>
   );
 };
 
