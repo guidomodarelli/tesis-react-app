@@ -8,9 +8,9 @@ import '../../styles/components/Chat.scss';
 
 dotenv.config();
 
-const { REACT_APP_SERVER_HOST: host, REACT_APP_SERVER_WEBSOCKET_PORT: port } =
-  process.env;
-const client = new W3CWebSocket(`ws://${host}:${port}`);
+const client = new W3CWebSocket(
+  `ws://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_WS_PORT}`,
+);
 
 const ChatGral = (props) => {
   const { currentUser } = props;
