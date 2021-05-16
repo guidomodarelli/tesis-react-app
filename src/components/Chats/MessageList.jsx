@@ -31,7 +31,7 @@ const MessageList = (props) => {
 
   return (
     <div className='ChatMessageList'>
-      {messages.map((el) => (
+      {messages?.map((el) => (
         <Message
           key={el.createdAt}
           message={el.message}

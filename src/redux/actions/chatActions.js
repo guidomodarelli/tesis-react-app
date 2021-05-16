@@ -19,7 +19,11 @@ import {
 export const getChatsGral = (tag) => async (dispatch) => {
   try {
     dispatch({ type: CHAT_LOADING });
-    const { data } = await axiosInstance.get(`/messages?tag=${tag}`);
+    const { data } = await axiosInstance.get('/messages', {
+      params: {
+        tag,
+      },
+    });
     dispatch({
       type: CHAT_GET_MESSAGES,
       payload: {

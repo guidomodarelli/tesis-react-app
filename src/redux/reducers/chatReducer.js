@@ -18,7 +18,7 @@ import {
  *  createdAt: string;
  * }} Message
  *
- * @typedef {Map<string, Message[]>} Tags
+ * @typedef {Record<string, Message[]>} Tags
  *
  * @typedef {{
  *  name: string;
@@ -30,7 +30,7 @@ import {
  * @typedef {{
  *  loading: boolean;
  *  error: string;
- *  groups: Map<string, Group>;
+ *  groups: Record<string, Group>;
  *  general: Tags,
  *  page: number;
  *  pages: number;
@@ -41,8 +41,8 @@ import {
 const INITIAL_STATE = {
   loading: true,
   error: '',
-  groups: new Map(),
-  general: new Map(),
+  groups: {},
+  general: {},
   page: 1,
   pages: 1,
 };
@@ -64,25 +64,32 @@ const chatReducer = produce(
    */
   (draft, action) => {
     switch (action.type) {
-      case CHAT_ADD_MESSAGE:
-        draft.general.get(action.payload.tag).unshift(action.payload.message);
-        break;
-      case CHAT_DELETE_MESSAGE: {
-        const messages = draft.general.get(action.payload.tag);
-        const idx = messages.findIndex((msg) => {
-          return msg.id === action.payload.id;
-        });
-        draft.general.get(action.payload.tag).splice(idx, 1);
+      case CHAT_ADD_MESSAGE: {
+        const { tag, message } = action.payload;
+        draft.general[tag].unshift(message);
         break;
       }
-      case CHAT_GET_MESSAGES:
-        if (!draft.general.has(action.payload.tag)) {
-          draft.general.set(action.payload.tag, action.payload.messages);
+      case CHAT_DELETE_MESSAGE: {
+        const { tag, id } = action.payload;
+        const messages = draft.general[tag];
+        const idx = messages.findIndex((msg) => {
+          return msg.id === id;
+        });
+        if (idx !== -1) {
+          draft.general[tag].splice(idx, 1);
+        }
+        break;
+      }
+      case CHAT_GET_MESSAGES: {
+        const { tag = 'general', messages } = action.payload;
+        if (!draft.general[tag]) {
+          draft.general[tag] = messages;
           return;
         }
-        draft.general.get(action.payload.tag).push(...action.payload.messages);
+        draft.general[tag].push(...messages);
         draft.loading = false;
         break;
+      }
       case CHAT_LOADING:
         draft.loading = true;
         break;
