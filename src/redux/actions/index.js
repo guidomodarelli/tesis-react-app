@@ -39,13 +39,13 @@ import { filterNonNull } from '../../utils';
 /**
  * @param {import("axios").AxiosError} error
  * @param {Dispatch} dispatch
- * @param {string} typeErrorGral
+ * @param {string} errorReducer
  * @param {string} typeAxios
  */
 export function catchError(
   error,
   dispatch,
-  typeErrorGral = ERROR,
+  errorReducer = ERROR,
   typeAxios = MESSAGE_ERRORS,
 ) {
   console.error(error);
@@ -55,7 +55,7 @@ export function catchError(
     const { errors: messageErrors } = data;
     dispatch({ type: typeAxios, messageErrors });
   } else {
-    dispatch({ type: typeErrorGral, error });
+    dispatch({ type: errorReducer, error });
   }
 }
 
