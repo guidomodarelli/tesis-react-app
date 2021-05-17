@@ -42,10 +42,26 @@ const INITIAL_STATE = {
   loading: true,
   error: '',
   groups: {},
-  general: {},
+  general: {
+    general: [],
+  },
   page: 1,
   pages: 1,
 };
+
+/**
+ *
+ * @param {Message[]} messages
+ * @returns
+ */
+function sortMessages(messages) {
+  messages.sort((a, b) => {
+    const timeA = new Date(a.createdAt).getTime();
+    const timeB = new Date(b.createdAt).getTime();
+    return timeA - timeB;
+  });
+  return messages;
+}
 
 const chatReducer = produce(
   /**
@@ -58,15 +74,15 @@ const chatReducer = produce(
    *    message: Message;
    *    id: number;
    *    messages: Message[],
-   *    error: string;
-   *  }
+   *  };
+   *  error: string;
    * }} action
    */
   (draft, action) => {
     switch (action.type) {
       case CHAT_ADD_MESSAGE: {
-        const { tag, message } = action.payload;
-        draft.general[tag].unshift(message);
+        const { message } = action.payload;
+        draft.general[message.tag].push(message);
         break;
       }
       case CHAT_DELETE_MESSAGE: {
@@ -82,11 +98,7 @@ const chatReducer = produce(
       }
       case CHAT_GET_MESSAGES: {
         const { tag = 'general', messages } = action.payload;
-        if (!draft.general[tag]) {
-          draft.general[tag] = messages;
-          return;
-        }
-        draft.general[tag].push(...messages);
+        draft.general[tag] = sortMessages(messages);
         draft.loading = false;
         break;
       }
@@ -94,7 +106,7 @@ const chatReducer = produce(
         draft.loading = true;
         break;
       case CHAT_ERROR:
-        draft.error = action.payload.error;
+        draft.error = action.error;
         break;
     }
   },
