@@ -1,6 +1,7 @@
 import { catchError } from '.';
 import axiosInstance from '../../config/axios';
 import {
+  CHAT_ADD_MESSAGE,
   CHAT_ERROR,
   CHAT_GET_MESSAGES,
   CHAT_LOADING,
@@ -37,12 +38,25 @@ export const getChatsGral = (tag) => async (dispatch) => {
 };
 
 /**
- *
+ * @param {string} tag
+ * @param {string} message
  * @returns {callbackDispatch}
  */
-export const addChatMessageByTag = () => (dispatch) => {
+export const addMsgGralByTag = (tag, message) => async (dispatch) => {
   try {
+    const { data } = await axiosInstance.post('/messages', {
+      body: message,
+      tag,
+    });
+    dispatch({
+      type: CHAT_ADD_MESSAGE,
+      payload: {
+        message: data,
+      },
+    });
+    return data;
   } catch (err) {
     catchError(err, dispatch, CHAT_ERROR);
+    return {};
   }
 };

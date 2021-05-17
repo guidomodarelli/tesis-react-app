@@ -1,11 +1,12 @@
 import * as dotenv from 'dotenv';
 import React, { useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import ChatInput from '../../components/Chats/ChatInput';
 import MessageList from '../../components/Chats/MessageList';
 import '../../styles/components/Chat.scss';
-import { getChatsGral } from '../../redux/actions/chatActions';
+import { getChatsGral, addMsgGralByTag } from '../../redux/actions/chatActions';
+import { CHAT_ADD_MESSAGE } from '../../redux/types/chatTypes';
 
 dotenv.config();
 
@@ -14,40 +15,51 @@ const client = new W3CWebSocket(
 );
 
 const ChatGral = (props) => {
-  const {
-    usersReducer: { currentUser },
-    getChatsGral,
-    chatReducer: { general },
-  } = props;
+  const { getChatsGral, addMsgGralByTag, general } = props;
+
+  const dispatch = useDispatch();
 
   /** @type {React.LegacyRef<HTMLInputElement>} */
   const refInput = useRef(null);
   /** @type {React.LegacyRef<HTMLDivElement>} */
   const refDiv = useRef(null);
-  // const [messages, setMessages] = useState([]);
+
+  const chatScrollTop = () => {
+    refDiv.current.scrollTop = refDiv.current?.scrollHeight;
+  };
 
   useEffect(() => {
-    getChatsGral();
+    if (!general.general.length) {
+      getChatsGral().then(() => {
+        setTimeout(() => {
+          chatScrollTop();
+        }, 50);
+      });
+    } else {
+      chatScrollTop();
+    }
     client.onopen = () => {
       console.info('WebSocket Client Connected');
     };
     client.onmessage = (message) => {
-      // const dataFromServer = JSON.parse(message.data);
-      // setMessages((messages) => messages.concat(dataFromServer));
-      refDiv.current.scrollTop = refDiv.current?.scrollHeight;
+      const msg = JSON.parse(message.data);
+      dispatch({
+        type: CHAT_ADD_MESSAGE,
+        payload: { message: msg },
+      });
+      chatScrollTop();
     };
   }, []);
 
   /** @param {React.FormEvent<HTMLFormElement>} event */
   const handleSubmit = (event) => {
     event.preventDefault();
-    client.send(
-      JSON.stringify({
-        creator: currentUser.id,
-        message: refInput.current.value,
-        createdAt: new Date(),
-      }),
-    );
+    const tag = 'general';
+    const message = refInput.current.value;
+    addMsgGralByTag(tag, message).then((msg) => {
+      client.send(JSON.stringify(msg));
+      chatScrollTop();
+    });
     refInput.current.value = '';
     refInput.current.focus();
   };
@@ -62,13 +74,11 @@ const ChatGral = (props) => {
   );
 };
 
-const mapStateToProps = ({ usersReducer, chatReducer }) => ({
-  usersReducer,
-  chatReducer,
-});
+const mapStateToProps = ({ chatReducer }) => chatReducer;
 
 const mapDispatchToProps = {
   getChatsGral,
+  addMsgGralByTag,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatGral);
