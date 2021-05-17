@@ -26,7 +26,7 @@ const MessageList = (props) => {
 
   const getNameCreator = (userID) => {
     const user = users.find((user) => user.id === userID);
-    return user.name;
+    return user?.name;
   };
 
   return (
@@ -34,7 +34,7 @@ const MessageList = (props) => {
       {messages?.map((el) => (
         <Message
           key={el.createdAt}
-          message={el.message}
+          message={el.body}
           creator={getNameCreator(el.creator)}
           time={new Date(el.createdAt)}
         />
