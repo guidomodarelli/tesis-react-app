@@ -32,7 +32,7 @@ const Porfolio = () => (
 
 const Promotion = () => (
   <section className='container'>
-    <h3 className='has-text-centered subtitle'>
+    <h3 className='has-text-centered subtitle mt-4 mb-2'>
       ¡Aprovecha tu semana
       {' '}
       <span>gratis</span>
@@ -50,7 +50,7 @@ const Promotion = () => (
 );
 
 const Home = () => (
-  <div className='container'>
+  <div className='container px-3'>
     <img
       className='image p-4'
       src={calistep}
