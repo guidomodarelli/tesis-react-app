@@ -16,7 +16,7 @@ const client = new W3CWebSocket(
 
 const useStyles = makeStyles(() => ({
   height: {
-    height: 'calc(100% - 52px)',
+    height: 'calc(100% - 3.25rem)',
   },
 }));
 
