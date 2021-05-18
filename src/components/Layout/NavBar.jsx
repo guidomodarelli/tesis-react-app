@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { signOut, resetMessageErrors } from '../../redux/actions';
 import { resetUserForm } from '../../redux/actions/usersActions';
 import 'bulma';
-import '../../styles/components/NavBar.css';
+import '../../styles/components/NavBar.scss';
 
 const NavBar = (props) => {
   const { userToken, signOut, resetUserForm, resetMessageErrors } = props;
