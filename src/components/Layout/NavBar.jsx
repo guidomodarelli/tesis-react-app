@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { signOut, resetMessageErrors } from '../../redux/actions';
 import { resetUserForm } from '../../redux/actions/usersActions';
 import 'bulma';
-import '../../styles/components/NavBar.scss';
+import '../../styles/components/NavBar.css';
 
 const NavBar = (props) => {
   const { userToken, signOut, resetUserForm, resetMessageErrors } = props;
@@ -54,7 +54,7 @@ const NavBar = (props) => {
         </div>
       </div>
 
-      <div id='navbarBasicExample' className='navbar-menu' ref={refNavbarMenu}>
+      <div id='navbarBasicExample' className='navbar-menu left-auto right-0 absolute top-14' ref={refNavbarMenu}>
         <div
           className='navbar-start'
           onClick={toggleActive}

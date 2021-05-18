@@ -61,7 +61,7 @@ function Publicar(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='BadgePub'>
+    <form onSubmit={handleSubmit} className='BadgePub mb-7 mx-auto shadow-lg rounded-lg overflow-hidden max-w-sm border border-opacity-20 border-black'>
       <ErrorMessages errors={messageErrors} />
       <TextareaAutosize
         type='text'

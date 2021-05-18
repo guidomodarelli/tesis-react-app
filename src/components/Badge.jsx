@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import logo from '../assets/images/logo-calistep.png';
-import '../styles/components/Badge.scss';
 import Gravatar from './Gravatar';
 import InstagramAccount from './InstagramAccount';
 
@@ -31,23 +30,20 @@ const Badge = (props) => {
   };
 
   return (
-    <div className='Badge'>
-      <div className='Badge__header'>
-        <img src={logo} alt='Logo' />
-      </div>
-      <div className='Badge__content'>
+    <div className='mb-6 shadow-lg rounded-lg overflow-hidden max-w-sm border border-opacity-20 border-black'>
+      <picture className='mx-1 h-20 flex justify-center py-2'>
+        <img className='m-2' src={logo} alt='Logo' />
+      </picture>
+      <Gravatar className='py-4 flex justify-center' email={email} />
+      <h3 className='break-all text-center m-0 pt-0 pb-4 pr-4 pl-4 text-2xl'>{name}</h3>
+      <p className='flex justify-center mb-2 text-md'>
+        {age()}
         {' '}
-        <Gravatar email={email} />
-        <h1 className='Badge__content--name subtitle'>{name}</h1>
-        <h5 className='Badge__content--age'>
-          {age()}
-          {' '}
-          años
-        </h5>
-      </div>
+        años
+      </p>
       {(bio || instagram) && (
-        <div className='Badge__footer'>
-          {bio && <p className='Badge__footer--bio'>{bio}</p>}
+        <div className='flex justify-center flex-col items-center py-2 bg-gray-100'>
+          {bio && <p className='break-all mx-4 text-center'>{bio}</p>}
           {instagram && <InstagramAccount instagram={instagram} />}
         </div>
       )}

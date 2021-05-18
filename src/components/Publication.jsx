@@ -42,7 +42,7 @@ const Publication = (props) => {
   const inputRef = useRef(null);
 
   return (
-    <div className='BadgePubs'>
+    <div className='BadgePubs mb-3 mx-auto shadow-lg rounded-lg overflow-hidden max-w-sm border border-opacity-20 border-black'>
       <div className='BadgePubs__header'>
         <Gravatar height='50px' width='50px' email={email} />
         <div className='BadgePubs__details'>

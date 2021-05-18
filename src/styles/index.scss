@@ -1,19 +1,7 @@
 @use './abstracts/fonts';
 @use './abstracts/colors';
 
-html,
-body,
-#root {
-  height: 100%;
-}
-
-#root {
-  display: flex;
-  flex-flow: column nowrap;
-}
-
 body {
-  margin: 0;
   font-family: fonts.$font-body;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -26,48 +14,6 @@ h4,
 h5,
 h6 {
   font-family: fonts.$font-title;
-}
-
-.textArea {
-  resize: none;
-}
-
-.Container {
-  width: 100%;
-  max-width: 580px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  margin-top: 1rem;
-  margin-bottom: 3rem;
-}
-
-.Login {
-  flex-direction: column;
-  max-width: 350px;
-  margin: 0 auto;
-}
-
-.Gravatar {
-  border-radius: 50%;
-}
-
-.ErrorMessages {
-  color: colors.$danger;
-}
-
-@media screen and (max-width: 1023px) {
-  .navbar-brand {
-    padding-top: 0;
-  }
-  nav.navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0;
-  }
-  .navbar-menu {
-    position: absolute;
-    top: 3.5rem;
-  }
 }
 
 .w-initial,

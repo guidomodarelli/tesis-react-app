@@ -13,14 +13,14 @@ import PropTypes from 'prop-types';
  * @returns
  */
 const Gravatar = (props) => {
-  const { email = '', height, width } = props;
+  const { email = '', height, width, className } = props;
   const hash = md5(email);
   return (
-    <picture>
+    <picture className={className}>
       <img
         src={`https://www.gravatar.com/avatar/${hash}?d=retro`}
         alt='Avatar'
-        className='Gravatar'
+        className='rounded-full'
         height={height || '80px'}
         width={width || '80px'}
       />
@@ -32,6 +32,7 @@ Gravatar.propTypes = {
   email: PropTypes.string.isRequired,
   height: PropTypes.string,
   width: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default Gravatar;
