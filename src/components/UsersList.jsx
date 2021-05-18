@@ -25,7 +25,7 @@ const UserListItem = (props) => {
       <div className='UserListItem__details'>
         <p className='UserListItem__details--name'>{user.name}</p>
         {user.instagram && <InstagramAccount instagram={user.instagram} />}
-        <p className='UserListItem__details--bio'>{user.bio}</p>
+        <p className='UserListItem__details--bio mb-3'>{user.bio}</p>
       </div>
     </div>
   );

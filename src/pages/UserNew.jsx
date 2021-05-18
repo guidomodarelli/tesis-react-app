@@ -5,93 +5,65 @@ import PageError from '../components/screens/PageError';
 import PageLoading from '../components/screens/PageLoading';
 import PageUpload from '../components/screens/PageUpload';
 import UserForm from '../components/UserForm';
+import { signUp } from '../redux/actions';
 import {
-  getUsers,
-  handleChangeUserForm,
-  putUser,
+  getUsers, handleChangeUserForm,
 } from '../redux/actions/usersActions';
 import '../styles/components/UserEdit.scss';
 
 /**
- *
- * @typedef {import("../redux/reducers/usersReducer").User} User
- * @typedef {import("../redux/reducers/usersReducer").UserForm} UserForm
- * @typedef {import("../redux/reducers").FormError} FormError
+ * @typedef {import("../redux/reducers").GlobalState} GlobalState
  */
 
 /**
  *
- * @param {{
- *  match: {
- *    params: {
- *      userId: string;
- *    };
- *  };
+ * @param {GlobalState & {
  *  history: unknown[];
- *  loading: boolean;
- *  currentUser: User;
- *  form: UserForm;
- *  users: User[];
- *  error: string;
- *  uploading: boolean;
- *  messageErrors: FormError[];
  *  handleChangeUserForm: handleChangeUserForm;
- *  putUser: putUser;
+ *  signUp: signUp;
  *  getUsers: getUsers;
  * }} props
  * @returns
  */
-const UserEdit = (props) => {
+const UserNew = (props) => {
   const {
-    match: {
-      params: { userId },
-    },
-    history,
-    loading,
-    currentUser,
-    form,
+    usersReducer: { form, users, uploading },
     handleChangeUserForm,
-    putUser,
-    users,
-    error,
+    signUp,
+    history,
+    reducer,
     getUsers,
-    uploading,
-    messageErrors,
   } = props;
-
   const handleChange = (e) => handleChangeUserForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSumbit = (e) => {
     e.preventDefault();
-    putUser(userId, history);
+    signUp(form, history);
   };
 
   const handleCancel = () => {
-    history.push(`/users/${userId}`);
+    history.push('/login');
+  };
+
+  const fetchUsers = () => {
+    if (!users.length) {
+      getUsers();
+    }
   };
 
   useEffect(() => {
-    const { name, birthdate, bio, instagram, email } = currentUser;
-    handleChangeUserForm({
-      ...form,
-      name,
-      birthdate,
-      bio: bio || '',
-      instagram: instagram || '',
-      email,
-    });
-    !users.length && getUsers();
+    fetchUsers();
   }, []);
 
-  if (loading || !form) return <PageLoading />;
   if (uploading) return <PageUpload />;
-  if (error) return <PageError />;
+  if (reducer.loading) return <PageLoading />;
+  if (reducer.error) return <PageError />;
   return (
     <div className='UserEdit'>
       <div className='UserEdit__badge'>
         <Badge
-          name={form.name}
-          email={form.email}
+          name={form.name || 'Nombre'}
+          email={form.email || ''}
           birthdate={form.birthdate || new Date().toISOString()}
           bio={form.bio}
           instagram={form.instagram}
@@ -99,29 +71,31 @@ const UserEdit = (props) => {
       </div>
 
       <div className='UserEdit__form'>
-        <h1 className='UserEdit__form--title h1'>Editar usuario</h1>
+        <h1 className='title has-text-centered'>Nuevo usuario</h1>
         <UserForm
           onChange={handleChange}
           formValues={form}
           onSubmit={handleSumbit}
           onCancel={handleCancel}
+          passwordRequired
           login={false}
-          messageErrors={messageErrors}
+          messageErrors={reducer.messageErrors}
         />
       </div>
     </div>
+
   );
 };
 
-const mapStateToProps = ({ usersReducer, reducer: { messageErrors } }) => ({
-  ...usersReducer,
-  messageErrors,
+const mapStateToProps = ({ reducer, usersReducer }) => ({
+  reducer,
+  usersReducer,
 });
 
 const mapDispatchToProps = {
   handleChangeUserForm,
-  putUser,
+  signUp,
   getUsers,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(UserNew);

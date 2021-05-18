@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Badge from '../../components/Badge';
-import DeleteUserModal from '../../components/DeleteUserModal';
-import PermisosAdminModal from '../../components/PermisosAdminModal';
-import { resetMessageErrors } from '../../redux/actions';
-import { resetUserForm } from '../../redux/actions/usersActions';
+import Badge from './Badge';
+import DeleteUserModal from './DeleteUserModal';
+import PermisosAdminModal from './PermisosAdminModal';
+import { resetMessageErrors } from '../redux/actions';
+import { resetUserForm } from '../redux/actions/usersActions';
 
 const Actions = (props) => {
   const {
@@ -36,11 +36,11 @@ const Actions = (props) => {
   };
 
   return (
-    <div className='col d-flex flex-column align-items-center justify-content-center mb-4'>
-      <h2 className='mb-3 h2'>Acciones:</h2>
-      <div className='w-100 justify-content-center d-flex'>
+    <div className='is-flex is-flex-direction-column is-align-items-center is-justify-content-center mb-4'>
+      <h2 className='mb-3 subtitle'>Acciones:</h2>
+      <div className='w-100 is-flex is-justify-content-center'>
         {profile && (
-          <Link className='btn btn-primary me-2' to={`/users/${userId}/edit`} onClick={handleClick}>
+          <Link className='button is-link mr-2' to={`/users/${userId}/edit`} onClick={handleClick}>
             Editar
           </Link>
         )}
@@ -49,7 +49,7 @@ const Actions = (props) => {
             <button
               type='button'
               onClick={onOpenModalDeleteUser}
-              className='btn btn-danger'
+              className='button is-danger'
             >
               Eliminar
             </button>
@@ -65,7 +65,7 @@ const Actions = (props) => {
             <button
               type='button'
               onClick={onOpenModalPermisos}
-              className='btn btn-outline-primary ms-2'
+              className='button is-link is-light ml-2'
             >
               {userRole === 'admin' && changePermissionsAdmins && <>Modificar permisos</>}
               {userRole === 'normal' && addAdmin && <>Designar como admin.</>}
@@ -130,11 +130,11 @@ const UserDetails = (props) => {
   } = props;
   return (
     <div className='container'>
-      <Link to='/users' className='btn btn-outline-dark mt-2'>
+      <Link to='/users' className='button is-dark is-outlined mt-2 ml-2'>
         Volver
       </Link>
-      <div className='row mt-3 flex-column'>
-        <div className='col px-2 d-flex justify-content-center'>
+      <div className='mt-3'>
+        <div className='px-2 is-flex is-justify-content-center'>
           <Badge
             name={user.name || ''}
             email={user.email || ''}

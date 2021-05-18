@@ -5,7 +5,7 @@ import '../../styles/components/Screens.scss';
 const Screen = ({ img, alt, msg }) => {
   return (
     <picture className='Screen'>
-      {msg && <h3 className='h3'>{msg}</h3>}
+      {msg && <h3 className='subtitle'>{msg}</h3>}
       <img src={img} alt={alt} />
     </picture>
   );

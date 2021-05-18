@@ -62,7 +62,7 @@ const Pubs = (props) => {
   if (pubsReducer.error || usersReducer.error) return <PageError />;
   return (
     <div className='Container'>
-      <h1 className='text-center fw-bold mb-4 h1'>Publicaciones</h1>
+      <h1 className='has-text-centered fw-bold mb-4 title'>Publicaciones</h1>
       <Publicar />
       {pubs.length ? (
         pubs.map((pub) => {
@@ -86,10 +86,10 @@ const Pubs = (props) => {
         <PageEmpty msg='No encontramos ninguna publicación' />
       )}
       {page < pages && (
-        <div className='d-flex justify-content-center'>
+        <div className='is-flex is-justify-content-center'>
           <button
             type='button'
-            className='btn btn-outline-secondary'
+            className='button is-link is-light'
             onClick={handleClick}
           >
             Cargar más...

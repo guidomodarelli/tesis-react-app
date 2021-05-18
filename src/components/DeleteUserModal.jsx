@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from './Modal';
+import FormButtons from './FormButtons';
 
 /**
  *
@@ -17,22 +18,13 @@ const DeleteUserModal = (props) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <>
         <div className='Modal__header'>
-          <h1 className='h1'>¿Estás seguro?</h1>
+          <h1 className='title'>¿Estás seguro?</h1>
         </div>
         <div className='Modal__body'>
           <p>¡Estás apunto de eliminar esta cuenta!</p>
         </div>
         <div className='Modal__footer'>
-          <button
-            type='button'
-            onClick={onDeleteUser}
-            className='btn btn-danger Modal__footer--confirm'
-          >
-            Confirmar
-          </button>
-          <button type='button' onClick={onClose} className='btn btn-secondary'>
-            Cancelar
-          </button>
+          <FormButtons onClick={onDeleteUser} onClose={onClose} danger />
         </div>
       </>
     </Modal>

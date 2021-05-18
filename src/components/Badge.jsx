@@ -38,7 +38,7 @@ const Badge = (props) => {
       <div className='Badge__content'>
         {' '}
         <Gravatar email={email} />
-        <h1 className='Badge__content--name h1'>{name}</h1>
+        <h1 className='Badge__content--name subtitle'>{name}</h1>
         <h5 className='Badge__content--age'>
           {age()}
           {' '}

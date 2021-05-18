@@ -69,3 +69,8 @@ h6 {
     top: 3.5rem;
   }
 }
+
+.w-initial,
+.w-initial.modal-content {
+  width: initial;
+}

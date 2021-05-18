@@ -65,27 +65,28 @@ function Publicar(props) {
       <ErrorMessages errors={messageErrors} />
       <TextareaAutosize
         type='text'
-        className='form-control'
+        className='input'
         maxRows={6}
         placeholder='¿Qué quieres compartir?'
         onChange={handleChange}
         value={form.body}
         name='body'
       />
-      <div className='form-check'>
-        <input
-          type='checkbox'
-          className='form-check-input'
-          id='scope'
-          checked={checked}
-          name='scope'
-          onChange={handleChange}
-        />
-        <label htmlFor='scope' className='form-check-label'>
-          {checked ? 'Privado' : 'Publico'}
-        </label>
+      <div className='field mt-2'>
+        <div className='control'>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              className='mr-1'
+              checked={checked}
+              name='scope'
+              onChange={handleChange}
+            />
+            {checked ? 'Privado' : 'Publico'}
+          </label>
+        </div>
       </div>
-      <button type='submit' className='btn btn-primary BadgePub__button'>
+      <button type='submit' className='button is-link'>
         Publicar
       </button>
     </form>

@@ -74,7 +74,7 @@ const Publication = (props) => {
         {' '}
         <button
           type='button'
-          className='btn'
+          className='button is-white'
           onClick={() => toggleFavPub(id, fav)}
         >
           <i
@@ -87,7 +87,7 @@ const Publication = (props) => {
         </button>
         <button
           type='button'
-          className='btn'
+          className='button is-white'
           onClick={() => {
             inputRef.current.focus();
           }}
@@ -99,7 +99,7 @@ const Publication = (props) => {
       <div className='BadgePubs__comments'>
         <form onSubmit={(e) => e.preventDefault()}>
           <TextareaAutosize
-            className='form-control'
+            className='input'
             placeholder='Escribe un comentario...'
             ref={inputRef}
             type='text'
@@ -107,7 +107,7 @@ const Publication = (props) => {
           />
           <div className='BadgePubs__comments--add-comment'>
             {' '}
-            <button type='submit' className='btn btn-outline-primary'>
+            <button type='submit' className='button is-link is-outlined'>
               <i className='fa fa-comment' />
               Agregar comentario
             </button>

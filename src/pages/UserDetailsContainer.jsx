@@ -10,7 +10,7 @@ import {
   handleChangeUserForm,
   putAdminPermissions,
 } from '../redux/actions/usersActions';
-import UserDetails from './presentational/UserDetails';
+import UserDetails from '../components/UserDetails';
 
 const selectCurrentUserDetails = (userId) => createSelector(
   (state) => state.usersReducer.users,

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { signOut, resetMessageErrors } from '../../redux/actions';
 import { resetUserForm } from '../../redux/actions/usersActions';
 import 'bulma';
+import '../../styles/components/NavBar.scss';
 
 const NavBar = (props) => {
   const { userToken, signOut, resetUserForm, resetMessageErrors } = props;
@@ -86,7 +87,7 @@ const NavBar = (props) => {
               {!userToken && (
                 <Link
                   to='/signup'
-                  className='btn btn-primary me-2'
+                  className='button is-link me-2'
                   onClick={toggleActive}
                 >
                   Registrarse
@@ -94,7 +95,7 @@ const NavBar = (props) => {
               )}
               <Link
                 to='/login'
-                className='btn btn-secondary text-nowrap'
+                className='button is-link is-light text-nowrap'
                 onClick={handleClick}
               >
                 {userToken ? <>Cerrar sesión</> : <>Iniciar sesión</>}

@@ -61,7 +61,7 @@ const Login = (props) => {
   if (reducer.error || usersReducer.error) return <PageError />;
   return (
     <div className='UserEdit Login mt-4'>
-      <h1 className='h1'>Iniciar sesión</h1>
+      <h1 className='title'>Iniciar sesión</h1>
       <UserForm
         onChange={handleChange}
         formValues={form}
@@ -70,7 +70,7 @@ const Login = (props) => {
         login
       />
       {reducer.messageErrors && (
-        <div className='mt-3 text-danger'>
+        <div className='mt-3 has-text-danger'>
           {reducer.messageErrors.map((obj) => (
             <p key={obj}>{obj.message}</p>
           ))}
@@ -78,7 +78,7 @@ const Login = (props) => {
       )}
       <p className='mt-2'>
         ¿No tienes una cuenta?&nbsp;
-        <Link to='/signup' className='text-decoration-none' onClick={handleClick}>
+        <Link to='/signup' onClick={handleClick}>
           Registrate
         </Link>
       </p>
