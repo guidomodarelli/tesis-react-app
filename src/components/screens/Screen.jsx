@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/components/Screens.scss';
 
 const Screen = ({ img, alt, msg }) => {
   return (
-    <picture className='Screen'>
-      {msg && <h3 className='subtitle'>{msg}</h3>}
-      <img src={img} alt={alt} />
+    <picture className='h-full flex items-center justify-center flex-col mt-4'>
+      {msg && <h3 className='subtitle text-center'>{msg}</h3>}
+      <img className='max-h-96' src={img} alt={alt} />
     </picture>
   );
 };

@@ -43,11 +43,11 @@ const PermisosAdminModal = (props) => {
   } = props;
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <>
-        <div className='Modal__header'>
-          <h1 className='title'>¿Qué puede hacer este administrador?</h1>
+      <div className='divide-y-2'>
+        <div className='px-4 pb-4 pt-5 text-center'>
+          <h1 className='title mt-4'>¿Qué puede hacer este administrador?</h1>
         </div>
-        <div className='Modal__body'>
+        <div className='p-4'>
           <form>
             <InputCheckBox
               name='addNewAdmins'
@@ -114,10 +114,10 @@ const PermisosAdminModal = (props) => {
             />
           </form>
         </div>
-        <div className='Modal__footer'>
+        <div className='flex items-center justify-end p-3'>
           <FormButtons onClick={handleSubmit} onClose={onClose} />
         </div>
-      </>
+      </div>
     </Modal>
   );
 };

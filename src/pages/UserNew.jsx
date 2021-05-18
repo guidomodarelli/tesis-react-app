@@ -9,7 +9,6 @@ import { signUp } from '../redux/actions';
 import {
   getUsers, handleChangeUserForm,
 } from '../redux/actions/usersActions';
-import '../styles/components/UserEdit.scss';
 
 /**
  * @typedef {import("../redux/reducers").GlobalState} GlobalState
@@ -59,8 +58,8 @@ const UserNew = (props) => {
   if (reducer.loading) return <PageLoading />;
   if (reducer.error) return <PageError />;
   return (
-    <div className='UserEdit'>
-      <div className='UserEdit__badge'>
+    <div className='flex flex-wrap justify-center'>
+      <div className='flex-shrink mx-2 mt-6'>
         <Badge
           name={form.name || 'Nombre'}
           email={form.email || ''}
@@ -70,8 +69,8 @@ const UserNew = (props) => {
         />
       </div>
 
-      <div className='UserEdit__form'>
-        <h1 className='title has-text-centered'>Nuevo usuario</h1>
+      <div className='flex-shrink mx-4 mb-6'>
+        <h1 className='title text-center'>Nuevo usuario</h1>
         <UserForm
           onChange={handleChange}
           formValues={form}

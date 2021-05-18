@@ -17,11 +17,11 @@ const Message = (props) => {
   const { message, creator, time } = props;
 
   return (
-    <div className='ChatMessage'>
-      <div className='ChatMessage__creator'>{creator}</div>
-      <div className='ChatMessage__message'>
-        <div className='ChatMessage__message--body'>{message}</div>
-        <div className='ChatMessage__message--time'>{getTimeMessage(time)}</div>
+    <div className='p-4 border border-solid border-gray-400 rounded-t-3xl rounded-br-sm rounded-bl-3xl mx-2 mb-2 max-w-xs min-w-xs '>
+      <div className='font-bold'>{creator}</div>
+      <div className='flex justify-end'>
+        <div className='text-lg text-left mr-2'>{message}</div>
+        <div className='text-left italic text-xs flex items-center'>{getTimeMessage(time)}</div>
       </div>
     </div>
   );

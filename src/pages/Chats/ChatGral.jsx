@@ -4,7 +4,6 @@ import { connect, useDispatch } from 'react-redux';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import ChatInput from '../../components/Chats/ChatInput';
 import MessageList from '../../components/Chats/MessageList';
-import '../../styles/components/Chat.scss';
 import { getChatsGral, addMsgGralByTag } from '../../redux/actions/chatActions';
 import { CHAT_ADD_MESSAGE } from '../../redux/types/chatTypes';
 
@@ -66,7 +65,7 @@ const ChatGral = (props) => {
 
   return (
     <>
-      <div className='Chat' ref={refDiv}>
+      <div className='mx-auto mt-auto overflow-y-auto' ref={refDiv}>
         <MessageList messages={general.general} />
       </div>
       <ChatInput ref={refInput} handleSubmit={handleSubmit} />

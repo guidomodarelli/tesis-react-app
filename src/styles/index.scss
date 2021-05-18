@@ -1,6 +1,10 @@
 @use './abstracts/fonts';
 @use './abstracts/colors';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   font-family: fonts.$font-body;
   -webkit-font-smoothing: antialiased;
@@ -19,4 +23,17 @@ h6 {
 .w-initial,
 .w-initial.modal-content {
   width: initial;
+}
+
+.text-instagram-color {
+  color: colors.$instagram-account;
+}
+
+.min-w-xs {
+  min-width: 20rem;
+}
+
+.text-break {
+  word-break: break-word;
+  word-wrap: break-word;
 }

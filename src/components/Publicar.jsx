@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import { handleChangePubForm, postPub } from '../redux/actions/pubsActions';
-import '../styles/components/BadgePub.scss';
 
 /**
  * @typedef {import("../redux/reducers").FormError} FormError
@@ -21,7 +20,7 @@ function ErrorMessages(props) {
   return (
     <>
       {errors.length !== 0 && (
-        <div className='BadgePub__Error'>
+        <div className='text-red-500'>
           {errors.map((obj) => (
             <p key={obj.message}>
               -
@@ -61,11 +60,11 @@ function Publicar(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='BadgePub mb-7 mx-auto shadow-lg rounded-lg overflow-hidden max-w-sm border border-opacity-20 border-black'>
+    <form onSubmit={handleSubmit} className='p-4 mb-7 flex flex-col mx-auto shadow-lg rounded-lg overflow-hidden max-w-sm border border-opacity-20 border-black'>
       <ErrorMessages errors={messageErrors} />
       <TextareaAutosize
         type='text'
-        className='input'
+        className='input resize-none mt-2'
         maxRows={6}
         placeholder='¿Qué quieres compartir?'
         onChange={handleChange}

@@ -35,7 +35,7 @@ const Badge = (props) => {
         <img className='m-2' src={logo} alt='Logo' />
       </picture>
       <Gravatar className='py-4 flex justify-center' email={email} />
-      <h3 className='break-all text-center m-0 pt-0 pb-4 pr-4 pl-4 text-2xl'>{name}</h3>
+      <h3 className='text-break text-center m-0 pt-0 pb-4 pr-4 pl-4 text-2xl'>{name}</h3>
       <p className='flex justify-center mb-2 text-md'>
         {age()}
         {' '}
@@ -43,7 +43,7 @@ const Badge = (props) => {
       </p>
       {(bio || instagram) && (
         <div className='flex justify-center flex-col items-center py-2 bg-gray-100'>
-          {bio && <p className='break-all mx-4 text-center'>{bio}</p>}
+          {bio && <p className='text-break mx-4 text-center'>{bio}</p>}
           {instagram && <InstagramAccount instagram={instagram} />}
         </div>
       )}

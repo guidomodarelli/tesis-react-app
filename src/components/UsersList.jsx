@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/components/UsersList.scss';
 import Gravatar from './Gravatar';
 import InstagramAccount from './InstagramAccount';
 import PageEmpty from './screens/PageEmpty';
@@ -20,12 +19,12 @@ const UserListItem = (props) => {
   const { user } = props;
 
   return (
-    <div className='UserListItem'>
-      <Gravatar email={user.email} />
-      <div className='UserListItem__details'>
-        <p className='UserListItem__details--name'>{user.name}</p>
+    <div className='UserListItem border border-solid border-black border-opacity-10 flex mt-4 rounded-md shadow-md'>
+      <Gravatar className='m-4' email={user.email} />
+      <div>
+        <p className='text-break font-bold mt-4 ml-4 text-lg'>{user.name}</p>
         {user.instagram && <InstagramAccount instagram={user.instagram} />}
-        <p className='UserListItem__details--bio mb-3'>{user.bio}</p>
+        <p className='text-break mr-4 text-base mb-3'>{user.bio}</p>
       </div>
     </div>
   );

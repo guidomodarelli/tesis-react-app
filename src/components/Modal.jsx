@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../styles/components/Modal.scss';
 import PropTypes from 'prop-types';
 import 'bulma';
 import classNames from 'classnames';
@@ -27,7 +26,7 @@ const Modal = (props) => {
         role='button'
         aria-label='background'
       />
-      <div className='w-initial modal-content px-5 has-background-white'>{children}</div>
+      <div className='w-initial modal-content px-5 bg-white'>{children}</div>
       <div
         className='modal-close is-large'
         aria-label='close'

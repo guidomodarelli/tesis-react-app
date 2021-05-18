@@ -1,6 +1,5 @@
 import React from 'react';
 import ErrorImage from '../../assets/images/error.svg';
-import '../../styles/components/Screens.scss';
 import Screen from './Screen';
 
 const PageError = () => (

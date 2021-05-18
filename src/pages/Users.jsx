@@ -31,7 +31,7 @@ const Users = (props) => {
   if (loading) return <PageLoading />;
   return (
     <div className='w-full max-w-xl mx-auto px-4 mt-4 mb-12'>
-      <h1 className='has-text-centered fw-bold mb-4 title'>Usuarios</h1>
+      <h1 className='text-center font-bold mb-4 title'>Usuarios</h1>
       <UsersList users={users} />
     </div>
   );

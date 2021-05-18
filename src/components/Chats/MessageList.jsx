@@ -30,7 +30,7 @@ const MessageList = (props) => {
   };
 
   return (
-    <div className='ChatMessageList'>
+    <>
       {messages?.map((el) => (
         <Message
           key={el.createdAt}
@@ -39,7 +39,7 @@ const MessageList = (props) => {
           time={new Date(el.createdAt)}
         />
       ))}
-    </div>
+    </>
   );
 };
 

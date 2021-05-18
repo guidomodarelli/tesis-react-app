@@ -70,7 +70,7 @@ const Login = (props) => {
         login
       />
       {reducer.messageErrors && (
-        <div className='mt-3 has-text-danger'>
+        <div className='mt-3 text-red-500'>
           {reducer.messageErrors.map((obj) => (
             <p key={obj}>{obj.message}</p>
           ))}

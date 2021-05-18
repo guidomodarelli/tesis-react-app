@@ -44,7 +44,7 @@ const UserForm = (props) => {
   return (
     <form onSubmit={handleSubmit} noValidate>
       {messageErrors && (
-        <div className='has-text-danger my-2'>
+        <div className='text-red-500 my-2'>
           {messageErrors.map((obj) => (
             <p key={obj.message}>
               -

@@ -10,7 +10,6 @@ import {
   handleChangeUserForm,
   putUser,
 } from '../redux/actions/usersActions';
-import '../styles/components/UserEdit.scss';
 
 /**
  *
@@ -87,8 +86,8 @@ const UserEdit = (props) => {
   if (uploading) return <PageUpload />;
   if (error) return <PageError />;
   return (
-    <div className='UserEdit'>
-      <div className='UserEdit__badge'>
+    <div className='flex flex-wrap justify-center'>
+      <div className='flex-shrink mx-2 mt-6'>
         <Badge
           name={form.name}
           email={form.email}
@@ -98,8 +97,8 @@ const UserEdit = (props) => {
         />
       </div>
 
-      <div className='UserEdit__form'>
-        <h1 className='title has-text-centered'>Editar usuario</h1>
+      <div className='flex-shrink mx-4 mb-6'>
+        <h1 className='title text-center'>Editar usuario</h1>
         <UserForm
           onChange={handleChange}
           formValues={form}

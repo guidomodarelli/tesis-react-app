@@ -6,7 +6,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { toggleFavPub } from '../redux/actions/pubsActions';
 import { formatNumber } from '../utils/numbers';
 import Gravatar from './Gravatar';
-import '../styles/components/BadgePubs.scss';
 
 /**
  * @typedef {import("../redux/reducers/pubsReducer").SCOPE} SCOPE
@@ -42,12 +41,12 @@ const Publication = (props) => {
   const inputRef = useRef(null);
 
   return (
-    <div className='BadgePubs mb-3 mx-auto shadow-lg rounded-lg overflow-hidden max-w-sm border border-opacity-20 border-black'>
-      <div className='BadgePubs__header'>
+    <div className='p-4 mb-3 mx-auto shadow-lg rounded-lg overflow-hidden max-w-sm border border-opacity-20 border-black'>
+      <div className='flex items-center'>
         <Gravatar height='50px' width='50px' email={email} />
-        <div className='BadgePubs__details'>
-          <div className='BadgePubs__details--name'>{name}</div>
-          <div className='BadgePubs__details--info'>
+        <div className='ml-2'>
+          <div className='text-break font-bold'>{name}</div>
+          <div className='font-bold text-gray-500'>
             {new Date(createdAt).toLocaleString()}
             <span>
               {' '}
@@ -63,27 +62,20 @@ const Publication = (props) => {
           </div>
         </div>
       </div>
-      <div className='BadgePubs__body'>{body}</div>
-      <div className='BadgePubs__likes'>
-        <i
-          className={classNames('fa', 'fa-heart', 'BadgePubs__likes--heart')}
-        />
+      <div className='text-break mt-4'>{body}</div>
+      <div className='ml-2 font-bold'>
+        <i className='fa fa-heart mr-1' />
         {formatNumber(favs)}
       </div>
-      <div className='BadgePubs__buttons'>
+      <div className='flex justify-evenly mt-2'>
         {' '}
         <button
           type='button'
-          className='button is-white'
+          className='button is-white font-bold text-gray-500'
           onClick={() => toggleFavPub(id, fav)}
         >
-          <i
-            className={classNames(
-              'fa',
-              fav ? 'fa-heart' : 'fa-heart-o',
-            )}
-          />
-          <span className='BadgePubs__buttons--nowrap'>Me gusta</span>
+          <i className={classNames(fav ? 'fa fa-heart' : 'fa fa-heart-o', 'mr-1')} />
+          <span className='whitespace-nowrap'>Me gusta</span>
         </button>
         <button
           type='button'
@@ -92,23 +84,23 @@ const Publication = (props) => {
             inputRef.current.focus();
           }}
         >
-          <i className='fa fa-comment-o' />
+          <i className='fa fa-comment-o mr-1' />
           Comentar
         </button>
       </div>
-      <div className='BadgePubs__comments'>
+      <div className='mt-2'>
         <form onSubmit={(e) => e.preventDefault()}>
           <TextareaAutosize
-            className='input'
+            className='input resize-none'
             placeholder='Escribe un comentario...'
             ref={inputRef}
             type='text'
             maxRows={6}
           />
-          <div className='BadgePubs__comments--add-comment'>
+          <div className='flex justify-end'>
             {' '}
-            <button type='submit' className='button is-link is-outlined'>
-              <i className='fa fa-comment' />
+            <button type='submit' className='button is-link is-outlined mt-2'>
+              <i className='fa fa-comment mr-1' />
               Agregar comentario
             </button>
           </div>

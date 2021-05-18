@@ -5,7 +5,6 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
 import reducers from './redux/reducers';
 import App from './routes/App';
-import './styles/index.css';
 
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
