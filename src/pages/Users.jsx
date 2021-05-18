@@ -22,7 +22,9 @@ const Users = (props) => {
   const { loading, error, users, getUsers } = props;
 
   useEffect(() => {
-    getUsers();
+    if (!users.length) {
+      getUsers();
+    }
   }, []);
 
   if (error) return <PageError />;
