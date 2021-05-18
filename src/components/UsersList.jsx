@@ -19,7 +19,7 @@ const UserListItem = (props) => {
   const { user } = props;
 
   return (
-    <div className='UserListItem border border-solid border-black border-opacity-10 flex mt-4 rounded-md shadow-md'>
+    <div className='UserListItem border border-solid border-black border-opacity-10 flex mt-4 rounded-md shadow-md text-black'>
       <Gravatar className='m-4' email={user.email} />
       <div>
         <p className='text-break font-bold mt-4 ml-4 text-lg'>{user.name}</p>

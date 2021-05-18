@@ -86,7 +86,7 @@ const Pubs = (props) => {
         <PageEmpty msg='No encontramos ninguna publicación' />
       )}
       {page < pages && (
-        <div className='is-flex is-justify-content-center'>
+        <div className='flex justify-center'>
           <button
             type='button'
             className='button is-link is-light'

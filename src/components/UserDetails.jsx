@@ -36,9 +36,9 @@ const Actions = (props) => {
   };
 
   return (
-    <div className='is-flex is-flex-direction-column is-align-items-center is-justify-content-center mb-4'>
+    <div className='flex flex-col items-center justify-center mb-4'>
       <h2 className='mb-3 subtitle'>Acciones:</h2>
-      <div className='w-100 is-flex is-justify-content-center'>
+      <div className='w-100 flex justify-center'>
         {profile && (
           <Link className='button is-link mr-2' to={`/users/${userId}/edit`} onClick={handleClick}>
             Editar
@@ -134,7 +134,7 @@ const UserDetails = (props) => {
         Volver
       </Link>
       <div className='mt-3'>
-        <div className='px-2 is-flex is-justify-content-center'>
+        <div className='px-2 flex justify-center'>
           <Badge
             name={user.name || ''}
             email={user.email || ''}

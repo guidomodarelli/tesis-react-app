@@ -17,7 +17,7 @@ const Message = (props) => {
   const { message, creator, time } = props;
 
   return (
-    <div className='p-4 border border-solid border-gray-400 rounded-t-3xl rounded-br-sm rounded-bl-3xl mx-2 mb-2 max-w-xs min-w-xs '>
+    <div className='p-4 border border-solid border-gray-400 rounded-t-3xl rounded-br-sm rounded-bl-3xl mx-2 mb-2 max-w-xs min-w-min '>
       <div className='font-bold'>{creator}</div>
       <div className='flex justify-end'>
         <div className='text-lg text-left mr-2'>{message}</div>

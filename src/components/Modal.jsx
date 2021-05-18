@@ -26,7 +26,9 @@ const Modal = (props) => {
         role='button'
         aria-label='background'
       />
-      <div className='w-initial modal-content px-5 bg-white'>{children}</div>
+      <div className='modal-content px-5 bg-white'>
+        <div className='divide-y-2'>{children}</div>
+      </div>
       <div
         className='modal-close is-large'
         aria-label='close'
