@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
 import React, { useEffect, useRef } from 'react';
 import { connect, useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import ChatInput from '../../components/Chats/ChatInput';
 import MessageList from '../../components/Chats/MessageList';
@@ -13,8 +14,15 @@ const client = new W3CWebSocket(
   `ws://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_WS_PORT}`,
 );
 
+const useStyles = makeStyles(() => ({
+  height: {
+    height: 'calc(100% - 52px)',
+  },
+}));
+
 const ChatGral = (props) => {
   const { getChatsGral, addMsgGralByTag, general } = props;
+  const classes = useStyles();
 
   const dispatch = useDispatch();
 
@@ -24,7 +32,9 @@ const ChatGral = (props) => {
   const refDiv = useRef(null);
 
   const chatScrollTop = () => {
-    refDiv.current.scrollTop = refDiv.current?.scrollHeight;
+    if (refDiv.current) {
+      refDiv.current.scrollTop = refDiv.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -64,12 +74,12 @@ const ChatGral = (props) => {
   };
 
   return (
-    <>
+    <div className={`${classes.height} flex flex-col`}>
       <div className='mx-auto mt-auto overflow-y-auto' ref={refDiv}>
         <MessageList messages={general.general} />
       </div>
       <ChatInput ref={refInput} handleSubmit={handleSubmit} />
-    </>
+    </div>
   );
 };
 

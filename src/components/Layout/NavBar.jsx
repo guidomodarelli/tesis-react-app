@@ -36,7 +36,7 @@ const NavBar = (props) => {
   };
 
   return (
-    <nav className='navbar' role='navigation' aria-label='main navigation'>
+    <nav className='navbar h-12' role='navigation' aria-label='main navigation'>
       <div className='navbar-brand'>
         <div
           role='button'

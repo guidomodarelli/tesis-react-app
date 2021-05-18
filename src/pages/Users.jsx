@@ -30,7 +30,7 @@ const Users = (props) => {
   if (error) return <PageError />;
   if (loading) return <PageLoading />;
   return (
-    <div className='w-full max-w-xl mx-auto px-4 mt-4 mb-12'>
+    <div className='w-full max-w-xl mx-auto px-4 mt-4 pb-5'>
       <h1 className='text-center font-bold mb-4 title'>Usuarios</h1>
       <UsersList users={users} />
     </div>

@@ -61,7 +61,7 @@ const Pubs = (props) => {
   if (pubsReducer.loading || usersReducer.loading) return <PageLoading />;
   if (pubsReducer.error || usersReducer.error) return <PageError />;
   return (
-    <div className='w-full max-w-xl mx-auto px-4 mt-4 mb-12'>
+    <div className='w-full max-w-xl mx-auto px-4 mt-4 pb-4'>
       <h1 className='text-center font-bold mb-4 title'>Publicaciones</h1>
       <Publicar />
       {pubs.length ? (

@@ -50,7 +50,7 @@ const Promotion = () => (
 );
 
 const Home = () => (
-  <div className='container px-3'>
+  <div className='container px-3 pb-2'>
     <img
       className='image p-4'
       src={calistep}
