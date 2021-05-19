@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 /**
  * @param {Date} time
@@ -14,14 +15,21 @@ function getTimeMessage(time) {
 }
 
 const Message = (props) => {
-  const { message, creator, time } = props;
+  const { message, creator, time, currentUser } = props;
 
   return (
-    <div className='p-4 border border-solid border-gray-400 rounded-t-3xl rounded-br-sm rounded-bl-3xl mx-2 mb-2 max-w-xs min-w-min '>
+    <div
+      className={classNames(
+        'p-4 border border-solid border-gray-400 rounded-t-3xl rounded-br-sm rounded-bl-3xl mx-4 mb-2 max-w-xs min-w-min',
+        currentUser ? 'self-end' : 'bg-blue-300',
+      )}
+    >
       <div className='font-bold'>{creator}</div>
       <div className='flex justify-end'>
         <div className='text-lg text-left mr-2'>{message}</div>
-        <div className='text-left italic text-xs flex items-center'>{getTimeMessage(time)}</div>
+        <div className='text-left italic text-xs flex items-center'>
+          {getTimeMessage(time)}
+        </div>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ const ChatInput = React.forwardRef((props, ref) => {
   return (
     <div className='flex justify-center'>
       <form className='field has-addons' onSubmit={handleSubmit}>
-        <div className='mx-1 mb-2 control'>
+        <div className='mb-2 control'>
           <input
             className='input'
             type='text'

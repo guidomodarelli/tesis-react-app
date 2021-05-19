@@ -29,7 +29,7 @@ const ChatGral = (props) => {
   /** @type {React.LegacyRef<HTMLInputElement>} */
   const refInput = useRef(null);
   /** @type {React.LegacyRef<HTMLDivElement>} */
-  const refDiv = useRef(null);
+  const refDiv = React.createRef();
 
   const chatScrollTop = () => {
     if (refDiv.current) {
@@ -74,10 +74,8 @@ const ChatGral = (props) => {
   };
 
   return (
-    <div className={`${classes.height} flex flex-col`}>
-      <div className='mx-auto mt-auto overflow-y-auto' ref={refDiv}>
-        <MessageList messages={general.general} />
-      </div>
+    <div className={`${classes.height} flex flex-col items-center`}>
+      <MessageList messages={general.general} ref={refDiv} />
       <ChatInput ref={refInput} handleSubmit={handleSubmit} />
     </div>
   );
