@@ -16,7 +16,7 @@ import Message from './Message';
  *  currentUser: User;
  * }} props
  */
-const MessageList = React.forwardRef((props, ref) => {
+const MessageList = (props) => {
   const { messages, users, getUsers, currentUser } = props;
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const MessageList = React.forwardRef((props, ref) => {
   };
 
   return (
-    <div className='overflow-y-auto flex flex-col items-start max-w-3xl w-full' ref={ref}>
+    <>
       {messages?.map((el) => {
         const isCurrentUser = currentUser.id === el.creator;
         return (
@@ -44,9 +44,9 @@ const MessageList = React.forwardRef((props, ref) => {
           />
         );
       })}
-    </div>
+    </>
   );
-});
+};
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
 

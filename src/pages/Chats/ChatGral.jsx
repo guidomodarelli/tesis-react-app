@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
@@ -27,9 +27,9 @@ const ChatGral = (props) => {
   const dispatch = useDispatch();
 
   /** @type {React.LegacyRef<HTMLInputElement>} */
-  const refInput = useRef(null);
+  const refInput = React.createRef();
   /** @type {React.LegacyRef<HTMLDivElement>} */
-  const refDiv = React.createRef();
+  const refDiv = React.useRef(null);
 
   const chatScrollTop = () => {
     if (refDiv.current) {
@@ -75,7 +75,12 @@ const ChatGral = (props) => {
 
   return (
     <div className={`${classes.height} flex flex-col items-center`}>
-      <MessageList messages={general.general} ref={refDiv} />
+      <div
+        className='overflow-y-auto flex flex-col items-start max-w-3xl w-full'
+        ref={refDiv}
+      >
+        <MessageList messages={general.general} />
+      </div>
       <ChatInput ref={refInput} handleSubmit={handleSubmit} />
     </div>
   );

@@ -20,8 +20,10 @@ const Message = (props) => {
   return (
     <div
       className={classNames(
-        'p-4 border border-solid border-gray-400 rounded-t-3xl rounded-br-sm rounded-bl-3xl mx-4 mb-2 max-w-xs min-w-min',
-        currentUser ? 'self-end' : 'bg-blue-300',
+        'p-4 border border-solid border-gray-400 rounded-t-3xl mx-4 mb-2 max-w-xs min-w-min',
+        currentUser
+          ? 'self-end rounded-br-sm rounded-bl-3xl'
+          : 'bg-blue-300 rounded-tl-sm rounded-b-3xl',
       )}
     >
       <div className='font-bold'>{creator}</div>

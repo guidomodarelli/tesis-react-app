@@ -12,9 +12,14 @@ const ChatInput = React.forwardRef((props, ref) => {
     }
   };
 
+  const innerHandleSubmit = (e) => {
+    setDisabled(true);
+    handleSubmit(e);
+  };
+
   return (
     <div className='flex justify-center'>
-      <form className='field has-addons' onSubmit={handleSubmit}>
+      <form className='field has-addons' onSubmit={innerHandleSubmit}>
         <div className='mb-2 control'>
           <input
             className='input'
